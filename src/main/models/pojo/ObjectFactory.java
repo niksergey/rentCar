@@ -6,7 +6,7 @@
 //
 
 
-package models.pojo;
+package main.models.pojo;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

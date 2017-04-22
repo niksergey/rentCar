@@ -1,4 +1,4 @@
-package utils;
+package main.utils;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

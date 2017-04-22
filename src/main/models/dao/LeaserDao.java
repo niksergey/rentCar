@@ -1,6 +1,6 @@
-package models.dao;
+package main.models.dao;
 
-import models.pojo.Leaser;
+import main.models.pojo.Leaser;
 
 import java.util.List;
 
