@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 rel. 3 (x64) (http://www.altova.com) by serg (serg) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:include schemaLocation="CarModelSchema.xsd"/>
+	<xs:complexType name="Car">
+		<xs:sequence>
+			<xs:element name="id" type="xs:int"/>
+			<xs:element name="carModel" type="CarModel"/>
+			<xs:element name="vin" type="xs:string"/>
+			<xs:element name="year">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="2000"/>
+						<xs:maxInclusive value="2020"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

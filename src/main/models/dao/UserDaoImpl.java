@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
                     result.getBoolean("isactive"),
                     result.getBoolean("isdeleted"));
         } catch (SQLException e) {
-            logger.warn("Cannot create Leaser from ResultSet", e);
+            logger.warn("Cannot create User from ResultSet", e);
         }
         return user;
     }
