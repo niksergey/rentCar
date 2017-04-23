@@ -12,13 +12,14 @@
     </jsp:attribute>
 
     <jsp:attribute name="logaction">
-            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/login">
+            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/login" method="post">
                     <%--<div class="form-group">--%>
                     <%--<input type="text" placeholder="Email" class="form-control">--%>
                     <%--</div>--%>
                     <%--<div class="form-group">--%>
                     <%--<input type="password" placeholder="Password" class="form-control">--%>
                     <%--</div>--%>
+                        <input type="hidden" name="currentSession" value="delete"/>
                 <button type="submit" class="btn btn-success">Выйти</button>
             </form>
     </jsp:attribute>

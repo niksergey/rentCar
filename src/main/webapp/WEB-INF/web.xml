@@ -33,4 +33,13 @@
         <servlet-name>SignUpSevlet</servlet-name>
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>WhiteFilter</filter-name>
+        <filter-class>main.controllers.filters.WhiteList</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>WhiteFilter</filter-name>
+        <servlet-name>CarListServlet</servlet-name>
+    </filter-mapping>
 </web-app>

@@ -18,18 +18,23 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
         req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug(req.getQueryString());
+        if ("delete".equals(req.getParameter("currentSession"))) {
+            logger.debug("Close session " + req.getSession().getId());
+            req.getSession().invalidate();
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        logger.debug("email/Password: " + email + "/" + password);
+        logger.debug("email/Password: " + email + " " + password);
         if (userService.auth(email, password) != null) {
-            req.getSession().setAttribute("userLogin", email);
+            req.getSession().setAttribute("userEmail", email);
             resp.sendRedirect(req.getContextPath() + "/listCars");
         } else {
             resp.sendRedirect(req.getContextPath() + "/login");
