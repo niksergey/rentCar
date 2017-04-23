@@ -33,13 +33,25 @@
         <servlet-name>listCarsServlet</servlet-name>
         <url-pattern>/listCars</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>listCarModelsServlet</servlet-name>
+        <servlet-class>main.controllers.ListCarModelsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>listCarModelsServlet</servlet-name>
+        <url-pattern>/listCarModels</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>WhiteList</filter-name>
         <filter-class>main.controllers.filters.WhiteList</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>WhiteList</filter-name>
-        <url-pattern>/listCars</url-pattern>
+        <servlet-name>listCarsServlet</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>WhiteList</filter-name>
+        <servlet-name>listCarModelsServlet</servlet-name>
     </filter-mapping>
     <filter>
         <filter-name>SignList</filter-name>
