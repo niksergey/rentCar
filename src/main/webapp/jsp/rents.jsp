@@ -4,7 +4,7 @@
 
 <t:genericpage>
     <jsp:attribute name="title">
-      Список моделей :: Краткосрочная аренда автомобилей в Иннополисе
+      Список аренд :: Краткосрочная аренда автомобилей в Иннополисе
     </jsp:attribute>
     <jsp:attribute name="stylecss">
         <c:set var="path" value="${pageContext.request.contextPath}" />
@@ -21,28 +21,29 @@
     <jsp:body>
         <t:lksidebar/>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Модельный ряд</h1>
+            <h1 class="page-header">Список аренд</h1>
 
             <div class="table-responsive">
                 <table class="table table-striped">
-                    <%--int id, String manufacturer, String model, String gear, int power--%>
                     <thead>
                     <tr>
                         <th>id</th>
+                        <th>Пользователь</th>
                         <th>Марка</th>
                         <th>Модель</th>
-                        <th>Мощность</th>
-                        <th>Коробка передач</th>
+                        <th>Старт аренды</th>
+                        <th>Завершение аренды</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.carModels}" var="rent">
+                    <c:forEach items="${requestScope.rents}" var="rent">
                         <tr>
                             <td><c:out value="${rent.getId()}"/></td>
-                            <td><c:out value="${rent.getManufacturer()}"/></td>
-                            <td><c:out value="${rent.getModel()}"/></td>
-                            <td><c:out value="${rent.getPower()}"/></td>
-                            <td><c:out value="${rent.getGear()}"/></td>
+                            <td><c:out value="${rent.getLeaser().getEmail()}"/></td>
+                            <td><c:out value="${rent.getCar().getCarModel().getManufacturer()}"/></td>
+                            <td><c:out value="${rent.getCar().getCarModel().getModel()}"/></td>
+                            <td><c:out value="${rent.getStartTime()}"/></td>
+                            <td><c:out value="${rent.getFinishDate()}"/></td>
                         </tr>
                     </c:forEach>
                     </tbody>

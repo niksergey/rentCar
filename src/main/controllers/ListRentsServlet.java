@@ -1,7 +1,7 @@
 package main.controllers;
 
-import main.services.CarService;
-import main.services.CarServiceImpl;
+import main.services.RentService;
+import main.services.RentServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ListCarsServlet extends HttpServlet {
-    private final static Logger logger = LogManager.getLogger(ListCarsServlet.class);
-
-    private static CarService carService = new CarServiceImpl();
+public class ListRentsServlet extends HttpServlet {
+    private final static Logger logger = LogManager.getLogger(LoginServlet.class);
+    private static RentService rentService = new RentServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("cars", carService.getAllCars());
-        getServletContext().getRequestDispatcher("/jsp/cars.jsp").forward(req, resp);
+        req.setAttribute("rents", rentService.getAllRents());
+        getServletContext().getRequestDispatcher("/jsp/rents.jsp").forward(req, resp);
     }
 }

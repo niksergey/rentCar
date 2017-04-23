@@ -11,6 +11,7 @@ import java.util.List;
 
 public class LeaserDaoImpl implements LeaserDao {
     static final Logger logger = LogManager.getLogger(LeaserDaoImpl.class.getName());
+
     private Leaser createEntity(ResultSet result) {
         Leaser leaser = null;
         try {
@@ -56,6 +57,25 @@ public class LeaserDaoImpl implements LeaserDao {
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
             statement.setString(2, password);
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    leaser = createEntity(result);
+                }
+            }
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return leaser;
+    }
+
+    @Override
+    public Leaser getById(int id) {
+        String query = "SELECT * FROM userentry WHERE id=?;";
+        Leaser leaser = null;
+
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, id);
             try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
                     leaser = createEntity(result);

@@ -7,4 +7,5 @@ import java.util.List;
 public interface LeaserDao {
     List<Leaser> getAll();
     Leaser getByEmailAndPassword(String email, String password);
+    Leaser getById(int id);
 }

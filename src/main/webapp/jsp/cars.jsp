@@ -35,13 +35,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.cars}" var="cm">
+                    <c:forEach items="${requestScope.cars}" var="rent">
                         <tr>
-                            <td><c:out value="${cm.getId()}"/></td>
-                            <td><c:out value="${cm.getCarModel().getManufacturer()}"/></td>
-                            <td><c:out value="${cm.getCarModel().getModel()}"/></td>
-                            <td><c:out value="${cm.getYear()}"/></td>
-                            <td><c:out value="${cm.getVin()}"/></td>
+                            <td><c:out value="${rent.getId()}"/></td>
+                            <td><c:out value="${rent.getCarModel().getManufacturer()}"/></td>
+                            <td><c:out value="${rent.getCarModel().getModel()}"/></td>
+                            <td><c:out value="${rent.getYear()}"/></td>
+                            <td><c:out value="${rent.getVin()}"/></td>
                         </tr>
                     </c:forEach>
                 </tbody>

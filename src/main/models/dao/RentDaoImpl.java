@@ -1,6 +1,6 @@
 package main.models.dao;
 
-import main.models.pojo.Car;
+import main.models.pojo.Rent;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,59 +9,61 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarDaoImpl implements CarDao {
-    static final Logger logger = LogManager.getLogger(CarModelDaoImpl.class.getName());
+public class RentDaoImpl implements  RentDao {
+    static final Logger logger = LogManager.getLogger(LeaserDaoImpl.class.getName());
 
-    static CarModelDao cmd = new CarModelDaoImpl();
+    private static CarDao cd = new CarDaoImpl();
+    private static LeaserDao lsd = new LeaserDaoImpl();
 
-    private Car createEntity(ResultSet result) {
-        Car car = null;
+    private Rent createEntity(ResultSet result) {
+        Rent car = null;
         try {
-            car = new Car(
+            car = new Rent(
                     result.getInt("id"),
-                    cmd.getById(result.getInt("model")),
-                    result.getString("vin"),
-                    result.getInt("year"));
+                    result.getTimestamp("start_time"),
+                    result.getTimestamp("finish_time"),
+                    lsd.getById(result.getInt("leaser")),
+                    cd.getById(result.getInt("car")));
         } catch (SQLException e) {
-            logger.warn("Cannot create CarModel from ResultSet", e);
+            logger.warn("Cannot create Rent from ResultSet", e);
         }
         return car;
     }
 
     @Override
-    public List<Car> getAll() {
-        String query = "SELECT * FROM car;";
-        List<Car> cars = new ArrayList<>(64);
+    public List<Rent> getAll() {
+        String query = "SELECT * FROM rent;";
+        List<Rent> rents = new ArrayList<>(64);
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement()) {
             try(ResultSet result = statement.executeQuery(query)) {
                 while (result.next()) {
-                    cars.add(createEntity(result));
+                    rents.add(createEntity(result));
                 }
             }
         }  catch (SQLException e) {
             logger.warn("SQLException during getAll()", e);
         }
-        return cars;
+        return rents;
     }
 
     @Override
-    public Car getById(int id) {
-        String query = "SELECT * FROM car WHERE id=?;";
-        Car car = null;
+    public Rent getById(int id) {
+        String query = "SELECT * FROM rent WHERE id=?;";
+        Rent rent = null;
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
-                    car = createEntity(result);
+                    rent = createEntity(result);
                 }
             }
         } catch (SQLException e ) {
             logger.warn("SQLException during getById()", e);
         }
-        return car;
+        return rent;
     }
 }
