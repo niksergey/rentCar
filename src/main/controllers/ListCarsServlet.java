@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CarsServlet extends HttpServlet {
+public class ListCarsServlet extends HttpServlet {
     private static CarService carService = new CarServiceImpl();
 
     @Override

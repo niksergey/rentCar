@@ -11,9 +11,16 @@
         <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
     </jsp:attribute>
 
+    <jsp:attribute name="logaction">
+    <c:set var="context" value="${pageContext.request.contextPath}"/>
+    <form class="navbar-form navbar-right" action="${context}/signup">
+        <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+    </form>
+    </jsp:attribute>
+
     <jsp:body>
         <div class="container">
-            <form class="form-signin" action="${pageContext.request.contextPath}/login" method="post">
+            <form class="form-signin" action="${pageContext.request.contextPath}/signin" method="post">
                 <h2 class="form-signin-heading">Вход</h2>
                 <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="text" id="inputEmail" class="form-control" placeholder="E-mail" name="email" required autofocus>

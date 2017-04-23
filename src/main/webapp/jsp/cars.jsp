@@ -7,39 +7,46 @@
       Список авто :: Краткосрочная аренда автомобилей в Иннополисе
     </jsp:attribute>
     <jsp:attribute name="stylecss">
-        <%--<c:set var="context" value="${pageContext.request.contextPath}" />--%>
-        <%--<link href="${context}/css/sticky-footer.css" rel="stylesheet">--%>
+        <c:set var="path" value="${pageContext.request.contextPath}" />
+        <link href="${path}/css/dashboard.css" rel="stylesheet">
     </jsp:attribute>
 
     <jsp:attribute name="logaction">
-            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/login" method="post">
-                    <%--<div class="form-group">--%>
-                    <%--<input type="text" placeholder="Email" class="form-control">--%>
-                    <%--</div>--%>
-                    <%--<div class="form-group">--%>
-                    <%--<input type="password" placeholder="Password" class="form-control">--%>
-                    <%--</div>--%>
+            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/signin" method="post">
                         <input type="hidden" name="currentSession" value="delete"/>
                 <button type="submit" class="btn btn-success">Выйти</button>
             </form>
     </jsp:attribute>
 
     <jsp:body>
-        <h1>Cars</h1>
-        <c:forEach items="${requestScope.cars}" var="car">
-            <ol>
-                <li>
-                    <td><c:out value="${car.getId()}"></c:out></td>
-                    <td><c:out value="${car.getVin()}"></c:out></td>
-                    <td><c:out value="${car.getYear()}"></c:out></td>
-                    <td><c:out value="${car.getCarModel().getModel()}"></c:out></td>
-                        <%--<form action="/students/manage" method="post">--%>
-                        <%--<input type="submit" value="deleteStudent"/>--%>
-                        <%--<input type="hidden" name="studentId" value="${car.getId()}"/>--%>
-                        <%--<input type="hidden" name="requestType" value="delete"/>--%>
-                        <%--</form>--%>
-                </li>
-            </ol>
-        </c:forEach>
+        <t:lksidebar/>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Доступные авто</h1>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Марка</th>
+                    <th>Модель</th>
+                    <th>Год выпуска</th>
+                    <th>Vin</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${requestScope.cars}" var="car">
+                        <tr>
+                            <td><c:out value="${car.getId()}"/></td>
+                            <td><c:out value="${car.getCarModel().getManufacturer()}"/></td>
+                            <td><c:out value="${car.getCarModel().getModel()}"/></td>
+                            <td><c:out value="${car.getYear()}"/></td>
+                            <td><c:out value="${car.getVin()}"/></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        </div>
     </jsp:body>
 </t:genericpage>

@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
         if ("delete".equals(req.getParameter("currentSession"))) {
             logger.debug("Close session " + req.getSession().getId());
             req.getSession().invalidate();
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/signin");
             return;
         }
 
@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
             req.getSession().setAttribute("userEmail", email);
             resp.sendRedirect(req.getContextPath() + "/listCars");
         } else {
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/signin");
         }
     }
 }
