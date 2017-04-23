@@ -27,4 +27,22 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    @Override
+    public int register(String email, String phone, String firstName,
+                        String secondName, String lastName, String password) {
+        int res = 0;
+        if (userDao.findByEmail(email) != null)
+            res += 1;
+        if (userDao.findByPhone(phone) != null)
+            res += 2;
+        if (res > 0)
+            return res;
+
+        if (!userDao.addUser(email, phone, firstName, secondName,
+                lastName, password))
+            res = 4;
+
+        return res;
+    }
 }

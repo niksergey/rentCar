@@ -7,13 +7,13 @@
       Войти :: Краткосрочная аренда автомобилей в Иннополисе
     </jsp:attribute>
     <jsp:attribute name="stylecss">
-        <c:set var="context" value="${pageContext.request.contextPath}" />
-        <link href="${context}/css/signin.css" rel="stylesheet">
+        <%--<c:set var="context" value="${pageContext.request.contextPath}" />--%>
+        <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet">
     </jsp:attribute>
 
     <jsp:body>
         <div class="container">
-            <form class="form-signin" action="/login" method="post">
+            <form class="form-signin" action="${pageContext.request.contextPath}/login" method="post">
                 <h2 class="form-signin-heading">Вход</h2>
                 <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="text" id="inputEmail" class="form-control" placeholder="E-mail" name="email" required autofocus>

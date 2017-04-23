@@ -11,28 +11,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-public class LoginServlet extends HttpServlet {
-    private static UserService userService = new UserServiceImpl();
+public class SignupServlet extends HttpServlet {
     private final static Logger logger = LogManager.getLogger(LoginServlet.class);
+    private static UserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/signup.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.debug(req.getQueryString());
+        String phone = req.getParameter("phone");
         String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        logger.debug("email/Password: " + email + "/" + password);
-        if (userService.auth(email, password) != null) {
-            req.getSession().setAttribute("userLogin", email);
-            resp.sendRedirect(req.getContextPath() + "/listCars");
-        } else {
+        logger.debug("Credentials " + phone +  " " + email);
+        int res = userService.register(req.getParameter("email"), req.getParameter("phone"),
+                req.getParameter("first_name"), req.getParameter("second_name"),
+                req.getParameter("last_name"), req.getParameter("password"));
+
+        if (res == 0) {
             resp.sendRedirect(req.getContextPath() + "/login");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/signup");
         }
+
     }
 }

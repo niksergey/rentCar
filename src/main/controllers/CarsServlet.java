@@ -15,6 +15,6 @@ public class CarsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("cars", carService.getAllCars());
-        getServletContext().getRequestDispatcher("/cars.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/jsp/cars.jsp").forward(req, resp);
     }
 }

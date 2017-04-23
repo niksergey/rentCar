@@ -67,4 +67,66 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
+
+    @Override
+    public User findByEmail(String email) {
+        String query = "SELECT * FROM userentry " +
+                "WHERE email=?";
+        User user = null;
+
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    user = createEntity(result);
+                }
+            }
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
+    public User findByPhone(String phone) {
+        String query = "SELECT * FROM userentry " +
+                "WHERE phone_number=?";
+        User user = null;
+
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, phone);
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    user = createEntity(result);
+                }
+            }
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
+    public boolean addUser(String email, String phone, String firstName,
+                           String secondName, String lastName, String password) {
+        String query = "INSERT INTO userentry (email, phone_number, first_name," +
+                " second_name, last_name, password) " +
+                " VALUES (?, ?, ?, ?, ?, ?);";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, email);
+            statement.setString(2, phone);
+            statement.setString(3, firstName);
+            statement.setString(4, secondName);
+            statement.setString(5, lastName);
+            statement.setString(6, password);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e ) {
+            logger.debug("SQLException while inserting user");
+        }
+        return false;
+    }
 }

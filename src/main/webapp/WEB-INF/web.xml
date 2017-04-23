@@ -25,4 +25,12 @@
         <servlet-name>CarListServlet</servlet-name>
         <url-pattern>/listCars</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>SignUpSevlet</servlet-name>
+        <servlet-class>main.controllers.SignupServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUpSevlet</servlet-name>
+        <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
 </web-app>
