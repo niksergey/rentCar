@@ -30,7 +30,7 @@ public class SignupServlet extends HttpServlet {
                 req.getParameter("last_name"), req.getParameter("password"));
 
         if (res == 0) {
-            resp.sendRedirect(req.getContextPath() + "/login");
+            resp.sendRedirect(req.getContextPath() + "/signin");
         } else {
             resp.sendRedirect(req.getContextPath() + "/signup");
         }

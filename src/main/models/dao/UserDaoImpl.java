@@ -112,8 +112,8 @@ public class UserDaoImpl implements UserDao {
     public boolean addUser(String email, String phone, String firstName,
                            String secondName, String lastName, String password) {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
-                " second_name, last_name, password) " +
-                " VALUES (?, ?, ?, ?, ?, ?);";
+                " second_name, last_name, password, isactive) " +
+                " VALUES (?, ?, ?, ?, ?, ?, ?);";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
@@ -122,6 +122,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(4, secondName);
             statement.setString(5, lastName);
             statement.setString(6, password);
+            statement.setBoolean(7, true);
             statement.executeUpdate();
             return true;
         } catch (SQLException e ) {

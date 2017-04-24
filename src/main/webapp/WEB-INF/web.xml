@@ -31,7 +31,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>listCarsServlet</servlet-name>
-        <url-pattern>/listCars</url-pattern>
+        <url-pattern>/car/list</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>listCarModelsServlet</servlet-name>
@@ -39,7 +39,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>listCarModelsServlet</servlet-name>
-        <url-pattern>/listCarModels</url-pattern>
+        <url-pattern>/carmodel/list</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>listRentServlet</servlet-name>
@@ -47,7 +47,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>listRentServlet</servlet-name>
-        <url-pattern>/listRents</url-pattern>
+        <url-pattern>/rent/list</url-pattern>
     </servlet-mapping>
     <filter>
         <filter-name>WhiteList</filter-name>
