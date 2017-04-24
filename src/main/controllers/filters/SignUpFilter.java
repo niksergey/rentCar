@@ -19,9 +19,11 @@ public class SignUpFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String userEmail = (String)((HttpServletRequest) servletRequest)
-                .getSession().getAttribute("userEmail");
-        if (userEmail == null) {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String userEmail = (String) request.getSession().getAttribute("userEmail");
+        String method = request.getMethod();
+
+        if (userEmail == null || "POST".equals(method)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             logger.debug("Already authorized");

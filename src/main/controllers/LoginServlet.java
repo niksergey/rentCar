@@ -1,5 +1,6 @@
 package main.controllers;
 
+import main.models.pojo.User;
 import main.services.UserService;
 import main.services.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +27,7 @@ public class LoginServlet extends HttpServlet {
         if ("delete".equals(req.getParameter("currentSession"))) {
             logger.debug("Close session " + req.getSession().getId());
             req.getSession().invalidate();
+            req.setAttribute("servletMsg", "Сессия закрыта");
             resp.sendRedirect(req.getContextPath() + "/signin");
             return;
         }
@@ -33,11 +35,19 @@ public class LoginServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         logger.debug("email/Password: " + email + " " + password);
-        if (userService.auth(email, password) != null) {
+
+        String text;
+        User user = userService.auth(email, password);
+        if (user == null ) {
+            text = "Пользователь с такой комбинацией email и пароль не найден";
+        } else if (user.isIsActive()) {
             req.getSession().setAttribute("userEmail", email);
             resp.sendRedirect(req.getContextPath() + "/car/list");
+            return;
         } else {
-            resp.sendRedirect(req.getContextPath() + "/signin");
+            text = "Пользователь заблокирован";
         }
+        req.setAttribute("servletMsg", text);
+        resp.sendRedirect(req.getContextPath() + "/signin");
     }
 }
