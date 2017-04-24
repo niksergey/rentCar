@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
         if (!user.isIsActive()) {
             logger.debug(user + " blocked");
-            return null;
+            return user;
         }
 
         logger.debug("user: " + user.getEmail());

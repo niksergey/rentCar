@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
             logger.debug("Close session " + req.getSession().getId());
             req.getSession().invalidate();
             req.setAttribute("servletMsg", "Сессия закрыта");
-            resp.sendRedirect(req.getContextPath() + "/signin");
+            req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
             return;
         }
 
@@ -47,7 +47,8 @@ public class LoginServlet extends HttpServlet {
         } else {
             text = "Пользователь заблокирован";
         }
+
         req.setAttribute("servletMsg", text);
-        resp.sendRedirect(req.getContextPath() + "/signin");
+        req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
     }
 }

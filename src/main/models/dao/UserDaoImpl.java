@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao {
 
     public User findByEmailAndPassword(String email, String password) {
         String query = "SELECT * FROM userentry " +
-                "WHERE email=? AND password=? AND isactive=TRUE;";
+                "WHERE email=? AND password=?";
         User user = null;
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();

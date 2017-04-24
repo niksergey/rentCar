@@ -20,7 +20,7 @@
 
     <jsp:body>
         <c:set var="servletMsg" value="${requestScope.servletMsg}"/>
-        <%--<c:if test="${servletMsg != null}">--%>
+        <c:if test="${servletMsg != null}">
             <div class="alert alert-warning alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -28,7 +28,7 @@
                 <strong>Внимание!</strong>
                     ${servletMsg}
             </div>
-        <%--</c:if>--%>
+        </c:if>
         <div class="container">
             <form class="form-signin" action="${pageContext.request.contextPath}/signin" method="post">
                 <h2 class="form-signin-heading">Вход</h2>
