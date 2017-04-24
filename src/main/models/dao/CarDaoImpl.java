@@ -64,4 +64,49 @@ public class CarDaoImpl implements CarDao {
         }
         return car;
     }
+
+    public boolean addCar(String vin, int year, int model) {
+        String query = "INSERT INTO car (vin, year, model) " +
+                " VALUES (?, ?, ?);";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, vin);
+            statement.setInt(2, year);
+            statement.setInt(3, model);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e ) {
+            logger.debug("SQLException while inserting car");
+        }
+        return false;
+    }
+
+    public boolean editCar(int id, String vin, int year, int model) {
+        String query = "UPDATE car SET vin=?, year=?, model=? WHERE id=?;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, vin);
+            statement.setInt(2, year);
+            statement.setInt(3, model);
+            statement.setInt(4, id);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteCar(int id) {
+        String query = "DELETE FROM car WHERE id=?;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

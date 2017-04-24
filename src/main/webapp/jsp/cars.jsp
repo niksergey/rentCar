@@ -32,16 +32,32 @@
                     <th>Модель</th>
                     <th>Год выпуска</th>
                     <th>Vin</th>
+                    <th>Редактировать</th>
+                    <th>Удалить</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.cars}" var="rent">
+                    <c:forEach items="${requestScope.cars}" var="car">
                         <tr>
-                            <td><c:out value="${rent.getId()}"/></td>
-                            <td><c:out value="${rent.getCarModel().getManufacturer()}"/></td>
-                            <td><c:out value="${rent.getCarModel().getModel()}"/></td>
-                            <td><c:out value="${rent.getYear()}"/></td>
-                            <td><c:out value="${rent.getVin()}"/></td>
+                            <td><c:out value="${car.getId()}"/></td>
+                            <td><c:out value="${car.getCarModel().getManufacturer()}"/></td>
+                            <td><c:out value="${car.getCarModel().getModel()}"/></td>
+                            <td><c:out value="${car.getYear()}"/></td>
+                            <td><c:out value="${car.getVin()}"/></td>
+                            <td>
+                                <form action="${path}/car/list">
+                                    <input type="hidden" name="actionType" value="edit"/>
+                                    <input type="hidden" name="carId" value="${car.getId()}"/>
+                                    <button type="submit" class="btn btn-warning">Редактировать</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="${path}/car/list" method="post">
+                                    <input type="hidden" name="actionType" value="delete"/>
+                                    <input type="hidden" name="carId" value="${car.getId()}"/>
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

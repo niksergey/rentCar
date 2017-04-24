@@ -36,14 +36,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.rents}" var="rent">
+                    <c:forEach items="${requestScope.rents}" var="car">
                         <tr>
-                            <td><c:out value="${rent.getId()}"/></td>
-                            <td><c:out value="${rent.getLeaser().getEmail()}"/></td>
-                            <td><c:out value="${rent.getCar().getCarModel().getManufacturer()}"/></td>
-                            <td><c:out value="${rent.getCar().getCarModel().getModel()}"/></td>
-                            <td><c:out value="${rent.getStartTime()}"/></td>
-                            <td><c:out value="${rent.getFinishDate()}"/></td>
+                            <td><c:out value="${car.getId()}"/></td>
+                            <td><c:out value="${car.getLeaser().getEmail()}"/></td>
+                            <td><c:out value="${car.getCar().getCarModel().getManufacturer()}"/></td>
+                            <td><c:out value="${car.getCar().getCarModel().getModel()}"/></td>
+                            <td><c:out value="${car.getStartTime()}"/></td>
+                            <td><c:out value="${car.getFinishDate()}"/></td>
                         </tr>
                     </c:forEach>
                     </tbody>
