@@ -1,5 +1,6 @@
 package main.controllers;
 
+import main.exceptions.DatabaseException;
 import main.models.pojo.User;
 import main.services.UserService;
 import main.services.UserServiceImpl;
@@ -37,15 +38,21 @@ public class LoginServlet extends HttpServlet {
         logger.debug("email/Password: " + email + " " + password);
 
         String text;
-        User user = userService.auth(email, password);
-        if (user == null ) {
-            text = "Пользователь с такой комбинацией email и пароль не найден";
-        } else if (user.isIsActive()) {
-            req.getSession().setAttribute("userEmail", email);
-            resp.sendRedirect(req.getContextPath() + "/car/list");
-            return;
-        } else {
-            text = "Пользователь заблокирован";
+
+        User user;
+        try {
+            user = userService.auth(email, password);
+            if (user == null ) {
+                text = "Пользователь с такой комбинацией email и пароль не найден";
+            } else if (user.isIsActive()) {
+                req.getSession().setAttribute("userEmail", email);
+                resp.sendRedirect(req.getContextPath() + "/car/list");
+                return;
+            } else {
+                text = "Пользователь заблокирован";
+            }
+        } catch (DatabaseException e) {
+            text = e.toString();
         }
 
         req.setAttribute("servletMsg", text);

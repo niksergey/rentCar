@@ -1,5 +1,6 @@
 package main.services;
 
+import main.exceptions.DatabaseException;
 import main.models.dao.UserDao;
 import main.models.dao.UserDaoImpl;
 import main.models.pojo.User;
@@ -11,7 +12,7 @@ public class UserServiceImpl implements UserService {
     private  static UserDao userDao = new UserDaoImpl();
 
     @Override
-    public User auth(String email, String password) {
+    public User auth(String email, String password) throws DatabaseException {
         User user = userDao.findByEmailAndPassword(email, password);
         if (user == null) {
             logger.debug("User with these credentials not found");
@@ -30,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(String email, String phone, String firstName,
-                        String secondName, String lastName, String password) {
+                        String secondName, String lastName, String password)
+            throws DatabaseException {
         int res = 0;
         if (userDao.findByEmail(email) != null)
             res += 1;

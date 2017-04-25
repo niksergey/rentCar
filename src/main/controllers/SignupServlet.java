@@ -1,5 +1,6 @@
 package main.controllers;
 
+import main.exceptions.DatabaseException;
 import main.services.UserService;
 import main.services.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
@@ -25,9 +26,16 @@ public class SignupServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
         logger.debug("Credentials " + phone +  " " + email);
-        int res = userService.register(req.getParameter("email"), req.getParameter("phone"),
-                req.getParameter("first_name"), req.getParameter("second_name"),
-                req.getParameter("last_name"), req.getParameter("password"));
+
+
+        int res = -1;
+        try {
+            res = userService.register(req.getParameter("email"), req.getParameter("phone"),
+                    req.getParameter("first_name"), req.getParameter("second_name"),
+                    req.getParameter("last_name"), req.getParameter("password"));
+        } catch (DatabaseException e) {
+            req.setAttribute("servletMsg", e.toString());
+        }
 
         if (res == 0) {
             resp.sendRedirect(req.getContextPath() + "/signin");

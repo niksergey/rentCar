@@ -1,9 +1,10 @@
 package main.services;
 
+import main.exceptions.DatabaseException;
 import main.models.pojo.User;
 
 public interface UserService {
-    User auth(String email, String password);
+    User auth(String email, String password) throws DatabaseException;
     int register(String email, String phone, String firstName, String secondName,
-                     String lastName, String password);
+                     String lastName, String password) throws DatabaseException;
 }
