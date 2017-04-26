@@ -4,16 +4,21 @@ import main.models.pojo.Rent;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class RentDaoImpl implements  RentDao {
     static final Logger logger = LogManager.getLogger(LeaserDaoImpl.class.getName());
 
-    private static CarDao cd = new CarDaoImpl();
-    private static LeaserDao lsd = new LeaserDaoImpl();
+    @Autowired
+    private CarDao cd;
+    @Autowired
+    private LeaserDao lsd;
 
     private Rent createEntity(ResultSet result) {
         Rent car = null;

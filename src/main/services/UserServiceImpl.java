@@ -6,10 +6,27 @@ import main.models.dao.UserDaoImpl;
 import main.models.pojo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
     static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
-    private  static UserDao userDao = new UserDaoImpl();
+
+    @Autowired
+    private UserDao userDao;
+
+    public UserServiceImpl() {
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
 
     @Override
     public User auth(String email, String password) throws DatabaseException {

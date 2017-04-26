@@ -4,11 +4,13 @@ import main.models.pojo.Leaser;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class LeaserDaoImpl implements LeaserDao {
     static final Logger logger = LogManager.getLogger(LeaserDaoImpl.class.getName());
 

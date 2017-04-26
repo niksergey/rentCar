@@ -4,15 +4,19 @@ import main.models.pojo.Car;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CarDaoImpl implements CarDao {
     static final Logger logger = LogManager.getLogger(CarModelDaoImpl.class.getName());
 
-    static CarModelDao cmd = new CarModelDaoImpl();
+    @Autowired
+    private CarModelDao cmd;
 
     private Car createEntity(ResultSet result) {
         Car car = null;
