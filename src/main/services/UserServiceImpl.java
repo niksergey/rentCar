@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
@@ -63,5 +65,10 @@ public class UserServiceImpl implements UserService {
             res = 4;
 
         return res;
+    }
+
+    @Override
+    public List<User> getAllUsers() throws DatabaseException {
+        return userDao.getAll();
     }
 }
