@@ -7,7 +7,7 @@ import java.util.List;
 public interface CarDao {
     List<Car> getAll();
     Car getById(int id);
-    boolean deleteCar(int id);
-    boolean editCar(int id, String vin, int year, int model);
-    boolean addCar(String vin, int year, int model);
+    boolean delete(int id);
+    boolean update(int id, String vin, int year, int model);
+    boolean save(String vin, int year, int model);
 }

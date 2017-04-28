@@ -1,7 +1,6 @@
 package main.services;
 
 import main.models.dao.CarDao;
-import main.models.dao.CarDaoImpl;
 import main.models.pojo.Car;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,22 +23,22 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean deleteCarById(int id) {
-        carDao.deleteCar(id);
+        carDao.delete(id);
         return false;
     }
 
     @Override
-    public boolean editCar(int id, String vin, int year, int model) {
-        return carDao.editCar(id, vin, year, model);
+    public boolean saveOrUpdateCar(Car car) {
+        if (findById(car.getId())==null) {
+            return carDao.save(car.getVin(), car.getYear(), car.getCarModel().getId());
+        } else {
+            return carDao.update(car.getId(), car.getVin(), car.getYear(),
+                    car.getCarModel().getId());
+        }
     }
 
     @Override
-    public boolean addCar(String vin, int year, int model) {
-        return carDao.addCar(vin, year, model);
-    }
-
-    @Override
-    public Car getCarById(int id) {
+    public Car findById(int id) {
         return carDao.getById(id);
     }
 }

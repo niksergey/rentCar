@@ -23,13 +23,12 @@
                 <button type="submit" class="btn btn-success">Зарегистрироваться</button>
             </form>
 
-            <form class="navbar-form navbar-right" action="${context}/signin">
+            <form class="navbar-form navbar-right" action="${context}/login">
                 <button type="submit" class="btn btn-success">Войти</button>
             </form>
         </c:when>
         <c:otherwise>
-            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/signin" method="post">
-                <input type="hidden" name="currentSession" value="delete"/>
+            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/logout" method="post">
                 <button type="submit" class="btn btn-success">Выйти</button>
             </form>
         </c:otherwise>

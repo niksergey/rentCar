@@ -13,51 +13,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for Car complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="Car">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="carModel" type="{}CarModel"/>
- *         &lt;element name="vin" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="year">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
- *               &lt;minInclusive value="2000"/>
- *               &lt;maxInclusive value="2020"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Car", propOrder = {
-    "id",
-    "carModel",
-    "vin",
-    "year"
-})
 public class Car {
-
-    protected int id;
-    @XmlElement(required = true)
-    protected CarModel carModel;
-    @XmlElement(required = true)
-    protected String vin;
-    protected int year;
+    Integer id;
+    CarModel carModel;
+    String vin;
+    int year;
 
     public Car() {
     }
@@ -68,89 +28,45 @@ public class Car {
         this.year = year;
     }
 
-    public Car(int id, CarModel carModel, String vin, int year) {
+    public Car(Integer id, CarModel carModel, String vin, int year) {
         this.id = id;
         this.carModel = carModel;
         this.vin = vin;
         this.year = year;
     }
 
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
+    public boolean isNew() {
+        return (this.id == null);
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
+    public void setId(Integer value) {
         this.id = value;
     }
 
-    /**
-     * Gets the value of the carModel property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CarModel }
-     *     
-     */
     public CarModel getCarModel() {
         return carModel;
     }
 
-    /**
-     * Sets the value of the carModel property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CarModel }
-     *     
-     */
     public void setCarModel(CarModel value) {
         this.carModel = value;
     }
 
-    /**
-     * Gets the value of the vin property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getVin() {
         return vin;
     }
 
-    /**
-     * Sets the value of the vin property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setVin(String value) {
         this.vin = value;
     }
 
-    /**
-     * Gets the value of the year property.
-     * 
-     */
     public int getYear() {
         return year;
     }
 
-    /**
-     * Sets the value of the year property.
-     * 
-     */
     public void setYear(int value) {
         this.year = value;
     }

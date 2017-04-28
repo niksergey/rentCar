@@ -69,7 +69,7 @@ public class CarDaoImpl implements CarDao {
         return car;
     }
 
-    public boolean addCar(String vin, int year, int model) {
+    public boolean save(String vin, int year, int model) {
         String query = "INSERT INTO car (vin, year, model) " +
                 " VALUES (?, ?, ?);";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
@@ -85,7 +85,7 @@ public class CarDaoImpl implements CarDao {
         return false;
     }
 
-    public boolean editCar(int id, String vin, int year, int model) {
+    public boolean update(int id, String vin, int year, int model) {
         String query = "UPDATE car SET vin=?, year=?, model=? WHERE id=?;";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
@@ -101,7 +101,7 @@ public class CarDaoImpl implements CarDao {
         return false;
     }
 
-    public boolean deleteCar(int id) {
+    public boolean delete(int id) {
         String query = "DELETE FROM car WHERE id=?;";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {

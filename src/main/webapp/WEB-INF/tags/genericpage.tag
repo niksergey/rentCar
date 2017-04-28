@@ -11,7 +11,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <%--<link rel="icon" href="../../favicon.ico">--%>
 
     <title><jsp:invoke fragment="title"/></title>
 
@@ -38,16 +38,7 @@
             <a class="navbar-brand" href="${pageContext.request.contextPath}/">InnoRentCar</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <%--<form class="navbar-form navbar-right">--%>
-            <%--<input type="text" class="form-control" placeholder="Search...">--%>
             <jsp:invoke fragment="logaction"/>
-            <%--<ul class="nav navbar-nav navbar-right">--%>
-                <%--<li><a href="#">Dashboard</a></li>--%>
-                <%--<li><a href="#">Settings</a></li>--%>
-                <%--<li><a href="#">Profile</a></li>--%>
-                <%--<li><a href="#">Help</a></li>--%>
-            <%--</ul>--%>
-
         </div>
     </div>
 </nav>

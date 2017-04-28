@@ -19,18 +19,17 @@
     </jsp:attribute>
 
     <jsp:body>
-        <c:set var="servletMsg" value="${requestScope.servletMsg}"/>
-        <c:if test="${servletMsg != null}">
-            <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <c:if test="${not empty msg}">
+            <div class="alert alert-${css} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <strong>Внимание!</strong>
-                    ${servletMsg}
+                <strong>${msg}</strong>
             </div>
         </c:if>
         <div class="container">
-            <form class="form-signin" action="${pageContext.request.contextPath}/signin" method="post">
+            <form class="form-signin" action="${pageContext.request.contextPath}/login" method="post">
                 <h2 class="form-signin-heading">Вход</h2>
                 <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="text" id="inputEmail" class="form-control" placeholder="E-mail" name="email" required autofocus>
