@@ -8,7 +8,7 @@
     </jsp:attribute>
     <jsp:attribute name="stylecss">
             <c:set var="context" value="${pageContext.request.contextPath}" />
-        <link href="${context}/css/signup.css" rel="stylesheet">
+        <link href="<c:url value="/resources/css/signup.css"/>" rel="stylesheet">
     </jsp:attribute>
 
     <jsp:body>

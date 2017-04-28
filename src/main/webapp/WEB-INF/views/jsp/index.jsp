@@ -1,6 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="t" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:genericpage>
     <jsp:attribute name="title">
@@ -10,7 +11,8 @@
     </jsp:attribute>
     <jsp:attribute name="stylecss">
         <c:if test="${sessionKey != null}">
-            <link href="${context}/css/dashboard.css" rel="stylesheet">
+            <spring:url value="/resources/css/dashboard.css" var="coreCss" />
+            <link href="${coreCss}" rel="stylesheet" />
         </c:if>
     </jsp:attribute>
 

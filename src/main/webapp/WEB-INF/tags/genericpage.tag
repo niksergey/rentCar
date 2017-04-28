@@ -1,4 +1,5 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@attribute name="title" fragment="true" %>
 <%@attribute name="stylecss" fragment="true" %>
 <%@attribute name="logaction" fragment="true" %>
@@ -14,11 +15,11 @@
 
     <title><jsp:invoke fragment="title"/></title>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="${pageContext.request.contextPath}/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="<c:url value="/resources/css/ie10-viewport-bug-workaround.css"/>" rel="stylesheet">
     <!-- Custom styles -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard-common.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/dashboard-common.css"/>">
     <jsp:invoke fragment="stylecss"/>
 </head>
 
@@ -56,9 +57,9 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/js/jquery.min.js"><\/script>')</script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script>window.jQuery || document.write('<script src="<c:url value="/resources/js/jquery.min.js"/>"><\/script>')</script>
+<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="${pageContext.request.contextPath}/js/ie10-viewport-bug-workaround.js"></script>
+<script src="<c:url value="/resources/js/ie10-viewport-bug-workaround.js"/>"></script>
 </body>
 </html>
