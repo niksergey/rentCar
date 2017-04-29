@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @SessionAttributes("userLogin")
 public class LoginController  {
@@ -58,7 +60,9 @@ public class LoginController  {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String logout(final RedirectAttributes redirectAttributes) {
+    public String logout(HttpSession session,
+            final RedirectAttributes redirectAttributes) {
+        session.invalidate();
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Сеанс закончен.");
         return "redirect:/login";
