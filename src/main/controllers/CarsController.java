@@ -31,7 +31,8 @@ public class CarsController  {
 
     @RequestMapping(value = "/cars", method = RequestMethod.POST)
     public String saveOrUpdateCar(@ModelAttribute("carForm") @Validated Car car,
-                                   BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+                                   BindingResult result, Model model,
+                                  final RedirectAttributes redirectAttributes) {
         logger.debug("saveOrUpdateCar() : {}", car);
 
         if (result.hasErrors()) {
@@ -39,22 +40,16 @@ public class CarsController  {
             return "cars/carform";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
-            if(car.isNew()){
+            if (car.isNew()) {
                 redirectAttributes.addFlashAttribute("msg", "Автомобиль успешно добавлен!");
-            }else{
+            } else {
                 redirectAttributes.addFlashAttribute("msg", "Автомобиль успешно обновлен!");
             }
 
             carService.saveOrUpdateCar(car);
 
-            // POST/REDIRECT/GET
             return "redirect:/cars/" + car.getId();
-
-            // POST/FORWARD/GET
-            // return "car/list";
-
         }
-
     }
 
     @RequestMapping(value = "/cars/{id}", method = RequestMethod.GET)
@@ -64,12 +59,11 @@ public class CarsController  {
         Car car = carService.findById(id);
         if (car == null) {
             model.addAttribute("css", "danger");
-            model.addAttribute("msg", "Car not found");
+            model.addAttribute("msg", "Автомобиль не найден!");
         }
         model.addAttribute("car", car);
 
         return "cars/show";
-
     }
 
     @RequestMapping(value = "/cars/{id}/delete", method = RequestMethod.POST)

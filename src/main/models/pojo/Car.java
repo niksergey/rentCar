@@ -71,4 +71,13 @@ public class Car {
         this.year = value;
     }
 
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", carModel=" + carModel +
+                ", vin='" + vin + '\'' +
+                ", year=" + year +
+                '}';
+    }
 }
