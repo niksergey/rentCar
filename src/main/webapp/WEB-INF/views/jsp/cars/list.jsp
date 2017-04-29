@@ -4,7 +4,7 @@
 
 <t:genericpage>
     <jsp:attribute name="title">
-      Список авто :: Краткосрочная аренда автомобилей в Иннополисе
+      Список авто
     </jsp:attribute>
     <jsp:attribute name="stylecss">
         <c:set var="path" value="${pageContext.request.contextPath}" />

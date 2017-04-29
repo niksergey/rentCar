@@ -29,30 +29,29 @@ public class CarsController  {
         return "/cars/list";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated Car car,
+    @RequestMapping(value = "/cars", method = RequestMethod.POST)
+    public String saveOrUpdateCar(@ModelAttribute("carForm") @Validated Car car,
                                    BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
-        logger.debug("saveOrUpdateUser() : {}", car);
+        logger.debug("saveOrUpdateCar() : {}", car);
 
         if (result.hasErrors()) {
 //            populateDefaultModel(model);
-            return "users/userform";
+            return "cars/carform";
         } else {
-
             redirectAttributes.addFlashAttribute("css", "success");
             if(car.isNew()){
-                redirectAttributes.addFlashAttribute("msg", "User added successfully!");
+                redirectAttributes.addFlashAttribute("msg", "Автомобиль успешно добавлен!");
             }else{
-                redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
+                redirectAttributes.addFlashAttribute("msg", "Автомобиль успешно обновлен!");
             }
 
             carService.saveOrUpdateCar(car);
 
             // POST/REDIRECT/GET
-            return "redirect:/users/" + car.getId();
+            return "redirect:/cars/" + car.getId();
 
             // POST/FORWARD/GET
-            // return "user/list";
+            // return "car/list";
 
         }
 
@@ -67,7 +66,7 @@ public class CarsController  {
             model.addAttribute("css", "danger");
             model.addAttribute("msg", "Car not found");
         }
-        model.addAttribute("user", car);
+        model.addAttribute("car", car);
 
         return "cars/show";
 
@@ -98,7 +97,7 @@ public class CarsController  {
     @RequestMapping(value = "/cars/{id}/update", method = RequestMethod.GET)
     public String showUpdateCarForm(@PathVariable("id") int id, Model model) {
 
-        logger.debug("showUpdateUserForm() : {}", id);
+        logger.debug("showUpdateCarForm() : {}", id);
 
         Car car = carService.findById(id);
         model.addAttribute("carForm", car);
@@ -109,7 +108,7 @@ public class CarsController  {
     }
 
     @RequestMapping(value = "/cars/add", method = RequestMethod.GET)
-    public String showAddUserForm(Model model) {
+    public String showAddCarForm(Model model) {
         Car car = new Car();
         model.addAttribute("carForm", car);
         return "cars/carform";

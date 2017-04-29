@@ -7,17 +7,25 @@
 
 <t:genericpage>
     <jsp:attribute name="title">
-      Редактирование :: Краткосрочная аренда автомобилей в Иннополисе
+        <c:set var="carNew"  value="${carForm['new']}"/>
+        <c:choose>
+            <c:when test="${carNew}">
+                Добавить автомобиль
+            </c:when>
+            <c:otherwise>
+                Обновить автомобиль
+            </c:otherwise>
+        </c:choose>
     </jsp:attribute>
     <jsp:attribute name="stylecss">
             <c:set var="context" value="${pageContext.request.contextPath}" />
-        <link href="<c:url value="/resources/css/signup.css"/>" rel="stylesheet">
+        <link href="<c:url value="/resources/css/dashboard.css"/>" rel="stylesheet">
     </jsp:attribute>
 
     <jsp:body>
 
         <c:choose>
-            <c:when test="${carForm['new']}">
+            <c:when test="${carNew}">
                 <h1>Добавить автомобиль</h1>
             </c:when>
             <c:otherwise>
@@ -32,18 +40,18 @@
 
             <form:hidden path="id" />
 
-            <spring:bind path="carModel">
+            <spring:bind path="carModel.id">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">Name</label>
+                    <label class="col-sm-2 control-label">Модель(id)</label>
                     <div class="col-sm-10">
-                        <form:input path="carModel" type="text" class="form-control " id="carModel" placeholder="carModel" />
-                        <form:errors path="carModel" class="control-label" />
+                        <form:input path="carModel.id" type="text" class="form-control " id="carModel" placeholder="carModel" />
+                        <form:errors path="carModel.id" class="control-label" />
                     </div>
                 </div>
             </spring:bind>
             <spring:bind path="vin">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">Name</label>
+                    <label class="col-sm-2 control-label">VIN</label>
                     <div class="col-sm-10">
                         <form:input path="vin" type="text" class="form-control " id="vin" placeholder="VIN" />
                         <form:errors path="vin" class="control-label" />
@@ -53,7 +61,7 @@
 
             <spring:bind path="year">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">Email</label>
+                    <label class="col-sm-2 control-label">Год выпуска</label>
                     <div class="col-sm-10">
                         <form:input path="year" type="number" class="form-control" id="year" placeholder="Год выпуска" />
                         <form:errors path="year" class="control-label" />
@@ -64,7 +72,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <c:choose>
-                        <c:when test="${userForm['new']}">
+                        <c:when test="${carNew}">
                             <button type="submit" class="btn-lg btn-primary pull-right">Добавить</button>
                         </c:when>
                         <c:otherwise>
@@ -74,21 +82,5 @@
                 </div>
             </div>
         </form:form>
-
-        <%--<c:set var="context" value="${pageContext.request.contextPath}" />--%>
-        <%--<div class="container">--%>
-            <%--<form class="form-signup" action="${context}/car/list" method="post">--%>
-                <%--<h2 class="form-signup-heading">Редактирование</h2>--%>
-                <%--<input type="text" id="vin" class="form-control" name="vin"--%>
-                       <%--value="${car.getVin()}"  required autofocus>--%>
-                <%--<input type="number" id="year" class="form-control" name="year"--%>
-                       <%--value="${car.getYear()}" placeholder="Год выпуска" required>--%>
-                <%--<input type="number" id="model" class="form-control" name="model"--%>
-                       <%--value="${car.getCarModel().getId()}"  required>--%>
-                <%--<input type="hidden" name="actionType" value="saveEdit"/>--%>
-                <%--<input type="hidden" name="carId" value="${car.getId()}"/>--%>
-                <%--<button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить</button>--%>
-            <%--</form>--%>
-        <%--</div> <!-- /container -->--%>
     </jsp:body>
 </t:genericpage>

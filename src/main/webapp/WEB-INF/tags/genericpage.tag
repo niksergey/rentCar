@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <%--<link rel="icon" href="../../favicon.ico">--%>
 
-    <title><jsp:invoke fragment="title"/></title>
+    <title><jsp:invoke fragment="title"/> : : Краткосрочная аренда автомобилей в Иннополисе</title>
 
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
