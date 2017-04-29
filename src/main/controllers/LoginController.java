@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @SessionAttributes("userLogin")
@@ -23,27 +24,26 @@ public class LoginController  {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLoginForm(Model model) {
+    public String showLoginForm(Model model) {
         String operationStatus = (String) model.asMap().get("operationStatus");
         model.addAttribute("status", operationStatus);
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView doLogin(@RequestParam("email") String email,
-                                @RequestParam("password") String password) {
+    public String processLogin(@RequestParam("email") String email,
+                                     @RequestParam("password") String password,
+                                     final RedirectAttributes redirectAttributes) {
         logger.debug("email/Password: " + email + " " + password);
 
-        ModelAndView mav = new ModelAndView();
         String text;
         try {
             User user = userService.auth(email, password);
             if (user == null) {
                 text = "Пользователь с такой комбинацией email и пароль не найден";
             } else if (user.isIsActive()) {
-                mav.addObject("userEmail", email);
-                mav.setViewName("redirect:/cars");
-                return mav;
+                redirectAttributes.addFlashAttribute("userEmail", email);
+                return "redirect:/cars";
             } else {
                 text = "Пользователь заблокирован";
             }
@@ -51,16 +51,17 @@ public class LoginController  {
             text = e.toString();
         }
 
-        mav.addObject("operationStatus", text);
-        mav.setViewName("redirect:/login");
-        return mav;
+        String cssStatus = "danger";
+        redirectAttributes.addFlashAttribute("css", cssStatus);
+        redirectAttributes.addFlashAttribute("msg", text);
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public ModelAndView logout() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/login");
-        return mav;
+    public String logout(final RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("css", "success");
+        redirectAttributes.addFlashAttribute("msg", "Сеанс закончен.");
+        return "redirect:/login";
     }
 
 }

@@ -66,7 +66,7 @@
             </table>
         </div>
             <form action="${path}/cars/add">
-                <button type="submit" class="btn btn-danger">Добавить</button>
+                <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
         </div>
     </jsp:body>
