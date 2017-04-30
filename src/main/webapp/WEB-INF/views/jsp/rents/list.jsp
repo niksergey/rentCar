@@ -12,8 +12,7 @@
     </jsp:attribute>
 
     <jsp:attribute name="logaction">
-            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/signin" method="post">
-                <input type="hidden" name="currentSession" value="delete"/>
+            <form class="navbar-form navbar-right" action="${pageContext.request.contextPath}/logout" method="post">
                 <button type="submit" class="btn btn-success">Выйти</button>
             </form>
     </jsp:attribute>

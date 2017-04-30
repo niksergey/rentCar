@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@SessionAttributes("userLogin")
+@SessionAttributes("userEmail")
 public class LoginController  {
     private final static Logger logger = LogManager.getLogger(LoginController.class);
 
@@ -27,8 +27,6 @@ public class LoginController  {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginForm(Model model) {
-        String operationStatus = (String) model.asMap().get("operationStatus");
-        model.addAttribute("status", operationStatus);
         return "login";
     }
 
@@ -44,7 +42,7 @@ public class LoginController  {
             if (user == null) {
                 text = "Пользователь с такой комбинацией email и пароль не найден";
             } else if (user.isIsActive()) {
-                redirectAttributes.addFlashAttribute("userEmail", email);
+                redirectAttributes.addAttribute("userEmail", email);
                 return "redirect:/cars";
             } else {
                 text = "Пользователь заблокирован";

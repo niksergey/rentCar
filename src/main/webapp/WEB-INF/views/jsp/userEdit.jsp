@@ -25,6 +25,6 @@
                 <input type="hidden" name="actionType" value="saveChanges"/>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить</button>
             </form>
-        </div> <!-- /container -->
+        </div>
     </jsp:body>
 </t:genericpage>
