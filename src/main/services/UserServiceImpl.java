@@ -2,12 +2,10 @@ package main.services;
 
 import main.exceptions.DatabaseException;
 import main.models.dao.UserDao;
-import main.models.dao.UserDaoImpl;
 import main.models.pojo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +36,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        if (!user.isIsActive()) {
+        if (!user.isActiveFlag()) {
             logger.debug(user + " blocked");
             return user;
         }

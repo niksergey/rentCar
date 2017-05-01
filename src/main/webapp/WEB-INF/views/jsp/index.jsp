@@ -10,10 +10,18 @@
         <c:set var="sessionKey" value="${sessionScope.userEmail}"/>
     </jsp:attribute>
     <jsp:attribute name="stylecss">
-        <c:if test="${sessionKey != null}">
-            <spring:url value="/resources/css/dashboard.css" var="coreCss" />
-            <link href="${coreCss}" rel="stylesheet" />
-        </c:if>
+        <%--<c:if test="${sessionKey != null}">--%>
+        <%--</c:if>--%>
+        <spring:url value="/resources/css/dashboard.css" var="coreCss" />
+        <link href="${coreCss}" rel="stylesheet" />
+        <spring:url value="/resources/js/placemark.js" var="yaMap" />
+        <script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+        <script src="${yaMap}" type="text/javascript"></script>
+	    <style>
+            html, body, #map {
+            width: 100%; height: 100%; padding: 0; margin: 0;
+            }
+        </style>
     </jsp:attribute>
 
     <jsp:attribute name="logaction">
@@ -38,14 +46,17 @@
     </jsp:attribute>
 
     <jsp:body>
-        <c:choose>
-        <c:when test="${sessionKey eq null}">
-        <h1>Добро пожаловать!</h1>
-        <h2>Авторизируйтесь для работы с системой</h2>
-        </c:when>
-        <c:otherwise>
-                <t:lksidebar/>
-        </c:otherwise>
-        </c:choose>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <c:choose>
+                <c:when test="${sessionKey eq null}">
+                    <h1>Добро пожаловать!</h1>
+                    <h2>Авторизируйтесь для работы с системой</h2>
+                </c:when>
+                <c:otherwise>
+                    <t:lksidebar/>
+                </c:otherwise>
+            </c:choose>
+            <div id="map"></div>
+        </div>
     </jsp:body>
 </t:genericpage>

@@ -8,40 +8,10 @@
 
 package main.models.pojo;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-
-
-/**
- * <p>Java class for Leaser complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="Leaser">
- *   &lt;complexContent>
- *     &lt;extension base="{}User">
- *       &lt;sequence>
- *         &lt;element name="leaserSpecificValue" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Leaser", propOrder = {
-    "leaserSpecificValue"
-})
 public class Leaser
     extends User
 {
 
-    @XmlElement(required = true)
     protected String leaserSpecificValue;
 
     public Leaser() {
@@ -58,26 +28,10 @@ public class Leaser
         super(id, firstName, secondName, lastName, phoneNumber, email, isAdmin, isActive, isDeleted);
     }
 
-    /**
-     * Gets the value of the leaserSpecificValue property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
     public String getLeaserSpecificValue() {
         return leaserSpecificValue;
     }
 
-    /**
-     * Sets the value of the leaserSpecificValue property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
     public void setLeaserSpecificValue(String value) {
         this.leaserSpecificValue = value;
     }

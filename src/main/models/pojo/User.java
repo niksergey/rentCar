@@ -8,9 +8,9 @@ public class User {
     String lastName;
     String phoneNumber;
     String email;
-    boolean isAdmin;
-    boolean isActive;
-    boolean isDeleted;
+    boolean adminFlag;
+    boolean activeFlag;
+    boolean deletedFlag;
 
     public User() {
     }
@@ -26,16 +26,16 @@ public class User {
 
     public User(int id, String firstName, String secondName, String lastName,
                 String phoneNumber, String email,
-                boolean isAdmin, boolean isActive, boolean isDeleted) {
+                boolean adminFlag, boolean activeFlag, boolean deletedFlag) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.isAdmin = isAdmin;
-        this.isActive = isActive;
-        this.isDeleted = isDeleted;
+        this.adminFlag = adminFlag;
+        this.activeFlag = activeFlag;
+        this.deletedFlag = deletedFlag;
     }
 
     public boolean isNew() {
@@ -90,28 +90,28 @@ public class User {
         this.email = value;
     }
 
-    public boolean isIsAdmin() {
-        return isAdmin;
+    public boolean isAdminFlag() {
+        return adminFlag;
     }
 
-    public void setIsAdmin(boolean value) {
-        this.isAdmin = value;
+    public void setAdminFlag(boolean value) {
+        this.adminFlag = value;
     }
 
-    public boolean isIsActive() {
-        return isActive;
+    public boolean isActiveFlag() {
+        return activeFlag;
     }
 
-    public void setIsActive(boolean value) {
-        this.isActive = value;
+    public void setActiveFlag(boolean value) {
+        this.activeFlag = value;
     }
 
-    public boolean isIsDeleted() {
-        return isDeleted;
+    public boolean isDeletedFlag() {
+        return deletedFlag;
     }
 
-    public void setIsDeleted(boolean value) {
-        this.isDeleted = value;
+    public void setDeletedFlag(boolean value) {
+        this.deletedFlag = value;
     }
 
     @Override

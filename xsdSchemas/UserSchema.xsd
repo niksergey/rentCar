@@ -8,9 +8,9 @@
             <xs:element name="lastName" type="xs:string"/>
             <xs:element name="phoneNumber" type="xs:string"/>
             <xs:element name="email" type="xs:string"/>
-            <xs:element name="isAdmin" type="xs:boolean"/>
-            <xs:element name="isActive" type="xs:boolean"/>
-            <xs:element name="isDeleted" type="xs:boolean"/>
+            <xs:element name="adminFlag" type="xs:boolean"/>
+            <xs:element name="activeFlag" type="xs:boolean"/>
+            <xs:element name="deletedFlag" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="Leaser">

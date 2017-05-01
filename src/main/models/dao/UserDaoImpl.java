@@ -18,7 +18,7 @@ public class UserDaoImpl implements UserDao {
     static final Logger logger = LogManager.getLogger(UserDaoImpl.class.getName());
 
     private User createEntity(ResultSet result) throws SQLException {
-        User user = new Leaser(
+        User user = new User(
                 result.getInt("id"),
                 result.getString("first_name"),
                 result.getString("second_name"),

@@ -38,19 +38,19 @@
                     <th>Отчество</th>
                     <th>Телефон</th>
                     <th>Админ</th>
-                    <th>Заблокирован</th>
+                    <th>Активен</th>
                 </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${requestScope.users}" var="user">
                         <tr>
-                            <td><c:out value="${user.getId()}"/></td>
+                            <td><c:out value="${user.id}"/></td>
                             <td><c:out value="${user.getFirstName()}"/></td>
                             <td><c:out value="${user.getSecondName()}"/></td>
-                            <td><c:out value="${user.getThirdName()}"/></td>
+                            <td><c:out value="${user.getLastName()}"/></td>
                             <td><c:out value="${user.getPhoneNumber()}"/></td>
-                            <td><c:out value="${user.isIsAdmin()}"/></td>
-                            <td><c:out value="${user.isIsBlocked()}"/></td>
+                            <td><c:out value="${user.isAdminFlag()}"/></td>
+                            <td><c:out value="${user.isActiveFlag()}"/></td>
                             <td>
                                 <form action="${path}/users/${user.getId()}/update">
                                     <button type="submit" class="btn btn-warning">Редактировать</button>
