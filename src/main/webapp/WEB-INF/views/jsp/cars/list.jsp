@@ -43,20 +43,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.cars}" var="user">
+                    <c:forEach items="${requestScope.cars}" var="car">
                         <tr>
-                            <td><c:out value="${user.getId()}"/></td>
-                            <td><c:out value="${user.getCarModel().getManufacturer()}"/></td>
-                            <td><c:out value="${user.getCarModel().getModel()}"/></td>
-                            <td><c:out value="${user.getYear()}"/></td>
-                            <td><c:out value="${user.getVin()}"/></td>
+                            <td><c:out value="${car.getId()}"/></td>
+                            <td><c:out value="${car.getCarModel().getManufacturer()}"/></td>
+                            <td><c:out value="${car.getCarModel().getModel()}"/></td>
+                            <td><c:out value="${car.getYear()}"/></td>
+                            <td><c:out value="${car.getVin()}"/></td>
                             <td>
-                                <form action="${path}/cars/${user.getId()}/update">
+                                <form action="${path}/cars/${car.getId()}/update">
                                     <button type="submit" class="btn btn-warning">Редактировать</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="${path}/cars/${user.getId()}/delete" method="post">
+                                <form action="${path}/cars/${car.getId()}/delete" method="post">
                                     <button type="submit" class="btn btn-danger">Удалить</button>
                                 </form>
                             </td>

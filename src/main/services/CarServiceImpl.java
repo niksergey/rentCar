@@ -2,6 +2,7 @@ package main.services;
 
 import main.models.dao.CarDao;
 import main.models.pojo.Car;
+import main.models.pojo.CarModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,14 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarDao carDao;
 
+    @Autowired
+    private CarModelService carModelService;
+
     @Override
     public List<Car> getAllCars() {
-        return carDao.getAll();
+        List<Car> allCars = carDao.getAll();
+        allCars.parallelStream().forEach((car)->car.setCarModel(carModelService.getById(car.getCarModelId())));
+        return allCars;
     }
 
     @Override
@@ -29,16 +35,21 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean saveOrUpdateCar(Car car) {
-        if (findById(car.getId())==null) {
-            return carDao.save(car.getVin(), car.getYear(), car.getCarModel().getId());
+        if (findById(car.getId()) == null) {
+            return carDao.save(car.getVin(), car.getYear(), car.getCarModelId());
         } else {
             return carDao.update(car.getId(), car.getVin(), car.getYear(),
-                    car.getCarModel().getId());
+                    car.getCarModelId());
         }
     }
 
     @Override
     public Car findById(int id) {
-        return carDao.getById(id);
+        Car car = carDao.getById(id);
+        if (car != null) {
+            CarModel cm = carModelService.getById(car.getCarModelId());
+            car.setCarModel(cm);
+        }
+        return car;
     }
 }

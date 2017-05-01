@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 
 public class Car {
     Integer id;
+    Integer carModelId;
     CarModel carModel;
     String vin;
     int year;
@@ -22,17 +23,32 @@ public class Car {
     public Car() {
     }
 
-    public Car(CarModel carModel, String vin, int year) {
-        this.carModel = carModel;
+//    public Car(CarModel carModel, String vin, int year) {
+//        this.carModel = carModel;
+//        this.vin = vin;
+//        this.year = year;
+//    }
+//
+//    public Car(Integer id, CarModel carModel, String vin, int year) {
+//        this.id = id;
+//        this.carModel = carModel;
+//        this.vin = vin;
+//        this.year = year;
+//    }
+
+    public Car(Integer id, Integer carModelId, String vin, int year) {
+        this.id = id;
+        this.carModelId = carModelId;
         this.vin = vin;
         this.year = year;
     }
 
-    public Car(Integer id, CarModel carModel, String vin, int year) {
-        this.id = id;
-        this.carModel = carModel;
-        this.vin = vin;
-        this.year = year;
+    public Integer getCarModelId() {
+        return carModelId;
+    }
+
+    public void setCarModelId(Integer carModelId) {
+        this.carModelId = carModelId;
     }
 
     public boolean isNew() {

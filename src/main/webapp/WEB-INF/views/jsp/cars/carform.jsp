@@ -40,15 +40,22 @@
 
             <form:hidden path="id" />
 
-            <spring:bind path="carModel.id">
+            <spring:bind path="carModelId">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">Модель(id)</label>
+                    <label class="col-sm-2 control-label">Country</label>
                     <div class="col-sm-10">
-                        <form:input path="carModel.id" type="text" class="form-control " id="carModel" placeholder="carModel" />
-                        <form:errors path="carModel.id" class="control-label" />
+                        <form:select path="carModelId" class="form-control">
+                            <form:option value="-1" label="--- Select ---" />
+                            <c:forEach var="cm" items="${carModels}">
+                                <form:option value="${cm.id}" label="${cm}"/>
+                            </c:forEach>
+                        </form:select>
+                        <form:errors path="carModelId" class="control-label" />
                     </div>
+                    <div class="col-sm-10"></div>
                 </div>
             </spring:bind>
+
             <spring:bind path="vin">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <label class="col-sm-2 control-label">VIN</label>

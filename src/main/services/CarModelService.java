@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CarModelService {
     List<CarModel> getAllCarModels();
+
+    CarModel getById(int id);
 }

@@ -23,7 +23,7 @@ public class CarDaoImpl implements CarDao {
         try {
             car = new Car(
                     result.getInt("id"),
-                    cmd.getById(result.getInt("model")),
+                    result.getInt("model"),
                     result.getString("vin"),
                     result.getInt("year"));
         } catch (SQLException e) {

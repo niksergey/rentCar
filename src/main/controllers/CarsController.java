@@ -1,6 +1,7 @@
 package main.controllers;
 
 import main.models.pojo.Car;
+import main.services.CarModelService;
 import main.services.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class CarsController  {
     private static final Logger logger = LogManager.getLogger(CarsController.class);
@@ -19,9 +22,13 @@ public class CarsController  {
     @Autowired
     private CarService carService;
 
+    @Autowired
+    private CarModelService carModelService;
+
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public String getCars(Model model) {
-        model.addAttribute("cars", carService.getAllCars());
+        List<Car> allCars = carService.getAllCars();
+        model.addAttribute("cars", allCars);
         return "/cars/list";
     }
 
@@ -57,6 +64,7 @@ public class CarsController  {
             model.addAttribute("css", "danger");
             model.addAttribute("msg", "Автомобиль не найден!");
         }
+
         model.addAttribute("car", car);
 
         return "cars/show";
@@ -92,7 +100,7 @@ public class CarsController  {
         Car car = carService.findById(id);
         model.addAttribute("carForm", car);
 
-//        populateDefaultModel(model);
+        model.addAttribute("carModels", carModelService.getAllCarModels());
 
         return "cars/carform";
     }

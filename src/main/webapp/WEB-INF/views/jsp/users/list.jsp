@@ -42,22 +42,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.users}" var="user">
+                    <c:forEach items="${requestScope.users}" var="car">
                         <tr>
-                            <td><c:out value="${user.id}"/></td>
-                            <td><c:out value="${user.getFirstName()}"/></td>
-                            <td><c:out value="${user.getSecondName()}"/></td>
-                            <td><c:out value="${user.getLastName()}"/></td>
-                            <td><c:out value="${user.getPhoneNumber()}"/></td>
-                            <td><c:out value="${user.isAdminFlag()}"/></td>
-                            <td><c:out value="${user.isActiveFlag()}"/></td>
+                            <td><c:out value="${car.id}"/></td>
+                            <td><c:out value="${car.getFirstName()}"/></td>
+                            <td><c:out value="${car.getSecondName()}"/></td>
+                            <td><c:out value="${car.getLastName()}"/></td>
+                            <td><c:out value="${car.getPhoneNumber()}"/></td>
+                            <td><c:out value="${car.isAdminFlag()}"/></td>
+                            <td><c:out value="${car.isActiveFlag()}"/></td>
                             <td>
-                                <form action="${path}/users/${user.getId()}/update">
+                                <form action="${path}/users/${car.getId()}/update">
                                     <button type="submit" class="btn btn-warning">Редактировать</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="${path}/users/${user.getId()}/delete" method="post">
+                                <form action="${path}/users/${car.getId()}/delete" method="post">
                                     <button type="submit" class="btn btn-danger">Удалить</button>
                                 </form>
                             </td>

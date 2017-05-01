@@ -1,7 +1,6 @@
 package main.services;
 
 import main.models.dao.CarModelDao;
-import main.models.dao.CarModelDaoImpl;
 import main.models.pojo.CarModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,5 +18,10 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     public List<CarModel> getAllCarModels() {
         return carModelDao.getAll();
+    }
+
+    @Override
+    public CarModel getById(int id) {
+        return carModelDao.getById(id);
     }
 }
