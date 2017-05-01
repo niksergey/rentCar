@@ -64,7 +64,7 @@ public class CarDaoImpl implements CarDao {
                 }
             }
         } catch (SQLException e ) {
-            logger.warn("SQLException during getById()", e);
+            logger.warn("SQLException during findById()", e);
         }
         return car;
     }

@@ -2,7 +2,7 @@ package main.models.pojo;
 
 public class CarModel {
 
-    protected int id;
+    protected Integer id;
     protected String manufacturer;
     protected String model;
     protected String gear;
@@ -26,11 +26,15 @@ public class CarModel {
         this.power = power;
     }
 
-    public int getId() {
+    public boolean isNew() {
+        return (this.id == null);
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int value) {
+    public void setId(Integer value) {
         this.id = value;
     }
 

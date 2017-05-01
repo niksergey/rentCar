@@ -21,7 +21,23 @@ public class CarModelServiceImpl implements CarModelService {
     }
 
     @Override
-    public CarModel getById(int id) {
+    public CarModel findById(int id) {
         return carModelDao.getById(id);
+    }
+
+    @Override
+    public boolean deleteCarModelById(int id) {
+        return carModelDao.delete(id);
+    }
+
+    @Override
+    public boolean saveOrUpdateCarModel(CarModel carModel) {
+        if (findById(carModel.getId()) == null) {
+            return carModelDao.save(carModel.getManufacturer(), carModel.getModel(),
+                    carModel.getPower(), carModel.getGear());
+        } else {
+            return carModelDao.update(carModel.getId(), carModel.getManufacturer(),
+                    carModel.getModel(), carModel.getPower(), carModel.getGear());
+        }
     }
 }

@@ -61,8 +61,58 @@ public class CarModelDaoImpl implements CarModelDao {
                 }
             }
         } catch (SQLException e ) {
-            logger.warn("SQLException during getById()", e);
+            logger.warn("SQLException during findById()", e);
         }
         return carModel;
+    }
+
+    @Override
+    public boolean save(String manufacturer, String model, int power, String gear) {
+        String query = "INSERT INTO carmodel (manufacturer, model, power, gear) " +
+                " VALUES (?, ?, ?, ?);";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, manufacturer);
+            statement.setString(2, model);
+            statement.setInt(3, power);
+            statement.setString(4, gear);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e ) {
+            logger.debug("SQLException while inserting carModel", e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean update(int id, String manufacturer, String model, int power, String gear) {
+        String query = "UPDATE carmodel SET manufacturer=?, model=?," +
+                " power=?, gear=? WHERE id=?;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, manufacturer);
+            statement.setString(2, model);
+            statement.setInt(3, power);
+            statement.setString(4, gear);
+            statement.setInt(5, id);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e ) {
+            logger.debug("SQLException while updating carModel", e);
+        }
+        return false;
+    }
+
+    public boolean delete(int id) {
+        String query = "DELETE FROM carmodel WHERE id=?;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e ) {
+            logger.debug("SQLException while deleting carModel", e);
+        }
+        return false;
     }
 }

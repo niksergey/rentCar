@@ -67,7 +67,7 @@ public class RentDaoImpl implements  RentDao {
                 }
             }
         } catch (SQLException e ) {
-            logger.warn("SQLException during getById()", e);
+            logger.warn("SQLException during findById()", e);
         }
         return rent;
     }

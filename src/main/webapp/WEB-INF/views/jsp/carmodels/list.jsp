@@ -7,6 +7,7 @@
       Список моделей :: Краткосрочная аренда автомобилей в Иннополисе
     </jsp:attribute>
     <jsp:attribute name="stylecss">
+        <c:set var="path" value="${pageContext.request.contextPath}" />
         <link href="<c:url value="/resources/css/dashboard.css"/>" rel="stylesheet">
     </jsp:attribute>
 
@@ -34,18 +35,31 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.carModels}" var="car">
+                    <c:forEach items="${requestScope.carModels}" var="carmodels">
                         <tr>
-                            <td><c:out value="${car.getId()}"/></td>
-                            <td><c:out value="${car.getManufacturer()}"/></td>
-                            <td><c:out value="${car.getModel()}"/></td>
-                            <td><c:out value="${car.getPower()}"/></td>
-                            <td><c:out value="${car.getGear()}"/></td>
+                            <td><c:out value="${carmodels.getId()}"/></td>
+                            <td><c:out value="${carmodels.getManufacturer()}"/></td>
+                            <td><c:out value="${carmodels.getModel()}"/></td>
+                            <td><c:out value="${carmodels.getPower()}"/></td>
+                            <td><c:out value="${carmodels.getGear()}"/></td>
+                            <td>
+                                <form action="${path}/carmodels/${carmodels.getId()}/update">
+                                    <button type="submit" class="btn btn-warning">Редактировать</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="${path}/carmodels/${carmodels.getId()}/delete" method="post">
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
+            <form action="${path}/carmodels/add">
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
         </div>
     </jsp:body>
 </t:genericpage>

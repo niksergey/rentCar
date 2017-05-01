@@ -7,5 +7,8 @@ import java.util.List;
 public interface CarModelService {
     List<CarModel> getAllCarModels();
 
-    CarModel getById(int id);
+    CarModel findById(int id);
+
+    boolean deleteCarModelById(int id);
+    boolean saveOrUpdateCarModel(CarModel carModel);
 }

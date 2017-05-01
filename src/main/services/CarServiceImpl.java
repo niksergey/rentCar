@@ -23,7 +23,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> getAllCars() {
         List<Car> allCars = carDao.getAll();
-        allCars.parallelStream().forEach((car)->car.setCarModel(carModelService.getById(car.getCarModelId())));
+        allCars.parallelStream().forEach((car)->car.setCarModel(carModelService.findById(car.getCarModelId())));
         return allCars;
     }
 
@@ -47,7 +47,7 @@ public class CarServiceImpl implements CarService {
     public Car findById(int id) {
         Car car = carDao.getById(id);
         if (car != null) {
-            CarModel cm = carModelService.getById(car.getCarModelId());
+            CarModel cm = carModelService.findById(car.getCarModelId());
             car.setCarModel(cm);
         }
         return car;

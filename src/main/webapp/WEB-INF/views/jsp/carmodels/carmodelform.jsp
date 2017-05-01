@@ -7,13 +7,13 @@
 
 <t:genericpage>
     <jsp:attribute name="title">
-        <c:set var="carModelNew" value="${carForm['new']}"/>
+        <c:set var="carModelNew" value="${carModelForm['new']}"/>
         <c:choose>
             <c:when test="${carModelNew}">
-                Добавить автомобиль
+                Добавить модель автомобиля
             </c:when>
             <c:otherwise>
-                Обновить автомобиль
+                Обновить модель автомобиля
             </c:otherwise>
         </c:choose>
     </jsp:attribute>
@@ -26,52 +26,59 @@
 
         <c:choose>
             <c:when test="${carModelNew}">
-                <h1>Добавить автомобиль</h1>
+                <h1>Добавить модель автомобиля</h1>
             </c:when>
             <c:otherwise>
-                <h1>Обновить автомобиль</h1>
+                <h1>Обновить модель автомобиля</h1>
             </c:otherwise>
         </c:choose>
         <br />
 
-        <spring:url value="/cars" var="carModelActionUrl"/>
+        <spring:url value="/carmodels" var="carModelActionUrl"/>
 
-        <form:form class="form-horizontal" method="post" modelAttribute="carForm" action="${carModelActionUrl}">
+        <form:form class="form-horizontal" method="post" modelAttribute="carModelForm" action="${carModelActionUrl}">
 
             <form:hidden path="id" />
 
-            <spring:bind path="carModelId">
+            <spring:bind path="manufacturer">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">Country</label>
+                    <label class="col-sm-2 control-label">Производитель</label>
                     <div class="col-sm-10">
-                        <form:select path="carModelId" class="form-control">
-                            <form:option value="-1" label="--- Select ---" />
-                            <c:forEach var="cm" items="${carModels}">
-                                <form:option value="${cm.id}" label="${cm}"/>
-                            </c:forEach>
-                        </form:select>
-                        <form:errors path="carModelId" class="control-label" />
+                        <form:input path="manufacturer" type="text" class="form-control "
+                                    id="manufacturer" placeholder="Производитель" />
+                        <form:errors path="manufacturer" class="control-label" />
                     </div>
-                    <div class="col-sm-10"></div>
                 </div>
             </spring:bind>
 
-            <spring:bind path="vin">
+            <spring:bind path="model">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <label class="col-sm-2 control-label">VIN</label>
                     <div class="col-sm-10">
-                        <form:input path="vin" type="text" class="form-control " id="vin" placeholder="VIN" />
-                        <form:errors path="vin" class="control-label" />
+                        <form:input path="model" type="text" class="form-control "
+                                    id="model" placeholder="Модель" />
+                        <form:errors path="model" class="control-label" />
                     </div>
                 </div>
             </spring:bind>
 
-            <spring:bind path="year">
+            <spring:bind path="power">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">Год выпуска</label>
+                    <label class="col-sm-2 control-label">Мощность</label>
                     <div class="col-sm-10">
-                        <form:input path="year" type="number" class="form-control" id="year" placeholder="Год выпуска" />
-                        <form:errors path="year" class="control-label" />
+                        <form:input path="power" type="number" class="form-control" id="power" placeholder="Мощность" />
+                        <form:errors path="power" class="control-label" />
+                    </div>
+                </div>
+            </spring:bind>
+
+            <spring:bind path="gear">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                    <label class="col-sm-2 control-label">Коробка передач</label>
+                    <div class="col-sm-10">
+                        <form:input path="gear" type="text" class="form-control "
+                                    id="gear" placeholder="Коробка передач" />
+                        <form:errors path="gear" class="control-label" />
                     </div>
                 </div>
             </spring:bind>
