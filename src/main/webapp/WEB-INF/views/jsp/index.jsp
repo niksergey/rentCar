@@ -14,14 +14,6 @@
         <%--</c:if>--%>
         <spring:url value="/resources/css/dashboard.css" var="coreCss" />
         <link href="${coreCss}" rel="stylesheet" />
-        <spring:url value="/resources/js/placemark.js" var="yaMap" />
-        <script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-        <script src="${yaMap}" type="text/javascript"></script>
-	    <style>
-            html, body, #map {
-            width: 100%; height: 100%; padding: 0; margin: 0;
-            }
-        </style>
     </jsp:attribute>
 
     <jsp:attribute name="logaction">
@@ -56,7 +48,6 @@
                     <t:lksidebar/>
                 </c:otherwise>
             </c:choose>
-            <div id="map"></div>
         </div>
     </jsp:body>
 </t:genericpage>

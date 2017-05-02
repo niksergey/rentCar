@@ -13,7 +13,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CarsController  {
@@ -26,7 +29,23 @@ public class CarsController  {
     private CarModelService carModelService;
 
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
-    public String getCars(Model model) {
+    public String getCars(Model model,
+                          HttpSession session) {
+        logger.info("in /cars GET ");
+        System.out.println("--- Model data ---");
+        Map modelMap = model.asMap();
+        for (Object modelKey : modelMap.keySet()) {
+            Object modelValue = modelMap.get(modelKey);
+            System.out.println(modelKey + " -- " + modelValue);
+        }
+
+        System.out.println("*** Session data ***");
+        Enumeration<String> e = session.getAttributeNames();
+        while (e.hasMoreElements()){
+            String s = e.nextElement();
+            System.out.println(s);
+            System.out.println("**" + session.getAttribute(s));
+        }
         List<Car> allCars = carService.getAllCars();
         model.addAttribute("cars", allCars);
         return "/cars/list";

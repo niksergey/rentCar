@@ -27,11 +27,6 @@ public class WhiteList implements Filter {
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
         String userEmail = (String)session.getAttribute("userEmail");
 
-        Enumeration<String> attributeNames = session.getAttributeNames();
-        while (attributeNames.hasMoreElements()) {
-            logger.debug("Attr " + attributeNames.nextElement());
-        }
-
         logger.debug("Session userEmail" + userEmail);
         if (userEmail != null) {
             filterChain.doFilter(servletRequest, servletResponse);
