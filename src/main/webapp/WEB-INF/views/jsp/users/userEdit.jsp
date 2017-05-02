@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="t" tagdir="/main/webapp/WEB-INF/tags" %>
 
 <t:genericpage>
     <jsp:attribute name="title">
