@@ -4,7 +4,7 @@
 
 <t:genericpage>
     <jsp:attribute name="title">
-      Список аренд :: Краткосрочная аренда автомобилей в Иннополисе
+      Список аренд
     </jsp:attribute>
     <jsp:attribute name="stylecss">
         <c:set var="path" value="${pageContext.request.contextPath}" />
@@ -21,7 +21,14 @@
         <t:lksidebar/>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Список аренд</h1>
-
+            <c:if test="${not empty msg}">
+                <div class="alert alert-${css} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>${msg}</strong>
+                </div>
+            </c:if>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

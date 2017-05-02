@@ -32,9 +32,8 @@ public class CarModelsController {
     public String saveOrUpdateCarModel(@ModelAttribute("carModelForm") @Validated CarModel carModel,
                                   BindingResult result, Model model,
                                   final RedirectAttributes redirectAttributes) {
-        logger.debug("saveOrUpdateCarModel() : {}", carModel);
+        logger.debug("saveOrUpdateCarModel() : ", carModel);
         if (result.hasErrors()) {
-//            populateDefaultModel(model);
             return "carmodels/carmodelform";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
@@ -72,7 +71,7 @@ public class CarModelsController {
     @RequestMapping(value = "/carmodels/{id}/update", method = RequestMethod.GET)
     public String showUpdateCarForm(@PathVariable("id") int id, Model model) {
 
-        logger.debug("showUpdateCarForm() : ", id);
+        logger.debug("showUpdateCarForm() : " + id);
 
         CarModel carModel = carModelService.findById(id);
         if (carModel == null) {
@@ -83,6 +82,26 @@ public class CarModelsController {
         model.addAttribute("carModelForm", carModel);
 
         return "carmodels/carmodelform";
+    }
+
+    @RequestMapping(value = "/carmodels/{id}/delete", method = RequestMethod.POST)
+    public String deleteCarModel(@PathVariable("id") int id, Model model,
+                                 RedirectAttributes redirectAttributes) {
+        logger.debug("deleteCarModel() " + id);
+        String cssStatus;
+        String msg;
+
+        if (carModelService.deleteCarModelById(id)) {
+            cssStatus = "success";
+            msg = "Модель автомобиля удалена!";
+        } else {
+            cssStatus = "danger";
+            msg = "Не удалось удалить марку автомобиля";
+        }
+
+        redirectAttributes.addFlashAttribute("css", cssStatus);
+        redirectAttributes.addFlashAttribute("msg", msg);
+        return "redirect:/carmodels";
     }
 
     @RequestMapping(value = "/carmodels/add", method = RequestMethod.GET)
