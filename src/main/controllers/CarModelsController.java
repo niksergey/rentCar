@@ -46,6 +46,10 @@ public class CarModelsController {
 
             carModelService.saveOrUpdateCarModel(carModel);
 
+            if (carModel.isNew()) {
+                return "redirect:/carmodels";
+            }
+
             return "redirect:/carmodels/" + carModel.getId();
         }
     }
@@ -68,7 +72,7 @@ public class CarModelsController {
     @RequestMapping(value = "/carmodels/{id}/update", method = RequestMethod.GET)
     public String showUpdateCarForm(@PathVariable("id") int id, Model model) {
 
-        logger.debug("showUpdateCarForm() : {}", id);
+        logger.debug("showUpdateCarForm() : ", id);
 
         CarModel carModel = carModelService.findById(id);
         if (carModel == null) {
@@ -76,6 +80,16 @@ public class CarModelsController {
             model.addAttribute("msg", "Автомобиль не найден!");
         }
 
+        model.addAttribute("carModelForm", carModel);
+
+        return "carmodels/carmodelform";
+    }
+
+    @RequestMapping(value = "/carmodels/add", method = RequestMethod.GET)
+    public String showAddCarModelForm(Model model) {
+        logger.debug("showAddCarmodelForm");
+
+        CarModel carModel = new CarModel();
         model.addAttribute("carModelForm", carModel);
 
         return "carmodels/carmodelform";

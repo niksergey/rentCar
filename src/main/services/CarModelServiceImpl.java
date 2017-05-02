@@ -32,7 +32,7 @@ public class CarModelServiceImpl implements CarModelService {
 
     @Override
     public boolean saveOrUpdateCarModel(CarModel carModel) {
-        if (findById(carModel.getId()) == null) {
+        if (carModel.isNew() || findById(carModel.getId()) == null) {
             return carModelDao.save(carModel.getManufacturer(), carModel.getModel(),
                     carModel.getPower(), carModel.getGear());
         } else {
