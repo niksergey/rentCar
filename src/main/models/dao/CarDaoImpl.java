@@ -15,8 +15,12 @@ import java.util.List;
 public class CarDaoImpl implements CarDao {
     static final Logger logger = LogManager.getLogger(CarModelDaoImpl.class.getName());
 
-    @Autowired
     private CarModelDao cmd;
+
+    @Autowired
+    public void setCmd(CarModelDao cmd) {
+        this.cmd = cmd;
+    }
 
     private Car createEntity(ResultSet result) {
         Car car = null;

@@ -13,20 +13,25 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 public class CarsController  {
     private static final Logger logger = LogManager.getLogger(CarsController.class);
 
-    @Autowired
     private CarService carService;
+    private CarModelService carModelService;
 
     @Autowired
-    private CarModelService carModelService;
+    public void setCarService(CarService carService) {
+        this.carService = carService;
+    }
+
+    @Autowired
+    public void setCarModelService(CarModelService carModelService) {
+        this.carModelService = carModelService;
+    }
 
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public String getCars(Model model) {
@@ -39,7 +44,7 @@ public class CarsController  {
 
     @RequestMapping(value = "/cars", method = RequestMethod.POST)
     public String saveOrUpdateCar(@ModelAttribute("carForm") @Validated Car car,
-                                   BindingResult result, Model model,
+                                   BindingResult result,
                                   final RedirectAttributes redirectAttributes) {
         logger.debug("saveOrUpdateCar() : {}", car);
 
@@ -97,7 +102,6 @@ public class CarsController  {
         return "redirect:/cars";
     }
 
-    // show update form
     @RequestMapping(value = "/cars/{id}/update", method = RequestMethod.GET)
     public String showUpdateCarForm(@PathVariable("id") int id, Model model) {
         logger.debug("showUpdateCarForm() : {}", id);

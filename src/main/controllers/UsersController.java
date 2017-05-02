@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UsersController {
     private static final Logger logger = LogManager.getLogger(UsersController.class);
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String showUser(Model model) {
@@ -28,4 +32,5 @@ public class UsersController {
         }
         return "users/list";
     }
+
 }

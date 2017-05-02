@@ -14,8 +14,12 @@ import java.util.List;
 public class RentServiceImpl implements RentService {
     private final static Logger logger = LogManager.getLogger(RentServiceImpl.class);
 
-    @Autowired
     private RentDao rd;
+
+    @Autowired
+    public void setRd(RentDao rd) {
+        this.rd = rd;
+    }
 
     @Override
     public List<Rent> getAllRents() {

@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RentsController  {
     private static final Logger logger = LogManager.getLogger(RentsController.class);
 
-    @Autowired
     private RentService rentService;
+
+    @Autowired
+    public void setRentService(RentService rentService) {
+        this.rentService = rentService;
+    }
 
     @RequestMapping(value = "/rents", method = RequestMethod.GET)
     public String showRents(Model model) {

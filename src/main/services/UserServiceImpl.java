@@ -14,18 +14,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
 
-    @Autowired
     private UserDao userDao;
 
     public UserServiceImpl() {
     }
 
+    @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
-    }
-
-    public UserDao getUserDao() {
-        return userDao;
     }
 
     @Override

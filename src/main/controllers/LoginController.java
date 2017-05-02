@@ -17,8 +17,12 @@ import javax.servlet.http.HttpSession;
 public class LoginController  {
     private final static Logger logger = LogManager.getLogger(LoginController.class);
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginForm(Model model) {

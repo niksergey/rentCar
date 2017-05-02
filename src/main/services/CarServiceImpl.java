@@ -15,11 +15,19 @@ import java.util.List;
 public class CarServiceImpl implements CarService {
     public static final Logger logger = LogManager.getLogger(CarServiceImpl.class.getName());
 
-    @Autowired
     private CarDao carDao;
 
-    @Autowired
     private CarModelService carModelService;
+
+    @Autowired
+    public void setCarDao(CarDao carDao) {
+        this.carDao = carDao;
+    }
+
+    @Autowired
+    public void setCarModelService(CarModelService carModelService) {
+        this.carModelService = carModelService;
+    }
 
     @Override
     public List<Car> getAllCars() {

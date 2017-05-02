@@ -12,8 +12,13 @@ import java.util.List;
 @Service
 public class CarModelServiceImpl implements CarModelService {
     public static final Logger logger = LogManager.getLogger(CarServiceImpl.class.getName());
-    @Autowired
+
     private CarModelDao carModelDao;
+
+    @Autowired
+    public void setCarModelDao(CarModelDao carModelDao) {
+        this.carModelDao = carModelDao;
+    }
 
     @Override
     public List<CarModel> getAllCarModels() {

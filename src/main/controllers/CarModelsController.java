@@ -19,8 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CarModelsController {
     private static final Logger logger = LogManager.getLogger(CarModelsController.class);
 
-    @Autowired
     private CarModelService carModelService;
+
+    @Autowired
+    public void setCarModelService(CarModelService carModelService) {
+        this.carModelService = carModelService;
+    }
 
     @RequestMapping(value = "/carmodels", method = RequestMethod.GET)
     public String showCarModels(Model model) {
