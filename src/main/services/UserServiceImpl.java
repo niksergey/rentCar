@@ -65,4 +65,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() throws DatabaseException {
         return userDao.getAll();
     }
+
+    @Override
+    public boolean deleteById(int id) throws DatabaseException {
+        return userDao.deleteUser(id);
+    }
 }

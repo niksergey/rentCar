@@ -13,4 +13,5 @@ public interface UserDao {
     User findByPhone(String phone) throws DatabaseException;
     boolean addUser(String email, String phone, String firstName,
                     String secondName, String lastName, String password) throws DatabaseException;
+    boolean deleteUser(int id) throws DatabaseException;
 }

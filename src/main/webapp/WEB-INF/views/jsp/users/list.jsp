@@ -7,6 +7,7 @@
       Список авто
     </jsp:attribute>
     <jsp:attribute name="stylecss">
+                <c:set var="path" value="${pageContext.request.contextPath}" />
         <link href="<c:url value="/resources/css/dashboard.css"/>" rel="stylesheet">
     </jsp:attribute>
 
@@ -33,9 +34,8 @@
                 <thead>
                 <tr>
                     <th>id</th>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Отчество</th>
+                    <th>ФИО</th>
+                    <th>Email</th>
                     <th>Телефон</th>
                     <th>Админ</th>
                     <th>Активен</th>
@@ -45,9 +45,8 @@
                     <c:forEach items="${requestScope.users}" var="user">
                         <tr>
                             <td><c:out value="${user.id}"/></td>
-                            <td><c:out value="${user.getFirstName()}"/></td>
-                            <td><c:out value="${user.getSecondName()}"/></td>
-                            <td><c:out value="${user.getLastName()}"/></td>
+                            <td><c:out value="${user.getSecondName()} ${user.getFirstName()} ${user.getLastName()}"/></td>
+                            <td><c:out value="${user.getEmail()}"/></td>
                             <td><c:out value="${user.getPhoneNumber()}"/></td>
                             <td><c:out value="${user.isAdminFlag()}"/></td>
                             <td><c:out value="${user.isActiveFlag()}"/></td>

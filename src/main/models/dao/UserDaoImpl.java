@@ -28,7 +28,6 @@ public class UserDaoImpl implements UserDao {
                 result.getBoolean("isadmin"),
                 result.getBoolean("isactive"),
                 result.getBoolean("isdeleted"));
-
         return user;
     }
 
@@ -97,7 +96,7 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-//    @Override
+    @Override
     public User findByPhone(String phone) throws DatabaseException {
         String query = "SELECT * FROM userentry " +
                 "WHERE phone_number=?";
@@ -136,11 +135,26 @@ public class UserDaoImpl implements UserDao {
             statement.setString(6, password);
             statement.setBoolean(7, true);
             statement.executeUpdate();
-            return true;
         } catch (SQLException e ) {
             String msg = "Ошибка при запросе к базе данных";
             logger.warn(msg, e);
             throw new DatabaseException(msg);
         }
+        return true;
+    }
+
+    @Override
+    public boolean deleteUser(int id) throws DatabaseException {
+        String query = "DELETE FROM userentry WHERE id=?;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e ) {
+            String msg = "Ошибка при запросе к базе данных";
+            logger.warn(msg, e);
+            throw new DatabaseException(msg);
+        }
+        return true;
     }
 }
