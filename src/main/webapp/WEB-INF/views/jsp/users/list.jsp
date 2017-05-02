@@ -42,22 +42,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${requestScope.users}" var="carmodels">
+                    <c:forEach items="${requestScope.users}" var="user">
                         <tr>
-                            <td><c:out value="${carmodels.id}"/></td>
-                            <td><c:out value="${carmodels.getFirstName()}"/></td>
-                            <td><c:out value="${carmodels.getSecondName()}"/></td>
-                            <td><c:out value="${carmodels.getLastName()}"/></td>
-                            <td><c:out value="${carmodels.getPhoneNumber()}"/></td>
-                            <td><c:out value="${carmodels.isAdminFlag()}"/></td>
-                            <td><c:out value="${carmodels.isActiveFlag()}"/></td>
+                            <td><c:out value="${user.id}"/></td>
+                            <td><c:out value="${user.getFirstName()}"/></td>
+                            <td><c:out value="${user.getSecondName()}"/></td>
+                            <td><c:out value="${user.getLastName()}"/></td>
+                            <td><c:out value="${user.getPhoneNumber()}"/></td>
+                            <td><c:out value="${user.isAdminFlag()}"/></td>
+                            <td><c:out value="${user.isActiveFlag()}"/></td>
                             <td>
-                                <form action="${path}/users/${carmodels.getId()}/update">
+                                <form action="${path}/users/${user.getId()}/update">
                                     <button type="submit" class="btn btn-warning">Редактировать</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="${path}/users/${carmodels.getId()}/delete" method="post">
+                                <form action="${path}/users/${user.getId()}/delete" method="post">
                                     <button type="submit" class="btn btn-danger">Удалить</button>
                                 </form>
                             </td>

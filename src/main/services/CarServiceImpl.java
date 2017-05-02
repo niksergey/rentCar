@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,8 +23,14 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getAllCars() {
-        List<Car> allCars = carDao.getAll();
-        allCars.parallelStream().forEach((car)->car.setCarModel(carModelService.findById(car.getCarModelId())));
+        List<Car> allCars = new ArrayList<>();
+        for (Car car: carDao.getAll()) {
+            CarModel cm = carModelService.findById(car.getCarModelId());
+            car.setCarModel(cm);
+            allCars.add(car);
+        }
+//        allCars.parallelStream().forEach((car)->
+//                car.setCarModel(carModelService.findById(car.getCarModelId())));
         return allCars;
     }
 
@@ -35,7 +42,8 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean saveOrUpdateCar(Car car) {
-        if (findById(car.getId()) == null) {
+        Integer carId = car.getId();
+        if (carId == null || findById(carId) == null) {
             return carDao.save(car.getVin(), car.getYear(), car.getCarModelId());
         } else {
             return carDao.update(car.getId(), car.getVin(), car.getYear(),

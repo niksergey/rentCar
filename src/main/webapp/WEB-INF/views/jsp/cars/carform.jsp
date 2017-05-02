@@ -42,7 +42,7 @@
 
             <spring:bind path="carModelId">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">Country</label>
+                    <label class="col-sm-2 control-label">Модель</label>
                     <div class="col-sm-10">
                         <form:select path="carModelId" class="form-control">
                             <form:option value="-1" label="--- Select ---" />
@@ -70,7 +70,9 @@
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <label class="col-sm-2 control-label">Год выпуска</label>
                     <div class="col-sm-10">
-                        <form:input path="year" type="number" class="form-control" id="year" placeholder="Год выпуска" />
+                        <form:input path="year" type="number" class="form-control"
+                                    id="year" placeholder="Год выпуска"
+                                    min="2000" max="2020" />
                         <form:errors path="year" class="control-label" />
                     </div>
                 </div>

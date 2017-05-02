@@ -35,20 +35,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.carModels}" var="carmodels">
+                    <c:forEach items="${carModels}" var="carmodel">
                         <tr>
-                            <td><c:out value="${carmodels.getId()}"/></td>
-                            <td><c:out value="${carmodels.getManufacturer()}"/></td>
-                            <td><c:out value="${carmodels.getModel()}"/></td>
-                            <td><c:out value="${carmodels.getPower()}"/></td>
-                            <td><c:out value="${carmodels.getGear()}"/></td>
+                            <td><c:out value="${carmodel.getId()}"/></td>
+                            <td><c:out value="${carmodel.getManufacturer()}"/></td>
+                            <td><c:out value="${carmodel.getModel()}"/></td>
+                            <td><c:out value="${carmodel.getPower()}"/></td>
+                            <td><c:out value="${carmodel.getGear()}"/></td>
                             <td>
-                                <form action="${path}/carmodels/${carmodels.getId()}/update">
+                                <form action="${path}/carmodels/${carmodel.getId()}/update">
                                     <button type="submit" class="btn btn-warning">Редактировать</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="${path}/carmodels/${carmodels.getId()}/delete" method="post">
+                                <form action="${path}/carmodels/${carmodel.getId()}/delete" method="post">
                                     <button type="submit" class="btn btn-danger">Удалить</button>
                                 </form>
                             </td>

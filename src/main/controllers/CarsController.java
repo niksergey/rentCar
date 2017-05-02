@@ -29,23 +29,9 @@ public class CarsController  {
     private CarModelService carModelService;
 
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
-    public String getCars(Model model,
-                          HttpSession session) {
+    public String getCars(Model model) {
         logger.info("in /cars GET ");
-        System.out.println("--- Model data ---");
-        Map modelMap = model.asMap();
-        for (Object modelKey : modelMap.keySet()) {
-            Object modelValue = modelMap.get(modelKey);
-            System.out.println(modelKey + " -- " + modelValue);
-        }
 
-        System.out.println("*** Session data ***");
-        Enumeration<String> e = session.getAttributeNames();
-        while (e.hasMoreElements()){
-            String s = e.nextElement();
-            System.out.println(s);
-            System.out.println("**" + session.getAttribute(s));
-        }
         List<Car> allCars = carService.getAllCars();
         model.addAttribute("cars", allCars);
         return "/cars/list";
@@ -58,7 +44,6 @@ public class CarsController  {
         logger.debug("saveOrUpdateCar() : {}", car);
 
         if (result.hasErrors()) {
-//            populateDefaultModel(model);
             return "cars/carform";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
@@ -113,7 +98,6 @@ public class CarsController  {
     // show update form
     @RequestMapping(value = "/cars/{id}/update", method = RequestMethod.GET)
     public String showUpdateCarForm(@PathVariable("id") int id, Model model) {
-
         logger.debug("showUpdateCarForm() : {}", id);
 
         Car car = carService.findById(id);
@@ -128,6 +112,9 @@ public class CarsController  {
     public String showAddCarForm(Model model) {
         Car car = new Car();
         model.addAttribute("carForm", car);
+
+        model.addAttribute("carModels", carModelService.getAllCarModels());
+
         return "cars/carform";
     }
 }

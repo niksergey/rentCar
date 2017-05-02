@@ -36,6 +36,12 @@ public class Car {
 //        this.year = year;
 //    }
 
+    public Car(Integer carModelId, String vin, int year) {
+        this.carModelId = carModelId;
+        this.vin = vin;
+        this.year = year;
+    }
+
     public Car(Integer id, Integer carModelId, String vin, int year) {
         this.id = id;
         this.carModelId = carModelId;
