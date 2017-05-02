@@ -33,6 +33,21 @@
     <url-pattern>/cars/*</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>WhiteList</filter-name>
+        <url-pattern>/users/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>WhiteList</filter-name>
+        <url-pattern>/carmodels/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>WhiteList</filter-name>
+        <url-pattern>/rents/*</url-pattern>
+    </filter-mapping>
+
     <context-param>
         <param-name>log4jConfiguration</param-name>
         <param-value>WEB-INF/log4j2.xml</param-value>
