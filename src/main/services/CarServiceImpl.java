@@ -60,4 +60,14 @@ public class CarServiceImpl implements CarService {
         }
         return car;
     }
+
+    @Override
+    public Car findByVin(String vin) {
+        Car car = carDao.getByVin(vin);
+        if (car != null) {
+            CarModel cm = carModelService.findById(car.getCarModelId());
+            car.setCarModel(cm);
+        }
+        return car;
+    }
 }

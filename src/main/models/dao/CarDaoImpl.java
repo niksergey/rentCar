@@ -69,6 +69,25 @@ public class CarDaoImpl implements CarDao {
         return car;
     }
 
+    @Override
+    public Car getByVin(String vin) {
+        String query = "SELECT * FROM car WHERE vin=?;";
+        Car car = null;
+
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, vin);
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    car = createEntity(result);
+                }
+            }
+        } catch (SQLException e ) {
+            logger.warn("SQLException during findById()", e);
+        }
+        return car;
+    }
+
     public boolean save(String vin, int year, int model) {
         String query = "INSERT INTO car (vin, year, model) " +
                 " VALUES (?, ?, ?);";

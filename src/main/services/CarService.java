@@ -7,6 +7,7 @@ import java.util.List;
 public interface CarService {
     List<Car> getAllCars();
     Car findById(int id);
+    Car findByVin(String vin);
     boolean deleteCarById(int id);
     boolean saveOrUpdateCar(Car car);
 }

@@ -54,7 +54,9 @@ public class CarsController  {
             }
 
             carService.saveOrUpdateCar(car);
-
+            if (car.isNew()) {
+                car = carService.findByVin(car.getVin());
+            }
             return "redirect:/cars/" + car.getId();
         }
     }
