@@ -37,7 +37,7 @@ public class RentDaoImpl implements  RentDao {
 
     @Override
     public List<Rent> getAll() {
-        String query = "SELECT * FROM rent;";
+        String query = "SELECT * FROM rent  ORDER BY id ASC;";
         List<Rent> rents = new ArrayList<>(64);
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();

@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public List<User> getAll() throws DatabaseException {
-        String query = "SELECT * FROM userentry;";
+        String query = "SELECT * FROM userentry  ORDER BY id ASC;";
         List<User> users = new ArrayList<>(64);
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();

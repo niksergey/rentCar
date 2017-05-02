@@ -31,7 +31,7 @@ public class CarModelDaoImpl implements CarModelDao {
 
     @Override
     public List<CarModel> getAll() {
-        String query = "SELECT * FROM carmodel;";
+        String query = "SELECT * FROM carmodel ORDER BY id ASC;";
         List<CarModel> carModels = new ArrayList<>(64);
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();

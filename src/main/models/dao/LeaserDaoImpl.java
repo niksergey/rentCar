@@ -34,7 +34,7 @@ public class LeaserDaoImpl implements LeaserDao {
     }
 
     public List<Leaser> getAll() {
-        String query = "SELECT * FROM userentry WHERE isadmin=FALSE";
+        String query = "SELECT * FROM userentry WHERE isadmin=FALSE ORDER BY id ASC;";
         List<Leaser> leasers = new ArrayList<>(64);
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();
