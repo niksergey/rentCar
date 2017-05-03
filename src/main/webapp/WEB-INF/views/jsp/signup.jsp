@@ -17,9 +17,9 @@
             <form class="form-signup" action="${context}/signup" method="post">
                 <h2 class="form-signup-heading">Регистрация</h2>
                 <input type="tel" id="phone" class="form-control" name="phone" placeholder="Телефон" required autofocus>
-                <input type="tel" id="second_name" class="form-control" name="second_name" placeholder="Фамилия" required>
-                <input type="tel" id="first_name" class="form-control" name="first_name" placeholder="Имя" required>
-                <input type="tel" id="last_name" class="form-control" name="last_name" placeholder="Отчество">
+                <input type="text" id="second_name" class="form-control" name="second_name" placeholder="Фамилия" required>
+                <input type="text" id="first_name" class="form-control" name="first_name" placeholder="Имя" required>
+                <input type="text" id="last_name" class="form-control" name="last_name" placeholder="Отчество">
                     <%--<label for="inputEmail" class="sr-only">Email address</label>--%>
                 <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" name="email" required >
                     <%--<label for="inputPassword" class="sr-only">Password</label>--%>

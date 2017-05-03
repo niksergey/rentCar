@@ -2,11 +2,11 @@ package main.models.pojo;
 
 public class CarModel {
 
-    protected Integer id;
-    protected String manufacturer;
-    protected String model;
-    protected String gear;
-    protected int power;
+    private Integer id;
+    private String manufacturer;
+    private String model;
+    private String gear;
+    private int power;
 
     public CarModel() {
     }

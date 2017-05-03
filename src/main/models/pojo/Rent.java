@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class Rent {
-    protected int id;
-    protected Date startTime;
-    protected Date finishDate;
-    protected Leaser leaser;
-    protected Car car;
+    private Integer id;
+    private Date startTime;
+    private Date finishDate;
+    private Leaser leaser;
+    private Car car;
 
     public Rent() {
     }
@@ -32,7 +32,7 @@ public class Rent {
         return new Date(stamp.getTime());
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

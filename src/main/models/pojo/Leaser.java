@@ -12,7 +12,7 @@ public class Leaser
     extends User
 {
 
-    protected String leaserSpecificValue;
+    private String leaserSpecificValue;
 
     public Leaser() {
     }

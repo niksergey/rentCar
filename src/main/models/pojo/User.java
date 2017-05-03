@@ -1,16 +1,15 @@
 package main.models.pojo;
 
 public class User {
-
-    Integer id;
-    String firstName;
-    String secondName;
-    String lastName;
-    String phoneNumber;
-    String email;
-    boolean adminFlag;
-    boolean activeFlag;
-    boolean deletedFlag;
+    private Integer id;
+    private String firstName;
+    private String secondName;
+    private String lastName;
+    private String phoneNumber;
+    private String email;
+    private boolean adminFlag;
+    private boolean activeFlag;
+    private boolean deletedFlag;
 
     public User() {
     }
