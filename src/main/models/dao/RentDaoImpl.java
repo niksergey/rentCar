@@ -13,12 +13,20 @@ import java.util.List;
 
 @Repository
 public class RentDaoImpl implements  RentDao {
-    static final Logger logger = LogManager.getLogger(LeaserDaoImpl.class.getName());
+    static final Logger logger = LogManager.getLogger(LeaserDaoImpl.class);
+
+    private CarDao cd;
+    private LeaserDao lsd;
 
     @Autowired
-    private CarDao cd;
+    public void setCd(CarDao cd) {
+        this.cd = cd;
+    }
+
     @Autowired
-    private LeaserDao lsd;
+    public void setLsd(LeaserDao lsd) {
+        this.lsd = lsd;
+    }
 
     private Rent createEntity(ResultSet result) {
         Rent car = null;

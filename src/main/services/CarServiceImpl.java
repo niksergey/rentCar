@@ -44,8 +44,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean deleteCarById(int id) {
-        carDao.delete(id);
-        return false;
+        return carDao.delete(id);
     }
 
     @Override
