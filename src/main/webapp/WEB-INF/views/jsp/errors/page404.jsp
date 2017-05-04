@@ -22,8 +22,8 @@
                     Sorry, an error has occured, Requested page not found!
                 </div>
                 <div class="error-actions">
-                    <a href="${path}/" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
-                        На главную </a><a href="${path}/" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Связаться с техподдержкой </a>
+                    <a href="${path}/main/webapp" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                        На главную </a><a href="${path}/main/webapp" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Связаться с техподдержкой </a>
                 </div>
             </div>
         </div>

@@ -1,17 +1,16 @@
 package main.models.dao;
 
-import main.exceptions.DatabaseException;
-import main.models.pojo.Leaser;
 import main.models.pojo.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
-    List<User> getAll() throws DatabaseException;
-    User findByEmailAndPassword(String email, String password) throws DatabaseException;
-    User findByEmail(String email) throws DatabaseException;
-    User findByPhone(String phone) throws DatabaseException;
+    List<User> getAll() throws SQLException;
+    User findByEmailAndPassword(String email, String password) throws SQLException;
+    User findByEmail(String email) throws SQLException;
+    User findByPhone(String phone) throws SQLException;
     boolean addUser(String email, String phone, String firstName,
-                    String secondName, String lastName, String password) throws DatabaseException;
-    boolean deleteUser(int id) throws DatabaseException;
+                    String secondName, String lastName, String password) throws SQLException;
+    boolean deleteUser(int id) throws SQLException;
 }

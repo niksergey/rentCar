@@ -1,6 +1,5 @@
 package main.controllers;
 
-import main.exceptions.DatabaseException;
 import main.models.pojo.User;
 import main.services.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 @Controller
 public class LoginController  {
@@ -33,21 +33,20 @@ public class LoginController  {
     public String processLogin(@RequestParam("email") String email,
                                @RequestParam("password") String password,
                                final RedirectAttributes redirectAttributes,
-                               HttpSession session) {
+                               HttpSession session)
+            throws SQLException
+    {
         logger.debug("email/Password: " + email + " " + password);
         String text;
-        try {
-            User user = userService.auth(email, password);
-            if (user == null) {
-                text = "Пользователь с такой комбинацией email и пароль не найден";
-            } else if (user.isActiveFlag()) {
-                session.setAttribute("userEmail", email);
-                return "redirect:/cars";
-            } else {
-                text = "Пользователь заблокирован";
-            }
-        } catch (DatabaseException e) {
-            text = e.toString();
+
+        User user = userService.auth(email, password);
+        if (user == null) {
+            text = "Пользователь с такой комбинацией email и пароль не найден";
+        } else if (user.isActiveFlag()) {
+            session.setAttribute("userEmail", email);
+            return "redirect:/cars";
+        } else {
+            text = "Пользователь заблокирован";
         }
 
         String cssStatus = "danger";
@@ -77,17 +76,11 @@ public class LoginController  {
                          @RequestParam("second_name") String second_name,
                          @RequestParam("last_name") String last_name,
                          @RequestParam("password") String password,
-                         RedirectAttributes redirectAttributes
-                         ) {
-        int res;
-        try {
-            res = userService.register(email, phone, first_name, second_name,
+                         RedirectAttributes redirectAttributes)
+            throws SQLException
+    {
+        int res = userService.register(email, phone, first_name, second_name,
                     last_name, password);
-        } catch (DatabaseException e) {
-            redirectAttributes.addFlashAttribute("css", "danger");
-            redirectAttributes.addFlashAttribute("msg", e.toString());
-            return "redirect:/signup";
-        }
 
         if (res == 0) {
             return "redirect:/login";

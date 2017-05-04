@@ -1,6 +1,5 @@
 package main.services;
 
-import main.exceptions.DatabaseException;
 import main.models.dao.UserDao;
 import main.models.pojo.User;
 import org.apache.logging.log4j.LogManager;
@@ -8,11 +7,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
+    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
 
     private UserDao userDao;
 
@@ -25,8 +25,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User auth(String email, String password) throws DatabaseException {
-        User user = userDao.findByEmailAndPassword(email, password);
+    public User auth(String email, String password) throws SQLException
+    {
+        User user = userDao.findByEmailAndPassword(email, password) ;
         if (user == null) {
             logger.debug("User with these credentials not found");
             return null;
@@ -45,7 +46,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public int register(String email, String phone, String firstName,
                         String secondName, String lastName, String password)
-            throws DatabaseException {
+            throws SQLException
+    {
         int res = 0;
         if (userDao.findByEmail(email) != null)
             res += 1;
@@ -62,12 +64,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() throws DatabaseException {
+    public List<User> getAllUsers() throws SQLException
+    {
         return userDao.getAll();
     }
 
     @Override
-    public boolean deleteById(int id) throws DatabaseException {
+    public boolean deleteById(int id) throws SQLException
+    {
         return userDao.deleteUser(id);
     }
 }

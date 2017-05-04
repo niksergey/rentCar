@@ -1,6 +1,5 @@
 package main.controllers;
 
-import main.exceptions.DatabaseException;
 import main.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,8 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping(value = "/users")
@@ -26,33 +26,24 @@ public class UsersController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String showUser(Model model) {
-        try {
-            model.addAttribute("users", userService.getAllUsers());
-        } catch (DatabaseException e) {
-            model.addAttribute("css", "danger");
-            model.addAttribute("msg", e.toString());
-            return "error";
-        }
+    public String showUser(Model model) throws SQLException {
+        model.addAttribute("users", userService.getAllUsers());
         return "users/list";
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String deleteUser(@PathVariable("id") int id,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes)
+            throws SQLException
+    {
         String cssStatus;
         String msg;
 
         logger.debug("deleteUser() id: {}", id);
 
-        try {
-            userService.deleteById(id);
-            cssStatus = "success";
-            msg = "Пользователь удален!";
-        } catch (DatabaseException e) {
-            cssStatus = "danger";
-            msg = "Не удалось удалить пользователя!";
-        }
+        userService.deleteById(id);
+        cssStatus = "success";
+        msg = "Пользователь удален!";
 
         redirectAttributes.addFlashAttribute("css", cssStatus);
         redirectAttributes.addFlashAttribute("msg", msg);

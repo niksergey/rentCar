@@ -1,15 +1,15 @@
 package main.services;
 
-import main.exceptions.DatabaseException;
 import main.models.pojo.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserService {
-    User auth(String email, String password) throws DatabaseException;
+    User auth(String email, String password) throws SQLException;
     int register(String email, String phone, String firstName, String secondName,
-                     String lastName, String password) throws DatabaseException;
+                     String lastName, String password) throws SQLException;
 
-    List<User> getAllUsers() throws DatabaseException;
-    boolean deleteById(int id) throws DatabaseException;
+    List<User> getAllUsers() throws SQLException;
+    boolean deleteById(int id) throws SQLException;
 }

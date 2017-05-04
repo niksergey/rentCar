@@ -1,12 +1,9 @@
 package main.models.dao;
 
-import main.exceptions.DatabaseException;
-import main.models.pojo.Leaser;
 import main.models.pojo.User;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -31,27 +28,23 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    public List<User> getAll() throws DatabaseException {
+    public List<User> getAll() throws SQLException {
         String query = "SELECT * FROM userentry  ORDER BY id ASC;";
         List<User> users = new ArrayList<>(64);
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement()) {
-            try(ResultSet result = statement.executeQuery(query)) {
+            try (ResultSet result = statement.executeQuery(query)) {
                 while (result.next()) {
                     users.add(createEntity(result));
                 }
             }
-        }  catch (SQLException e) {
-            String msg = "Ошибка при запросе к базе данных";
-            logger.warn(msg, e);
-            throw new DatabaseException(msg);
         }
         return users;
     }
 
     public User findByEmailAndPassword(String email, String password)
-            throws DatabaseException {
+            throws SQLException {
         String query = "SELECT * FROM userentry " +
                 "WHERE email=? AND password=?";
         User user = null;
@@ -65,17 +58,14 @@ public class UserDaoImpl implements UserDao {
                     user = createEntity(result);
                 }
             }
-        } catch (SQLException e ) {
-            String msg = "Ошибка при запросе к базе данных";
-            logger.warn(msg, e);
-            throw new DatabaseException(msg);
         }
+
         return user;
     }
 
     @Override
     public User findByEmail(String email)
-            throws DatabaseException {
+            throws SQLException {
         String query = "SELECT * FROM userentry " +
                 "WHERE email=?";
         User user = null;
@@ -88,16 +78,12 @@ public class UserDaoImpl implements UserDao {
                     user = createEntity(result);
                 }
             }
-        } catch (SQLException e) {
-            String msg = "Ошибка при запросе к базе данных";
-            logger.warn(msg, e);
-            throw new DatabaseException(msg);
         }
         return user;
     }
 
     @Override
-    public User findByPhone(String phone) throws DatabaseException {
+    public User findByPhone(String phone) throws SQLException {
         String query = "SELECT * FROM userentry " +
                 "WHERE phone_number=?";
         User user = null;
@@ -110,18 +96,15 @@ public class UserDaoImpl implements UserDao {
                     user = createEntity(result);
                 }
             }
-        } catch (SQLException e ) {
-            String msg = "Ошибка при запросе к базе данных";
-            logger.warn(msg, e);
-            throw new DatabaseException(msg);
         }
+
         return user;
     }
 
     @Override
     public boolean addUser(String email, String phone, String firstName,
                            String secondName, String lastName, String password)
-            throws DatabaseException {
+            throws SQLException {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
                 " second_name, last_name, password, isactive) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -135,25 +118,17 @@ public class UserDaoImpl implements UserDao {
             statement.setString(6, password);
             statement.setBoolean(7, true);
             statement.executeUpdate();
-        } catch (SQLException e ) {
-            String msg = "Ошибка при запросе к базе данных";
-            logger.warn(msg, e);
-            throw new DatabaseException(msg);
         }
         return true;
     }
 
     @Override
-    public boolean deleteUser(int id) throws DatabaseException {
+    public boolean deleteUser(int id) throws SQLException {
         String query = "DELETE FROM userentry WHERE id=?;";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.executeUpdate();
-        } catch (SQLException e ) {
-            String msg = "Ошибка при запросе к базе данных";
-            logger.warn(msg, e);
-            throw new DatabaseException(msg);
         }
         return true;
     }

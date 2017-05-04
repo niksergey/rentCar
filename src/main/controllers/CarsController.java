@@ -68,7 +68,7 @@ public class CarsController  {
     }
 
     @RequestMapping(value = "/cars/{id}", method = RequestMethod.GET)
-    public String showCar(@PathVariable("id") int id, Model model) {
+    public String showCar(@PathVariable("id") int id, Model model) throws CarNotFoundException {
         logger.debug("showCar() id: {}", id);
 
         Car car = carService.findById(id);
