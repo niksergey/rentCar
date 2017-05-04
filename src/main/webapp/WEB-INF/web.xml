@@ -57,4 +57,9 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>WEB-INF/MainDispatcher-servlet.xml</param-value>
     </context-param>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/jsp/error.jsp</location>
+    </error-page>
 </web-app>

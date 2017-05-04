@@ -1,5 +1,6 @@
 package main.controllers;
 
+import main.exceptions.CarNotFoundException;
 import main.models.pojo.Car;
 import main.services.CarModelService;
 import main.services.CarService;
@@ -72,12 +73,10 @@ public class CarsController  {
 
         Car car = carService.findById(id);
         if (car == null) {
-            model.addAttribute("css", "danger");
-            model.addAttribute("msg", "Автомобиль не найден!");
+            throw new CarNotFoundException(id);
         }
 
         model.addAttribute("car", car);
-
         return "cars/show";
     }
 
