@@ -21,7 +21,7 @@
     </http>
 
     <beans:bean id="roleBasedAuthenticationSuccessHandler"
-                class="main.controllers.handlers.RentUrlAuthenticationSuccessHandler"/>
+                class="main.controllers.handlers.RoleBasedUrlAuthenticationSuccessHandler"/>
 
     <authentication-manager>
         <authentication-provider>
