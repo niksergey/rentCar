@@ -37,7 +37,6 @@
                     <th>ФИО</th>
                     <th>Email</th>
                     <th>Телефон</th>
-                    <th>Админ</th>
                     <th>Активен</th>
                 </tr>
                 </thead>
@@ -48,8 +47,7 @@
                             <td><c:out value="${user.getSecondName()} ${user.getFirstName()} ${user.getLastName()}"/></td>
                             <td><c:out value="${user.getEmail()}"/></td>
                             <td><c:out value="${user.getPhoneNumber()}"/></td>
-                            <td><c:out value="${user.isAdminFlag()}"/></td>
-                            <td><c:out value="${user.isActiveFlag()}"/></td>
+                            <td><c:out value="${user.isEnabled()}"/></td>
                             <td>
                                 <form action="${path}/users/${user.getId()}/update">
                                     <button type="submit" class="btn btn-warning">Редактировать</button>

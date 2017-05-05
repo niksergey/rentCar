@@ -24,28 +24,12 @@
     </listener>
 
     <filter>
-    <filter-name>WhiteList</filter-name>
-    <filter-class>main.controllers.filters.WhiteList</filter-class>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
-
     <filter-mapping>
-    <filter-name>WhiteList</filter-name>
-    <url-pattern>/cars/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>WhiteList</filter-name>
-        <url-pattern>/users/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>WhiteList</filter-name>
-        <url-pattern>/carmodels/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>WhiteList</filter-name>
-        <url-pattern>/rents/*</url-pattern>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <context-param>
@@ -55,7 +39,9 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>WEB-INF/MainDispatcher-servlet.xml</param-value>
+        <param-value>WEB-INF/MainDispatcher-servlet.xml
+            WEB-INF/spring-database.xml WEB-INF/spring-security.xml
+        </param-value>
     </context-param>
 
     <error-page>

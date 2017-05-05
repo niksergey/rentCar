@@ -7,9 +7,7 @@ public class User {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private boolean adminFlag;
-    private boolean activeFlag;
-    private boolean deletedFlag;
+    private boolean enabled;
 
     public User() {
     }
@@ -24,17 +22,14 @@ public class User {
     }
 
     public User(int id, String firstName, String secondName, String lastName,
-                String phoneNumber, String email,
-                boolean adminFlag, boolean activeFlag, boolean deletedFlag) {
+                String phoneNumber, String email, boolean enabled) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.adminFlag = adminFlag;
-        this.activeFlag = activeFlag;
-        this.deletedFlag = deletedFlag;
+        this.enabled = enabled;
     }
 
     public boolean isNew() {
@@ -89,29 +84,14 @@ public class User {
         this.email = value;
     }
 
-    public boolean isAdminFlag() {
-        return adminFlag;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setAdminFlag(boolean value) {
-        this.adminFlag = value;
+    public void setEnabled(boolean value) {
+        this.enabled = value;
     }
 
-    public boolean isActiveFlag() {
-        return activeFlag;
-    }
-
-    public void setActiveFlag(boolean value) {
-        this.activeFlag = value;
-    }
-
-    public boolean isDeletedFlag() {
-        return deletedFlag;
-    }
-
-    public void setDeletedFlag(boolean value) {
-        this.deletedFlag = value;
-    }
 
     @Override
     public String toString() {

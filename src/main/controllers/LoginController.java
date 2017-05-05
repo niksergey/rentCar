@@ -29,31 +29,6 @@ public class LoginController  {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String processLogin(@RequestParam("email") String email,
-                               @RequestParam("password") String password,
-                               final RedirectAttributes redirectAttributes,
-                               HttpSession session)
-            throws SQLException
-    {
-        logger.debug("email/Password: " + email + " " + password);
-        String text;
-
-        User user = userService.auth(email, password);
-        if (user == null) {
-            text = "Пользователь с такой комбинацией email и пароль не найден";
-        } else if (user.isActiveFlag()) {
-            session.setAttribute("userEmail", email);
-            return "redirect:/cars";
-        } else {
-            text = "Пользователь заблокирован";
-        }
-
-        String cssStatus = "danger";
-        redirectAttributes.addFlashAttribute("css", cssStatus);
-        redirectAttributes.addFlashAttribute("msg", text);
-        return "redirect:/login";
-    }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession session,

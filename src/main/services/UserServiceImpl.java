@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        if (!user.isActiveFlag()) {
+        if (!user.isEnabled()) {
             logger.debug(user + " blocked");
             return user;
         }

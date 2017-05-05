@@ -22,9 +22,7 @@ public class UserDaoImpl implements UserDao {
                 result.getString("last_name"),
                 result.getString("phone_number"),
                 result.getString("email"),
-                result.getBoolean("isadmin"),
-                result.getBoolean("isactive"),
-                result.getBoolean("isdeleted"));
+                result.getBoolean("enabled"));
         return user;
     }
 
