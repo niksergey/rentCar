@@ -11,14 +11,17 @@
         <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
         <form-login
                 login-page="/login"
-                default-target-url="/cars"
                 authentication-failure-url="/login?error"
+                authentication-success-handler-ref="roleBasedAuthenticationSuccessHandler"
                 username-parameter="email"
                 password-parameter="password" />
         <logout logout-success-url="/login?logout" />
         <!-- enable csrf protection -->
         <csrf disabled="true"/>
     </http>
+
+    <beans:bean id="roleBasedAuthenticationSuccessHandler"
+                class="main.controllers.handlers.RentUrlAuthenticationSuccessHandler"/>
 
     <authentication-manager>
         <authentication-provider>
