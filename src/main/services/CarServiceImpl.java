@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,6 @@ public class CarServiceImpl implements CarService {
             car.setCarModel(cm);
             allCars.add(car);
         }
-//        allCars.parallelStream().forEach((car)->
-//                car.setCarModel(carModelService.findById(car.getCarModelId())));
         return allCars;
     }
 
@@ -76,5 +75,20 @@ public class CarServiceImpl implements CarService {
             car.setCarModel(cm);
         }
         return car;
+    }
+
+    @Override
+    public int getNumberAllCars() throws SQLException {
+        return carDao.getNumberAllCars();
+    }
+
+    @Override
+    public int getNumberAvailableCars()  throws SQLException {
+        return carDao.getNumberAvailableCars();
+    }
+
+    @Override
+    public int getNumberRentedCars()  throws SQLException {
+        return carDao.getNumberRentedCars();
     }
 }

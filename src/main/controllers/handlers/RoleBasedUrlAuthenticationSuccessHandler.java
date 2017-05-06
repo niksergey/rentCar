@@ -31,10 +31,10 @@ public class RoleBasedUrlAuthenticationSuccessHandler extends SimpleUrlAuthentic
         String targetUrl;
         if (savedRequest == null) {
             targetUrl = determineTargetUrl(authentication);
-            logger.debug("Based on role:");
+            logger.debug("Based on role.");
         } else {
             targetUrl = savedRequest.getRedirectUrl();
-            logger.debug("Based on previous URL:");
+            logger.debug("Based on previous URL.");
         }
 
         String targetUrlParameter = getTargetUrlParameter();
@@ -72,7 +72,7 @@ public class RoleBasedUrlAuthenticationSuccessHandler extends SimpleUrlAuthentic
         if (isUser) {
             return "/userpage";
         } else if (isAdmin) {
-            return "/adminpage";
+            return "/admin";
         } else {
             throw new IllegalStateException();
         }

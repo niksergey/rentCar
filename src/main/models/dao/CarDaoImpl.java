@@ -136,4 +136,52 @@ public class CarDaoImpl implements CarDao {
         }
         return false;
     }
+
+    @Override
+    public int getNumberAllCars() throws SQLException {
+        int quantity = 0;
+
+        String query = "SELECT COUNT(*) FROM car;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery(query)) {
+            if (result.next()) {
+                quantity = result.getInt(1);
+            }
+        }
+
+        return quantity;
+    }
+
+    @Override
+    public int getNumberAvailableCars() throws SQLException {
+        int quantity = 0;
+
+        String query = "SELECT COUNT(*) FROM car WHERE rented=FALSE;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery(query)) {
+            if (result.next()) {
+                quantity = result.getInt(1);
+            }
+        }
+
+        return quantity;
+    }
+
+    @Override
+    public int getNumberRentedCars() throws SQLException {
+        int quantity = 0;
+
+        String query = "SELECT COUNT(*) FROM car WHERE rented=TRUE;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery(query)) {
+            if (result.next()) {
+                quantity = result.getInt(1);
+            }
+        }
+
+        return quantity;
+    }
 }

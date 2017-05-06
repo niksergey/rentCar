@@ -27,6 +27,7 @@ public class GlobalControllerExceptionHandler
     @ExceptionHandler(value = {SQLException.class, DataAccessException.class})
     public ModelAndView databaseError(Exception exception) {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("error-desc", exception.toString());
         mav.setViewName("/errors/databaseError");
         logger.error("Request raised " + exception.getClass().getSimpleName());
         return mav;

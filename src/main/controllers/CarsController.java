@@ -40,7 +40,7 @@ public class CarsController  {
 
         List<Car> allCars = carService.getAllCars();
         model.addAttribute("cars", allCars);
-        return "/cars/list";
+        return "cars/list";
     }
 
     @RequestMapping(value = "/cars", method = RequestMethod.POST)
