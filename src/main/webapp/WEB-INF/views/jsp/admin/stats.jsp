@@ -33,19 +33,44 @@
             <br />
 
             <div class="row">
-                <label class="col-sm-2">Машин всего</label>
-                <div class="col-sm-10">${totalcars}</div>
-            </div>
-
-            <div class="row">
-                <label class="col-sm-2">Машин доступно</label>
-                <div class="col-sm-10">${availablecars}</div>
-            </div>
-
-            <div class="row">
-                <label class="col-sm-2">Автомобилей арендовано</label>
-                <div class="col-sm-10">${rentedcars}</div>
-            </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Автомобили</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="badge">${rentedcars}</span>
+                                Арендовано
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">${availablecars}</span>
+                                Доступно
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">${totalcars}</span>
+                                Всего
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Аренды</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="badge">${currentrents}</span>
+                                Текущие
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">${finishedrents}</span>
+                                Завершенные
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </jsp:body>

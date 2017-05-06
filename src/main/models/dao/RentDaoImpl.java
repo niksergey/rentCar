@@ -79,4 +79,34 @@ public class RentDaoImpl implements  RentDao {
         }
         return rent;
     }
+
+    @Override
+    public int getCurrentRents() throws SQLException {
+        String query = "SELECT COUNT(*) FROM rent WHERE started=TRUE AND " +
+                "finished=FALSE;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery(query)) {
+            if (result.next()) {
+                return result.getInt(1);
+            } else {
+                throw new SQLException("Impossible result");
+            }
+        }
+    }
+
+    @Override
+    public int getFinishedRents() throws SQLException {
+        String query = "SELECT COUNT(*) FROM rent WHERE started=TRUE AND " +
+                "finished=TRUE;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery(query)) {
+            if (result.next()) {
+                return result.getInt(1);
+            } else {
+                throw new SQLException("Impossible result");
+            }
+        }
+    }
 }

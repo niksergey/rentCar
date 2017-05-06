@@ -32,6 +32,9 @@ public class WelcomeController {
         model.addAttribute("totalcars", carService.getNumberAllCars());
         model.addAttribute("rentedcars", carService.getNumberRentedCars());
         model.addAttribute("availablecars", carService.getNumberAvailableCars());
+        model.addAttribute("currentrents", rentService.getNumberCurrentRents());
+        model.addAttribute("finishedrents", rentService.getNumberFinishedRents());
+
         return "admin/stats";
     }
 

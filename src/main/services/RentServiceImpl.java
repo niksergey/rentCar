@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -24,5 +25,15 @@ public class RentServiceImpl implements RentService {
     @Override
     public List<Rent> getAllRents() {
         return rd.getAll();
+    }
+
+    @Override
+    public int getNumberCurrentRents() throws SQLException {
+        return rd.getCurrentRents();
+    }
+
+    @Override
+    public int getNumberFinishedRents() throws SQLException {
+        return rd.getFinishedRents();
     }
 }
