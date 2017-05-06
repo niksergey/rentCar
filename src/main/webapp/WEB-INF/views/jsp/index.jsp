@@ -7,7 +7,6 @@
     <jsp:attribute name="title">
       Краткосрочная аренда автомобилей в Иннополисе
         <c:set var="context" value="${pageContext.request.contextPath}"/>
-        <c:set var="sessionKey" value="${sessionScope.userEmail}"/>
     </jsp:attribute>
     <jsp:attribute name="stylecss">
         <%--<c:if test="${sessionKey != null}">--%>
@@ -41,8 +40,19 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <c:choose>
                 <c:when test="${sessionKey eq null}">
-                    <h1>Добро пожаловать!</h1>
-                    <h2>Авторизируйтесь для работы с системой</h2>
+                    <h2>Поминутная аренда автомобилей в Иннополисе</h2>
+                    <h4>Управляй арендой через личный кабинет</h4>
+                    <br/>
+                    <br/>
+                    <h3>
+                        <ul >
+                            <li><a href="${context}/signup">Зарегистрируйся</a></li>
+                            <li>Выбери удобный для тебя автомобиль</li>
+                            <li>Начни аренду</li>
+                            <li>Наслаждайся поездкой</li>
+                            <li>Заверши аренду в любом разрешенном месте</li>
+                        </ul>
+                    </h3>
                 </c:when>
                 <c:otherwise>
                     <t:lksidebar/>
