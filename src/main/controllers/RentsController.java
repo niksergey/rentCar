@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/admin/rents")
 public class RentsController  {
     private static final Logger logger = LogManager.getLogger(RentsController.class);
 
@@ -20,7 +21,7 @@ public class RentsController  {
         this.rentService = rentService;
     }
 
-    @RequestMapping(value = "/rents", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String showRents(Model model) {
         model.addAttribute("rents", rentService.getAllRents());
         return "rents/list";

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.sql.SQLException;
 
 @Controller
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/admin/users")
 public class UsersController {
     private static final Logger logger = LogManager.getLogger(UsersController.class);
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/admin/carmodels")
 public class CarModelsController {
     private static final Logger logger = LogManager.getLogger(CarModelsController.class);
 
@@ -26,13 +27,13 @@ public class CarModelsController {
         this.carModelService = carModelService;
     }
 
-    @RequestMapping(value = "/carmodels", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String showCarModels(Model model) {
         model.addAttribute("carModels", carModelService.getAllCarModels());
         return "carmodels/list";
     }
 
-    @RequestMapping(value = "/carmodels", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public String saveOrUpdateCarModel(@ModelAttribute("carModelForm") @Validated CarModel carModel,
                                   BindingResult result, Model model,
                                   final RedirectAttributes redirectAttributes) {
@@ -57,7 +58,7 @@ public class CarModelsController {
         }
     }
 
-    @RequestMapping(value = "/carmodels/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String showCar(@PathVariable("id") int id, Model model) {
         logger.debug("showCar() id: {}", id);
 
@@ -72,7 +73,7 @@ public class CarModelsController {
         return "carmodels/show";
     }
 
-    @RequestMapping(value = "/carmodels/{id}/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateCarForm(@PathVariable("id") int id, Model model) {
 
         logger.debug("showUpdateCarForm() : " + id);
@@ -88,7 +89,7 @@ public class CarModelsController {
         return "carmodels/carmodelform";
     }
 
-    @RequestMapping(value = "/carmodels/{id}/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String deleteCarModel(@PathVariable("id") int id, Model model,
                                  RedirectAttributes redirectAttributes) {
         logger.debug("deleteCarModel() " + id);
@@ -108,7 +109,7 @@ public class CarModelsController {
         return "redirect:/carmodels";
     }
 
-    @RequestMapping(value = "/carmodels/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showAddCarModelForm(Model model) {
         logger.debug("showAddCarmodelForm");
 

@@ -32,8 +32,8 @@
 
             <br />
 
-            <div class="row">
-                <div class="panel panel-primary">
+            <div class="row justify-content-md-center">
+                <div class="panel panel-primary col">
                     <div class="panel-heading">
                         <h3 class="panel-title">Автомобили</h3>
                     </div>
@@ -54,7 +54,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel panel-primary">
+                <div class="panel panel-primary col">
                     <div class="panel-heading">
                         <h3 class="panel-title">Аренды</h3>
                     </div>

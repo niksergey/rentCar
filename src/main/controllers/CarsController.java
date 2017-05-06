@@ -18,6 +18,7 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping("/admin/cars")
 public class CarsController  {
     private static final Logger logger = LogManager.getLogger(CarsController.class);
 
@@ -34,7 +35,7 @@ public class CarsController  {
         this.carModelService = carModelService;
     }
 
-    @RequestMapping(value = "/cars", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String getCars(Model model) {
         logger.info("in /cars GET ");
 
@@ -43,7 +44,7 @@ public class CarsController  {
         return "cars/list";
     }
 
-    @RequestMapping(value = "/cars", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public String saveOrUpdateCar(@ModelAttribute("carForm") @Validated Car car,
                                    BindingResult result,
                                   final RedirectAttributes redirectAttributes) {
@@ -67,7 +68,7 @@ public class CarsController  {
         }
     }
 
-    @RequestMapping(value = "/cars/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String showCar(@PathVariable("id") int id, Model model) throws CarNotFoundException {
         logger.debug("showCar() id: {}", id);
 
@@ -80,7 +81,7 @@ public class CarsController  {
         return "cars/show";
     }
 
-    @RequestMapping(value = "/cars/{id}/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String deleteCar(@PathVariable("id") int id,
                             final RedirectAttributes redirectAttributes) {
         String cssStatus;
@@ -101,7 +102,7 @@ public class CarsController  {
         return "redirect:/cars";
     }
 
-    @RequestMapping(value = "/cars/{id}/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     public String showUpdateCarForm(@PathVariable("id") int id, Model model) {
         logger.debug("showUpdateCarForm() : {}", id);
 
@@ -113,7 +114,7 @@ public class CarsController  {
         return "cars/carform";
     }
 
-    @RequestMapping(value = "/cars/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showAddCarForm(Model model) {
         Car car = new Car();
         model.addAttribute("carForm", car);
