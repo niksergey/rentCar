@@ -18,7 +18,7 @@
         </c:choose>
     </jsp:attribute>
     <jsp:attribute name="stylecss">
-            <c:set var="context" value="${pageContext.request.contextPath}" />
+            <c:set var="path" value="${pageContext.request.contextPath}/admin" />
         <link href="<c:url value="/resources/css/dashboard.css"/>" rel="stylesheet">
     </jsp:attribute>
 
@@ -34,7 +34,7 @@
         </c:choose>
         <br />
 
-        <spring:url value="/carmodels" var="carModelActionUrl"/>
+        <spring:url value="/admin/carmodels" var="carModelActionUrl"/>
 
         <form:form class="form-horizontal" method="post" modelAttribute="carModelForm" action="${carModelActionUrl}">
 
@@ -53,7 +53,7 @@
 
             <spring:bind path="model">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <label class="col-sm-2 control-label">VIN</label>
+                    <label class="col-sm-2 control-label">Модель</label>
                     <div class="col-sm-10">
                         <form:input path="model" type="text" class="form-control "
                                     id="model" placeholder="Модель" />

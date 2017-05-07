@@ -64,7 +64,7 @@ public class CarsController  {
             if (car.isNew()) {
                 car = carService.findByVin(car.getVin());
             }
-            return "redirect:/cars/" + car.getId();
+            return "redirect:/admin/cars/" + car.getId();
         }
     }
 
@@ -99,7 +99,7 @@ public class CarsController  {
 
         redirectAttributes.addFlashAttribute("css", cssStatus);
         redirectAttributes.addFlashAttribute("msg", msg);
-        return "redirect:/cars";
+        return "redirect:/admin/cars";
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)

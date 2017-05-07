@@ -18,7 +18,7 @@
         </c:choose>
     </jsp:attribute>
     <jsp:attribute name="stylecss">
-            <c:set var="context" value="${pageContext.request.contextPath}" />
+            <c:set var="path" value="${pageContext.request.contextPath}/admin" />
         <link href="<c:url value="/resources/css/dashboard.css"/>" rel="stylesheet">
     </jsp:attribute>
 
@@ -34,7 +34,7 @@
         </c:choose>
         <br />
 
-        <spring:url value="/cars" var="carModelActionUrl"/>
+        <spring:url value="/admin/cars" var="carModelActionUrl"/>
 
         <form:form class="form-horizontal" method="post" modelAttribute="carForm" action="${carModelActionUrl}">
 

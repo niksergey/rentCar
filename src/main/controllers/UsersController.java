@@ -47,6 +47,6 @@ public class UsersController {
 
         redirectAttributes.addFlashAttribute("css", cssStatus);
         redirectAttributes.addFlashAttribute("msg", msg);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 }

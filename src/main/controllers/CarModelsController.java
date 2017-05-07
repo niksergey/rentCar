@@ -51,10 +51,10 @@ public class CarModelsController {
             carModelService.saveOrUpdateCarModel(carModel);
 
             if (carModel.isNew()) {
-                return "redirect:/carmodels";
+                return "redirect:/admin/carmodels";
             }
 
-            return "redirect:/carmodels/" + carModel.getId();
+            return "redirect:/admin/carmodels/" + carModel.getId();
         }
     }
 
@@ -106,7 +106,7 @@ public class CarModelsController {
 
         redirectAttributes.addFlashAttribute("css", cssStatus);
         redirectAttributes.addFlashAttribute("msg", msg);
-        return "redirect:/carmodels";
+        return "redirect:/admin/carmodels";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)

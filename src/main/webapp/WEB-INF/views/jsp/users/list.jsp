@@ -7,7 +7,7 @@
       Список авто
     </jsp:attribute>
     <jsp:attribute name="stylecss">
-                <c:set var="path" value="${pageContext.request.contextPath}" />
+                <c:set var="path" value="${pageContext.request.contextPath}/admin" />
         <link href="<c:url value="/resources/css/dashboard.css"/>" rel="stylesheet">
     </jsp:attribute>
 

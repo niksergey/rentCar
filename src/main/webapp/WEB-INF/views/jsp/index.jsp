@@ -6,7 +6,7 @@
 <t:genericpage>
     <jsp:attribute name="title">
       Краткосрочная аренда автомобилей в Иннополисе
-        <c:set var="context" value="${pageContext.request.contextPath}"/>
+        <c:set var="path" value="${pageContext.request.contextPath}"/>
     </jsp:attribute>
     <jsp:attribute name="stylecss">
         <%--<c:if test="${sessionKey != null}">--%>
@@ -18,11 +18,11 @@
     <jsp:attribute name="logaction">
         <c:choose>
         <c:when test="${sessionKey eq null}">
-            <form class="navbar-form navbar-right" action="${context}/signup">
+            <form class="navbar-form navbar-right" action="${path}/signup">
                 <button type="submit" class="btn btn-success">Зарегистрироваться</button>
             </form>
 
-            <form class="navbar-form navbar-right" action="${context}/login">
+            <form class="navbar-form navbar-right" action="${path}/login">
                 <button type="submit" class="btn btn-success">Войти</button>
             </form>
         </c:when>
@@ -46,7 +46,7 @@
                     <br/>
                     <h3>
                         <ul >
-                            <li><a href="${context}/signup">Зарегистрируйся</a></li>
+                            <li><a href="${path}/signup">Зарегистрируйся</a></li>
                             <li>Выбери удобный для тебя автомобиль</li>
                             <li>Начни аренду</li>
                             <li>Наслаждайся поездкой</li>

@@ -12,8 +12,8 @@
     </jsp:attribute>
 
     <jsp:attribute name="logaction">
-    <c:set var="context" value="${pageContext.request.contextPath}"/>
-    <form class="navbar-form navbar-right" action="${context}/signup">
+    <c:set var="path" value="${pageContext.request.contextPath}"/>
+    <form class="navbar-form navbar-right" action="${path}/signup">
         <button type="submit" class="btn btn-success">Зарегистрироваться</button>
     </form>
     </jsp:attribute>

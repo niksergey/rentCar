@@ -10,14 +10,14 @@
       Регистрация
     </jsp:attribute>
     <jsp:attribute name="stylecss">
-            <c:set var="context" value="${pageContext.request.contextPath}" />
+            <c:set var="path" value="${pageContext.request.contextPath}" />
         <link href="<c:url value="/resources/css/signup.css"/>" rel="stylesheet">
     </jsp:attribute>
 
     <jsp:body>
         <c:set var="context" value="${pageContext.request.contextPath}" />
 
-        <form:form class="form-signup" method="post" modelAttribute="user" action="${context}/signup">
+        <form:form class="form-signup" method="post" modelAttribute="user" action="${path}/signup">
             <h2 class="form-signup-heading">Регистрация</h2>
 
             <div class="form-group ${status.error ? 'has-error' : ''}">
