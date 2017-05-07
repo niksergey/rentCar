@@ -104,7 +104,7 @@ public class UserDaoImpl implements UserDao {
                            String secondName, String lastName, String password)
             throws SQLException {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
-                " second_name, last_name, password, isactive) " +
+                " second_name, last_name, password, enabled) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
@@ -123,7 +123,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User addUser(User user) throws SQLException {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
-                " second_name, last_name, password, isactive) " +
+                " second_name, last_name, password, enabled) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {

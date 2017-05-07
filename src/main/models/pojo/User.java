@@ -127,10 +127,15 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }

@@ -3,7 +3,7 @@
 <%@attribute name="title" fragment="true" %>
 <%@attribute name="stylecss" fragment="true" %>
 <%@attribute name="logaction" fragment="true" %>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

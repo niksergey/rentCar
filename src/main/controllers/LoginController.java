@@ -37,8 +37,7 @@ public class LoginController  {
         return "login";
     }
 
-
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST) //todo
     public String logout(HttpSession session,
             final RedirectAttributes redirectAttributes) {
         session.invalidate();
@@ -48,57 +47,37 @@ public class LoginController  {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signUpForm() {
-        return "signup";
+    public String signUpForm(Model model) {
+        UserDto userDto = new UserDto();
+        model.addAttribute("user", userDto);
+        return "registrationForm";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signUp(@RequestParam("email") String email,
-                         @RequestParam("phone") String phone,
-                         @RequestParam("first_name") String first_name,
-                         @RequestParam("second_name") String second_name,
-                         @RequestParam("last_name") String last_name,
-                         @RequestParam("password") String password,
-                         RedirectAttributes redirectAttributes)
-            throws SQLException
-    {
-        int res = userService.register(email, phone, first_name, second_name,
-                    last_name, password);
-
-        if (res == 0) {
-            return "redirect:/login";
-        } else {
-            redirectAttributes.addFlashAttribute("css", "danger");
-            redirectAttributes.addFlashAttribute("msg", "Не удалось зарегистрировать пользователя");
-            return "redirect:/signup";
-        }
-    }
-
-    @RequestMapping(value = "/signup2", method = RequestMethod.POST)
     public ModelAndView registerNewUserAccount(
             @ModelAttribute("user") @Valid UserDto accountDto,
-            BindingResult result, WebRequest request,
-            Errors errors) throws SQLException
+            BindingResult result) throws SQLException
     {
+        logger.debug(accountDto);
         User registered = new User();
 
         if(!result.hasErrors()) {
-            registered = createUserAccount(accountDto, result);
-        }
-
-        if (registered == null) {
-            result.rejectValue("email", "message.regError");
+            registered = createUserAccount(accountDto);
+            if (registered == null) {
+                result.rejectValue("email", "message.regError",
+                        "Пользователь с таким email существует!");
+            }
         }
 
         if(result.hasErrors()) {
-            return new ModelAndView("signup", "user", accountDto);
+            return new ModelAndView("registrationForm", "user", accountDto);
         } else {
             return new ModelAndView("login");
         }
     }
 
-    private User createUserAccount(UserDto accountDto, BindingResult result) throws SQLException {
-        User registered = null;
+    private User createUserAccount(UserDto accountDto) throws SQLException {
+        User registered;
         try {
             registered = userService.registerNewUserAccount(accountDto);
         } catch (EmailExistsException e) {
