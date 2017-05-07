@@ -24,6 +24,10 @@ public class UserDto {
     @Size(min = 1)
     private String email;
 
+    @NotNull
+    @Size(min = 6)
+    private String password;
+
     private boolean enabled;
 
     public UserDto() {
@@ -83,5 +87,13 @@ public class UserDto {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

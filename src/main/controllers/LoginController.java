@@ -7,6 +7,7 @@ import main.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,7 +75,7 @@ public class LoginController  {
     }
 
     @RequestMapping(value = "/signup2", method = RequestMethod.POST)
-    public ModelAndView registerUserAccount(
+    public ModelAndView registerNewUserAccount(
             @ModelAttribute("user") @Valid UserDto accountDto,
             BindingResult result, WebRequest request,
             Errors errors) throws SQLException

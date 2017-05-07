@@ -7,6 +7,7 @@ import main.models.pojo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
 
     private UserDao userDao;
+    private PasswordEncoder passwordEncoder;
 
     public UserServiceImpl() {
     }
@@ -25,6 +27,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -67,13 +74,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerNewUserAccount(UserDto userDto) throws EmailExistsException, SQLException {
-        if (emailExist(userDto.getEmail())) {
+    public User registerNewUserAccount(UserDto accountDto) throws EmailExistsException, SQLException {
+        if (emailExist(accountDto.getEmail())) {
             throw new EmailExistsException("There is an account with that email address: "
-                    + userDto.getEmail());
+                    + accountDto.getEmail());
         }
 
-        User user = new User(userDto);
+        User user = new User(accountDto);
+        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setRoles(Arrays.asList("ROLE_USER"));
         return userDao.addUser(user);
     }
