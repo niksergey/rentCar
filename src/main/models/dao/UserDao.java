@@ -9,6 +9,7 @@ public interface UserDao {
     List<User> getAll() throws SQLException;
     User findByEmailAndPassword(String email, String password) throws SQLException;
     User findByEmail(String email) throws SQLException;
+    List<String> findRolesByEmail(String email) throws SQLException;
     User findByPhone(String phone) throws SQLException;
     boolean addUser(String email, String phone, String firstName,
                     String secondName, String lastName, String password) throws SQLException;

@@ -14,7 +14,7 @@ public class User {
     private boolean enabled;
     private String password;
 
-    List<String> roles;
+    private List<String> roles;
 
     public User() {
     }
@@ -29,7 +29,7 @@ public class User {
     }
 
     public User(int id, String firstName, String secondName, String lastName,
-                String phoneNumber, String email, boolean enabled) {
+                String phoneNumber, String email, boolean enabled, String password) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -37,6 +37,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.enabled = enabled;
+        this.password = password;
     }
 
     public User(UserDto userDto) {
@@ -45,6 +46,7 @@ public class User {
         this.lastName = userDto.getLastName();
         this.phoneNumber = userDto.getPhoneNumber();
         this.email = userDto.getEmail();
+        this.password = userDto.getPassword();
     }
 
     public boolean isNew() {

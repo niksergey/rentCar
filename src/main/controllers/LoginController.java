@@ -59,7 +59,7 @@ public class LoginController  {
             BindingResult result) throws SQLException
     {
         logger.debug(accountDto);
-        User registered = new User();
+        User registered;
 
         if(!result.hasErrors()) {
             registered = createUserAccount(accountDto);

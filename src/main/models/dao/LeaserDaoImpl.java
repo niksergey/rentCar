@@ -24,7 +24,8 @@ public class LeaserDaoImpl implements LeaserDao {
                     result.getString("last_name"),
                     result.getString("phone_number"),
                     result.getString("email"),
-                    result.getBoolean("enabled"));
+                    result.getBoolean("enabled"),
+                    result.getString("password"));
         } catch (SQLException e) {
             logger.warn("Cannot create Leaser from ResultSet", e);
         }

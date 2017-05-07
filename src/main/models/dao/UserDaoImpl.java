@@ -22,7 +22,8 @@ public class UserDaoImpl implements UserDao {
                 result.getString("last_name"),
                 result.getString("phone_number"),
                 result.getString("email"),
-                result.getBoolean("enabled"));
+                result.getBoolean("enabled"),
+                result.getString("password"));
         return user;
     }
 
@@ -66,6 +67,7 @@ public class UserDaoImpl implements UserDao {
             throws SQLException {
         String query = "SELECT * FROM userentry " +
                 "WHERE email=?";
+
         User user = null;
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();
@@ -78,6 +80,23 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return user;
+    }
+
+    @Override
+    public List<String> findRolesByEmail(String email) throws SQLException {
+        String query = "SELECT role FROM user_roles " +
+                "WHERE email=?";
+        List<String> roles = new ArrayList<>(2);
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    roles.add(result.getString("role"));
+                }
+            }
+        }
+        return roles;
     }
 
     @Override

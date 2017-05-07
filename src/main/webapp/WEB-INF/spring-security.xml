@@ -23,16 +23,21 @@
     <beans:bean id="roleBasedAuthenticationSuccessHandler"
                 class="main.controllers.handlers.RoleBasedUrlAuthenticationSuccessHandler"/>
 
-    <beans:bean id="passwordEncoder"
+    <beans:bean id="byPasswordEncoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <beans:bean id="passwordEncodedUserDetailService"
+          class="main.services.PasswordEncodedUserDetailService"/>
+
+    <beans:bean id="authProvider"
+          class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="passwordEncodedUserDetailService" />
+        <beans:property name="passwordEncoder" ref="byPasswordEncoder" />
+    </beans:bean>
+
+
     <authentication-manager>
-        <authentication-provider>
-            <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query=
-                                       "select email, password, enabled from userentry where email=?;"
-                               authorities-by-username-query=
-                                       "select email, role from user_roles where email =?;" />
-        </authentication-provider>
+        <authentication-provider ref="authProvider"/>
     </authentication-manager>
 
 </beans:beans>

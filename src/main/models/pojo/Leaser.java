@@ -17,14 +17,9 @@ public class Leaser
     public Leaser() {
     }
 
-    public Leaser(String firstName, String secondName, String lastName,
-                  String phoneNumber, String email) {
-        super(firstName, secondName, lastName, phoneNumber, email);
-    }
-
     public Leaser(int id, String firstName, String secondName, String lastName,
-                  String phoneNumber, String email, boolean enabled) {
-        super(id, firstName, secondName, lastName, phoneNumber, email, enabled);
+                  String phoneNumber, String email, boolean enabled, String password) {
+        super(id, firstName, secondName, lastName, phoneNumber, email, enabled, password);
     }
 
     public String getLeaserSpecificValue() {

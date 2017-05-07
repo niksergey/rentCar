@@ -54,26 +54,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int register(String email, String phone, String firstName,
-                        String secondName, String lastName, String password)
-            throws SQLException
-    {
-        int res = 0;
-        if (userDao.findByEmail(email) != null)
-            res += 1;
-        if (userDao.findByPhone(phone) != null)
-            res += 2;
-        if (res > 0)
-            return res;
-
-        if (!userDao.addUser(email, phone, firstName, secondName,
-                lastName, password))
-            res = 4;
-
-        return res;
-    }
-
-    @Override
     public User registerNewUserAccount(UserDto accountDto) throws EmailExistsException, SQLException {
         if (emailExist(accountDto.getEmail())) {
             throw new EmailExistsException("There is an account with that email address: "
