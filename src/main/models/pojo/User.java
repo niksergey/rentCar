@@ -1,5 +1,9 @@
 package main.models.pojo;
 
+import main.models.dto.UserDto;
+
+import java.util.List;
+
 public class User {
     private Integer id;
     private String firstName;
@@ -8,6 +12,9 @@ public class User {
     private String phoneNumber;
     private String email;
     private boolean enabled;
+    private String password;
+
+    List<String> roles;
 
     public User() {
     }
@@ -30,6 +37,14 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.enabled = enabled;
+    }
+
+    public User(UserDto userDto) {
+        this.firstName = userDto.getFirstName();
+        this.secondName = userDto.getSecondName();
+        this.lastName = userDto.getLastName();
+        this.phoneNumber = userDto.getPhoneNumber();
+        this.email = userDto.getEmail();
     }
 
     public boolean isNew() {
@@ -92,6 +107,22 @@ public class User {
         this.enabled = value;
     }
 
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {

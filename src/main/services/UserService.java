@@ -1,5 +1,7 @@
 package main.services;
 
+import main.exceptions.EmailExistsException;
+import main.models.dto.UserDto;
 import main.models.pojo.User;
 
 import java.sql.SQLException;
@@ -10,6 +12,7 @@ public interface UserService {
     int register(String email, String phone, String firstName, String secondName,
                      String lastName, String password) throws SQLException;
 
+    User registerNewUserAccount(UserDto userDto) throws EmailExistsException, SQLException;
     List<User> getAllUsers() throws SQLException;
     boolean deleteById(int id) throws SQLException;
 }

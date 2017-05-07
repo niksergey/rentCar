@@ -121,6 +121,26 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User addUser(User user) throws SQLException {
+        String query = "INSERT INTO userentry (email, phone_number, first_name," +
+                " second_name, last_name, password, isactive) " +
+                " VALUES (?, ?, ?, ?, ?, ?, ?);";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPhoneNumber());
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getSecondName());
+            statement.setString(5, user.getLastName());
+            statement.setString(6, user.getPassword());
+            statement.setBoolean(7, true);  // TODO
+            statement.executeUpdate();
+        }
+
+        return user;
+    }
+
+    @Override
     public boolean deleteUser(int id) throws SQLException {
         String query = "DELETE FROM userentry WHERE id=?;";
         try (Connection conn = DatabaseManager.getConnectionFromPool();

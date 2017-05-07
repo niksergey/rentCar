@@ -1,5 +1,7 @@
 package main.controllers;
 
+import main.exceptions.EmailExistsException;
+import main.models.dto.UserDto;
 import main.models.pojo.User;
 import main.services.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -7,10 +9,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.sql.SQLException;
 
 @Controller
@@ -64,5 +71,38 @@ public class LoginController  {
             redirectAttributes.addFlashAttribute("msg", "Не удалось зарегистрировать пользователя");
             return "redirect:/signup";
         }
+    }
+
+    @RequestMapping(value = "/signup2", method = RequestMethod.POST)
+    public ModelAndView registerUserAccount(
+            @ModelAttribute("user") @Valid UserDto accountDto,
+            BindingResult result, WebRequest request,
+            Errors errors) throws SQLException
+    {
+        User registered = new User();
+
+        if(!result.hasErrors()) {
+            registered = createUserAccount(accountDto, result);
+        }
+
+        if (registered == null) {
+            result.rejectValue("email", "message.regError");
+        }
+
+        if(result.hasErrors()) {
+            return new ModelAndView("signup", "user", accountDto);
+        } else {
+            return new ModelAndView("login");
+        }
+    }
+
+    private User createUserAccount(UserDto accountDto, BindingResult result) throws SQLException {
+        User registered = null;
+        try {
+            registered = userService.registerNewUserAccount(accountDto);
+        } catch (EmailExistsException e) {
+            return null;
+        }
+        return registered;
     }
 }

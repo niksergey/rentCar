@@ -12,5 +12,6 @@ public interface UserDao {
     User findByPhone(String phone) throws SQLException;
     boolean addUser(String email, String phone, String firstName,
                     String secondName, String lastName, String password) throws SQLException;
+    User addUser(User user) throws SQLException;
     boolean deleteUser(int id) throws SQLException;
 }
