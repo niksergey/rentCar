@@ -22,6 +22,7 @@
                     Внутренняя ошибка системы</h2>
                 <div class="error-details">
                     Попробуйте повторить действие, затем обратитесь в техподдержку
+                    ${error-desc}
                 </div>
                 <div class="error-actions">
                     <a href="${path}/" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>

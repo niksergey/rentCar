@@ -15,12 +15,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class PasswordEncodedUserDetailService implements UserDetailsService {
+public class RepositoryUserDetailService implements UserDetailsService {
     public final Logger logger = LogManager.getLogger(this.getClass());
 
     private UserDao userRepository;
 
-    public PasswordEncodedUserDetailService() {
+    public RepositoryUserDetailService() {
     }
 
     @Override

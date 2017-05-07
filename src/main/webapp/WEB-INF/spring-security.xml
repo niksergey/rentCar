@@ -27,11 +27,11 @@
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <beans:bean id="passwordEncodedUserDetailService"
-          class="main.services.PasswordEncodedUserDetailService"/>
+          class="main.services.RepositoryUserDetailService"/>
 
     <beans:bean id="authProvider"
           class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-        <beans:property name="userDetailsService" ref="passwordEncodedUserDetailService" />
+        <beans:property name="userDetailsService" ref="repositoryUserDetailService" />
         <beans:property name="passwordEncoder" ref="byPasswordEncoder" />
     </beans:bean>
 

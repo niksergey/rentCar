@@ -144,8 +144,11 @@ public class UserDaoImpl implements UserDao {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
                 " second_name, last_name, password, enabled) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String roleQuery = "INSERT INTO user_roles (email, role) VALUES (?, ?)";
+
         try (Connection conn = DatabaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
+             PreparedStatement statement = conn.prepareStatement(query);
+             PreparedStatement roleStatement = conn.prepareStatement(roleQuery)) {
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPhoneNumber());
             statement.setString(3, user.getFirstName());
@@ -154,6 +157,12 @@ public class UserDaoImpl implements UserDao {
             statement.setString(6, user.getPassword());
             statement.setBoolean(7, true);  // TODO
             statement.executeUpdate();
+
+            for (String role : user.getRoles()) {
+                roleStatement.setString(1, user.getEmail());
+                roleStatement.setString(2, role);
+                roleStatement.executeUpdate();
+            }
         }
 
         return user;

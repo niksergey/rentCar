@@ -29,7 +29,7 @@ public class GlobalControllerExceptionHandler
         ModelAndView mav = new ModelAndView();
         mav.addObject("error-desc", exception.toString());
         mav.setViewName("/errors/databaseError");
-        logger.error("Request raised " + exception.getClass().getSimpleName());
+        logger.error("Request raised " + exception);
         return mav;
     }
 
