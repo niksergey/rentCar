@@ -27,6 +27,11 @@ public class WelcomeController {
         return "index";
     }
 
+    @RequestMapping("/userpage")
+    public String userPage() {
+        return "userpage";
+    }
+
     @RequestMapping("/admin")
     public String statisticPage(Model model) throws SQLException {
         model.addAttribute("totalcars", carService.getNumberAllCars());
