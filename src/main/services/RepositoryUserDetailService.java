@@ -20,6 +20,7 @@ public class RepositoryUserDetailService implements UserDetailsService {
     private UserDao userRepository;
 
     public RepositoryUserDetailService() {
+        logger.warn("RepositoryUserDetailService");
     }
 
     @Override
@@ -33,6 +34,7 @@ public class RepositoryUserDetailService implements UserDetailsService {
 
         List<String> roles = userRepository.findRolesByEmail(email);
         user.setRoles(roles);
+        user.setEnabled(true);
 
         return new PasswUserDetail(user);
     }

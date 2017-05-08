@@ -18,18 +18,16 @@ public class UserDaoImpl implements UserDao {
     static final Logger logger = LogManager.getLogger(UserDaoImpl.class.getName());
 
     private User createEntity(ResultSet result) throws SQLException {
-        User user = null;
-        if (result.next()) {
-            user = new User(
-                    result.getInt("id"),
-                    result.getString("first_name"),
-                    result.getString("second_name"),
-                    result.getString("last_name"),
-                    result.getString("phone_number"),
-                    result.getString("email"),
-                    result.getBoolean("enabled"),
-                    result.getString("password"));
-        }
+        User user = new User(
+                result.getInt("id"),
+                result.getString("first_name"),
+                result.getString("second_name"),
+                result.getString("last_name"),
+                result.getString("phone_number"),
+                result.getString("email"),
+                result.getBoolean("enabled"),
+                result.getString("password"));
+
         return user;
     }
 
@@ -81,12 +79,14 @@ public class UserDaoImpl implements UserDao {
 
         User user = null;
 
+        logger.warn("User email " + email);
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
             try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
                     user = createEntity(result);
+                    logger.warn(user);
                 }
             }
         } catch (SQLException ex) {

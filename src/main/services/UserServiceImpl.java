@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
         User user = new User(accountDto);
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setRoles(Arrays.asList("ROLE_USER"));
+        user.setEnabled(true);
         logger.debug(user);
         return userDao.addUser(user);
     }
