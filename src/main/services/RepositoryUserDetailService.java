@@ -24,19 +24,16 @@ public class RepositoryUserDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = null;
-        try {
-            user = userRepository.findByEmail(email);
-            List<String> roles = userRepository.findRolesByEmail(email);
-            user.setRoles(roles);
-        } catch (SQLException e) {
-            logger.warn("User SQL error", e);
-        }
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
+    {
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException(email);
         }
+
+        List<String> roles = userRepository.findRolesByEmail(email);
+        user.setRoles(roles);
 
         return new PasswUserDetail(user);
     }

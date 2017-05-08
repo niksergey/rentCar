@@ -26,7 +26,7 @@ public class UsersController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String showUser(Model model) throws SQLException {
+    public String showUser(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users/list";
     }
@@ -34,7 +34,6 @@ public class UsersController {
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public String deleteUser(@PathVariable("id") int id,
                              RedirectAttributes redirectAttributes)
-            throws SQLException
     {
         String cssStatus;
         String msg;

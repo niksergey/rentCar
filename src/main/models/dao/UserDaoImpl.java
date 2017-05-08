@@ -4,6 +4,9 @@ import main.models.pojo.User;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.NonTransientDataAccessException;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -15,19 +18,22 @@ public class UserDaoImpl implements UserDao {
     static final Logger logger = LogManager.getLogger(UserDaoImpl.class.getName());
 
     private User createEntity(ResultSet result) throws SQLException {
-        User user = new User(
-                result.getInt("id"),
-                result.getString("first_name"),
-                result.getString("second_name"),
-                result.getString("last_name"),
-                result.getString("phone_number"),
-                result.getString("email"),
-                result.getBoolean("enabled"),
-                result.getString("password"));
+        User user = null;
+        if (result.next()) {
+            user = new User(
+                    result.getInt("id"),
+                    result.getString("first_name"),
+                    result.getString("second_name"),
+                    result.getString("last_name"),
+                    result.getString("phone_number"),
+                    result.getString("email"),
+                    result.getBoolean("enabled"),
+                    result.getString("password"));
+        }
         return user;
     }
 
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll() {
         String query = "SELECT * FROM userentry  ORDER BY id ASC;";
         List<User> users = new ArrayList<>(64);
 
@@ -38,12 +44,15 @@ public class UserDaoImpl implements UserDao {
                     users.add(createEntity(result));
                 }
             }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("getAll", query, ex);
         }
+
         return users;
     }
 
     public User findByEmailAndPassword(String email, String password)
-            throws SQLException {
+    {
         String query = "SELECT * FROM userentry " +
                 "WHERE email=? AND password=?";
         User user = null;
@@ -57,6 +66,8 @@ public class UserDaoImpl implements UserDao {
                     user = createEntity(result);
                 }
             }
+        }  catch (SQLException ex) {
+            throw new UncategorizedSQLException("findByEmailAndPassword", query, ex);
         }
 
         return user;
@@ -64,7 +75,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByEmail(String email)
-            throws SQLException {
+    {
         String query = "SELECT * FROM userentry " +
                 "WHERE email=?";
 
@@ -78,12 +89,15 @@ public class UserDaoImpl implements UserDao {
                     user = createEntity(result);
                 }
             }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("findByEmail", query, ex);
         }
+
         return user;
     }
 
     @Override
-    public List<String> findRolesByEmail(String email) throws SQLException {
+    public List<String> findRolesByEmail(String email) {
         String query = "SELECT role FROM user_roles " +
                 "WHERE email=?";
         List<String> roles = new ArrayList<>(2);
@@ -95,12 +109,15 @@ public class UserDaoImpl implements UserDao {
                     roles.add(result.getString("role"));
                 }
             }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("findRolesByEmail", query, ex);
         }
+
         return roles;
     }
 
     @Override
-    public User findByPhone(String phone) throws SQLException {
+    public User findByPhone(String phone) {
         String query = "SELECT * FROM userentry " +
                 "WHERE phone_number=?";
         User user = null;
@@ -113,6 +130,8 @@ public class UserDaoImpl implements UserDao {
                     user = createEntity(result);
                 }
             }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("findByPhone", query, ex);
         }
 
         return user;
@@ -121,7 +140,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean addUser(String email, String phone, String firstName,
                            String secondName, String lastName, String password)
-            throws SQLException {
+    {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
                 " second_name, last_name, password, enabled) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -135,12 +154,14 @@ public class UserDaoImpl implements UserDao {
             statement.setString(6, password);
             statement.setBoolean(7, true);
             statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("addUser", query, ex);
         }
         return true;
     }
 
     @Override
-    public User addUser(User user) throws SQLException {
+    public User addUser(User user) {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
                 " second_name, last_name, password, enabled) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -163,19 +184,24 @@ public class UserDaoImpl implements UserDao {
                 roleStatement.setString(2, role);
                 roleStatement.executeUpdate();
             }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("addUser", query, ex);
         }
 
         return user;
     }
 
     @Override
-    public boolean deleteUser(int id) throws SQLException {
+    public boolean deleteUser(int id) {
         String query = "DELETE FROM userentry WHERE id=?;";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("deleteUser", query, ex);
         }
+
         return true;
     }
 }
