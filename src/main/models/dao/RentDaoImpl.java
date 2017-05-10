@@ -18,6 +18,13 @@ public class RentDaoImpl implements  RentDao {
     private CarDao cd;
     private LeaserDao lsd;
 
+    private DatabaseManager databaseManager;
+
+    @Autowired
+    public void setDatabaseManager(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
+
     @Autowired
     public void setCd(CarDao cd) {
         this.cd = cd;
@@ -48,7 +55,7 @@ public class RentDaoImpl implements  RentDao {
         String query = "SELECT * FROM rent  ORDER BY id ASC;";
         List<Rent> rents = new ArrayList<>(64);
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement()) {
             try(ResultSet result = statement.executeQuery(query)) {
                 while (result.next()) {
@@ -66,7 +73,7 @@ public class RentDaoImpl implements  RentDao {
         String query = "SELECT * FROM rent WHERE id=?;";
         Rent rent = null;
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             try (ResultSet result = statement.executeQuery()) {
@@ -84,7 +91,7 @@ public class RentDaoImpl implements  RentDao {
     public int getCurrentRents() throws SQLException {
         String query = "SELECT COUNT(*) FROM rent WHERE started=TRUE AND " +
                 "finished=FALSE;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(query)) {
             if (result.next()) {
@@ -99,7 +106,7 @@ public class RentDaoImpl implements  RentDao {
     public int getFinishedRents() throws SQLException {
         String query = "SELECT COUNT(*) FROM rent WHERE started=TRUE AND " +
                 "finished=TRUE;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(query)) {
             if (result.next()) {

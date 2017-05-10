@@ -4,6 +4,7 @@ import main.models.pojo.User;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.jdbc.UncategorizedSQLException;
@@ -16,6 +17,13 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
     static final Logger logger = LogManager.getLogger(UserDaoImpl.class.getName());
+
+    private DatabaseManager databaseManager;
+
+    @Autowired
+    public void setDatabaseManager(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
 
     private User createEntity(ResultSet result) throws SQLException {
         User user = new User(
@@ -35,7 +43,7 @@ public class UserDaoImpl implements UserDao {
         String query = "SELECT * FROM userentry  ORDER BY id ASC;";
         List<User> users = new ArrayList<>(64);
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement()) {
             try (ResultSet result = statement.executeQuery(query)) {
                 while (result.next()) {
@@ -55,7 +63,7 @@ public class UserDaoImpl implements UserDao {
                 "WHERE email=? AND password=?";
         User user = null;
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
             statement.setString(2, password);
@@ -80,7 +88,7 @@ public class UserDaoImpl implements UserDao {
         User user = null;
 
         logger.warn("User email " + email);
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
             try (ResultSet result = statement.executeQuery()) {
@@ -101,7 +109,7 @@ public class UserDaoImpl implements UserDao {
         String query = "SELECT role FROM user_roles " +
                 "WHERE email=?";
         List<String> roles = new ArrayList<>(2);
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
             try (ResultSet result = statement.executeQuery()) {
@@ -122,7 +130,7 @@ public class UserDaoImpl implements UserDao {
                 "WHERE phone_number=?";
         User user = null;
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, phone);
             try (ResultSet result = statement.executeQuery()) {
@@ -144,7 +152,7 @@ public class UserDaoImpl implements UserDao {
         String query = "INSERT INTO userentry (email, phone_number, first_name," +
                 " second_name, last_name, password, enabled) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
             statement.setString(2, phone);
@@ -167,7 +175,7 @@ public class UserDaoImpl implements UserDao {
                 " VALUES (?, ?, ?, ?, ?, ?, ?);";
         String roleQuery = "INSERT INTO user_roles (email, role) VALUES (?, ?)";
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query);
              PreparedStatement roleStatement = conn.prepareStatement(roleQuery)) {
             statement.setString(1, user.getEmail());
@@ -194,7 +202,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean deleteUser(int id) {
         String query = "DELETE FROM userentry WHERE id=?;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.executeUpdate();

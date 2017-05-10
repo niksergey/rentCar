@@ -17,6 +17,12 @@ public class CarDaoImpl implements CarDao {
     static final Logger logger = LogManager.getLogger(CarModelDaoImpl.class.getName());
 
     private CarModelDao cmd;
+    private DatabaseManager databaseManager;
+
+    @Autowired
+    public void setDatabaseManager(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
 
     @Autowired
     public void setCmd(CarModelDao cmd) {
@@ -42,7 +48,7 @@ public class CarDaoImpl implements CarDao {
         String query = "SELECT * FROM car ORDER BY id ASC;";
         List<Car> cars = new ArrayList<>(64);
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(query)) {
             while (result.next()) {
@@ -59,7 +65,7 @@ public class CarDaoImpl implements CarDao {
         String query = "SELECT * FROM car WHERE id=?;";
         Car car = null;
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             try (ResultSet result = statement.executeQuery()) {
@@ -78,7 +84,7 @@ public class CarDaoImpl implements CarDao {
         String query = "SELECT * FROM car WHERE vin=?;";
         Car car = null;
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, vin);
             try (ResultSet result = statement.executeQuery()) {
@@ -95,7 +101,7 @@ public class CarDaoImpl implements CarDao {
     public boolean save(String vin, int year, int model) {
         String query = "INSERT INTO car (vin, year, model) " +
                 " VALUES (?, ?, ?);";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, vin);
             statement.setInt(2, year);
@@ -109,7 +115,7 @@ public class CarDaoImpl implements CarDao {
 
     public boolean update(int id, String vin, int year, int model) {
         String query = "UPDATE car SET vin=?, year=?, model=? WHERE id=?;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, vin);
             statement.setInt(2, year);
@@ -124,7 +130,7 @@ public class CarDaoImpl implements CarDao {
 
     public boolean delete(int id) {
         String query = "DELETE FROM car WHERE id=?;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -139,7 +145,7 @@ public class CarDaoImpl implements CarDao {
         int quantity = 0;
 
         String query = "SELECT COUNT(*) FROM car;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(query)) {
             if (result.next()) {
@@ -157,7 +163,7 @@ public class CarDaoImpl implements CarDao {
         int quantity = 0;
 
         String query = "SELECT COUNT(*) FROM car WHERE rented=FALSE;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(query)) {
             if (result.next()) {
@@ -175,7 +181,7 @@ public class CarDaoImpl implements CarDao {
         int quantity = 0;
 
         String query = "SELECT COUNT(*) FROM car WHERE rented=TRUE;";
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement();
              ResultSet result = statement.executeQuery(query)) {
             if (result.next()) {

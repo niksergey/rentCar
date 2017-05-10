@@ -4,6 +4,7 @@ import main.models.pojo.Leaser;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -13,6 +14,13 @@ import java.util.List;
 @Repository
 public class LeaserDaoImpl implements LeaserDao {
     static final Logger logger = LogManager.getLogger(LeaserDaoImpl.class.getName());
+
+    private DatabaseManager databaseManager;
+
+    @Autowired
+    public void setDatabaseManager(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+    }
 
     private Leaser createEntity(ResultSet result) {
         Leaser leaser = null;
@@ -36,7 +44,7 @@ public class LeaserDaoImpl implements LeaserDao {
         String query = "SELECT * FROM userentry WHERE isadmin=FALSE ORDER BY id ASC;";
         List<Leaser> leasers = new ArrayList<>(64);
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              Statement statement = conn.createStatement()) {
             try(ResultSet result = statement.executeQuery(query)) {
                 while (result.next()) {
@@ -54,7 +62,7 @@ public class LeaserDaoImpl implements LeaserDao {
                 "WHERE email=? AND password=? AND isactive=TRUE;";
         Leaser leaser = null;
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, email);
             statement.setString(2, password);
@@ -74,7 +82,7 @@ public class LeaserDaoImpl implements LeaserDao {
         String query = "SELECT * FROM userentry WHERE id=?;";
         Leaser leaser = null;
 
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
+        try (Connection conn = databaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             try (ResultSet result = statement.executeQuery()) {

@@ -1,30 +1,33 @@
 package main.utils;
 
+import org.springframework.stereotype.Component;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+@Component
 public class DatabaseManager {
-    public static Connection getConnectionFromPool() {
+
+    private DataSource ds;
+
+    public DatabaseManager() {
+        try {
+            InitialContext cxt = new InitialContext();
+            ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/postgres");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Connection getConnectionFromPool() {
         Connection conn = null;
 
         try {
-            InitialContext cxt = new InitialContext();
-            if (cxt == null) {
-                throw new Exception("No context found!");
-            }
-            DataSource ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/postgres");
-            if (ds == null) {
-                throw new Exception("Data source not found!");
-            }
             conn = ds.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
