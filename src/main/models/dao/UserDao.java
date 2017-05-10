@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
-    List<User> getAll() throws SQLException;
-    User findByEmailAndPassword(String email, String password) throws SQLException;
-    User findByEmail(String email) throws SQLException;
-    List<String> findRolesByEmail(String email) throws SQLException;
-    User findByPhone(String phone) throws SQLException;
+    List<User> getAll();
+    User findByEmailAndPassword(String email, String password);
+    User findByEmail(String email);
+    List<String> findRolesByEmail(String email);
+    User findByPhone(String phone);
     boolean addUser(String email, String phone, String firstName,
-                    String secondName, String lastName, String password) throws SQLException;
-    User addUser(User user) throws SQLException;
-    boolean deleteUser(int id) throws SQLException;
+                    String secondName, String lastName, String password);
+    User addUser(User user);
+    boolean deleteUser(int id);
 }

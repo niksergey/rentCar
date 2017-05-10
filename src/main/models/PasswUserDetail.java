@@ -1,6 +1,8 @@
 package main.models;
 
 import main.models.pojo.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,10 +12,13 @@ import java.util.Collection;
 import java.util.List;
 
 public class PasswUserDetail implements UserDetails {
+    public final Logger logger = LogManager.getLogger(this.getClass());
+
     private User user;
 
     public PasswUserDetail(User user) {
         this.user = user;
+        logger.debug(user);
     }
 
     @Override

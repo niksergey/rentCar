@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface UserService {
-    User auth(String email, String password) throws SQLException;
-    User registerNewUserAccount(UserDto userDto) throws EmailExistsException, SQLException;
-    List<User> getAllUsers() throws SQLException;
-    boolean deleteById(int id) throws SQLException;
+    User auth(String email, String password);
+    User registerNewUserAccount(UserDto userDto) throws EmailExistsException;
+    List<User> getAllUsers();
+    boolean deleteById(int id);
 }

@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -21,22 +20,21 @@ public class RepositoryUserDetailService implements UserDetailsService {
     private UserDao userRepository;
 
     public RepositoryUserDetailService() {
+        logger.warn("RepositoryUserDetailService");
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = null;
-        try {
-            user = userRepository.findByEmail(email);
-            List<String> roles = userRepository.findRolesByEmail(email);
-            user.setRoles(roles);
-        } catch (SQLException e) {
-            logger.warn("User SQL error", e);
-        }
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
+    {
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException(email);
         }
+
+        List<String> roles = userRepository.findRolesByEmail(email);
+        user.setRoles(roles);
+        user.setEnabled(true);
 
         return new PasswUserDetail(user);
     }

@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,17 +77,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public int getNumberAllCars() throws SQLException {
+    public int getNumberAllCars() {
         return carDao.getNumberAllCars();
     }
 
     @Override
-    public int getNumberAvailableCars()  throws SQLException {
+    public int getNumberAvailableCars() {
         return carDao.getNumberAvailableCars();
     }
 
     @Override
-    public int getNumberRentedCars()  throws SQLException {
+    public int getNumberRentedCars() {
         return carDao.getNumberRentedCars();
     }
 }

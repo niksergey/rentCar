@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface CarDao {
     List<Car> getAll();
-    int getNumberAllCars() throws SQLException;
-    int getNumberAvailableCars() throws SQLException;
-    int getNumberRentedCars() throws SQLException;
+    int getNumberAllCars();
+    int getNumberAvailableCars();
+    int getNumberRentedCars();
     Car getById(int id);
     Car getByVin(String vin);
     boolean delete(int id);

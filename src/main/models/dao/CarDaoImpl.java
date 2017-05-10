@@ -5,6 +5,7 @@ import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -42,14 +43,13 @@ public class CarDaoImpl implements CarDao {
         List<Car> cars = new ArrayList<>(64);
 
         try (Connection conn = DatabaseManager.getConnectionFromPool();
-             Statement statement = conn.createStatement()) {
-            try(ResultSet result = statement.executeQuery(query)) {
-                while (result.next()) {
-                    cars.add(createEntity(result));
-                }
+             Statement statement = conn.createStatement();
+             ResultSet result = statement.executeQuery(query)) {
+            while (result.next()) {
+                cars.add(createEntity(result));
             }
-        }  catch (SQLException e) {
-            logger.warn("SQLException during getAll()", e);
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("getAll", query, ex);
         }
         return cars;
     }
@@ -67,8 +67,8 @@ public class CarDaoImpl implements CarDao {
                     car = createEntity(result);
                 }
             }
-        } catch (SQLException e ) {
-            logger.warn("SQLException during findById()", e);
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("getById", query, ex);
         }
         return car;
     }
@@ -86,8 +86,8 @@ public class CarDaoImpl implements CarDao {
                     car = createEntity(result);
                 }
             }
-        } catch (SQLException e ) {
-            logger.warn("SQLException during findById()", e);
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("getByVin", query, ex);
         }
         return car;
     }
@@ -101,11 +101,10 @@ public class CarDaoImpl implements CarDao {
             statement.setInt(2, year);
             statement.setInt(3, model);
             statement.executeUpdate();
-            return true;
-        } catch (SQLException e ) {
-            logger.debug("SQLException while inserting car");
+        }  catch (SQLException ex) {
+            throw new UncategorizedSQLException("save", query, ex);
         }
-        return false;
+        return true;
     }
 
     public boolean update(int id, String vin, int year, int model) {
@@ -117,11 +116,10 @@ public class CarDaoImpl implements CarDao {
             statement.setInt(3, model);
             statement.setInt(4, id);
             statement.executeUpdate();
-            return true;
-        } catch (SQLException e ) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("update", query, ex);
         }
-        return false;
+        return true;
     }
 
     public boolean delete(int id) {
@@ -130,15 +128,14 @@ public class CarDaoImpl implements CarDao {
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.executeUpdate();
-            return true;
-        } catch (SQLException e ) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("delete", query, ex);
         }
-        return false;
+        return true;
     }
 
     @Override
-    public int getNumberAllCars() throws SQLException {
+    public int getNumberAllCars() {
         int quantity = 0;
 
         String query = "SELECT COUNT(*) FROM car;";
@@ -148,13 +145,15 @@ public class CarDaoImpl implements CarDao {
             if (result.next()) {
                 quantity = result.getInt(1);
             }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("getNumberAllCars", query, ex);
         }
 
         return quantity;
     }
 
     @Override
-    public int getNumberAvailableCars() throws SQLException {
+    public int getNumberAvailableCars() {
         int quantity = 0;
 
         String query = "SELECT COUNT(*) FROM car WHERE rented=FALSE;";
@@ -164,13 +163,15 @@ public class CarDaoImpl implements CarDao {
             if (result.next()) {
                 quantity = result.getInt(1);
             }
+        }  catch (SQLException ex) {
+            throw new UncategorizedSQLException("getNumberAvailableCars", query, ex);
         }
 
         return quantity;
     }
 
     @Override
-    public int getNumberRentedCars() throws SQLException {
+    public int getNumberRentedCars() {
         int quantity = 0;
 
         String query = "SELECT COUNT(*) FROM car WHERE rented=TRUE;";
@@ -180,6 +181,8 @@ public class CarDaoImpl implements CarDao {
             if (result.next()) {
                 quantity = result.getInt(1);
             }
+        }  catch (SQLException ex) {
+            throw new UncategorizedSQLException("getNumberRentedCars", query, ex);
         }
 
         return quantity;

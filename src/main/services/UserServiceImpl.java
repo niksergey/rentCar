@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User auth(String email, String password) throws SQLException
+    public User auth(String email, String password)
     {
         User user = userDao.findByEmailAndPassword(email, password) ;
         if (user == null) {
@@ -54,7 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerNewUserAccount(UserDto accountDto) throws EmailExistsException, SQLException {
+    public User registerNewUserAccount(UserDto accountDto) throws EmailExistsException {
+
         if (emailExist(accountDto.getEmail())) {
             throw new EmailExistsException("There is an account with that email address: "
                     + accountDto.getEmail());
@@ -69,18 +70,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() throws SQLException
+    public List<User> getAllUsers()
     {
         return userDao.getAll();
     }
 
     @Override
-    public boolean deleteById(int id) throws SQLException
+    public boolean deleteById(int id)
     {
         return userDao.deleteUser(id);
     }
 
-    private boolean emailExist(String email) throws SQLException {
+    private boolean emailExist(String email) {
         User user = userDao.findByEmail(email);
         if (user != null) {
             return true;
