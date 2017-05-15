@@ -16,15 +16,15 @@
 
     <context:component-scan base-package="main"/>
 
+    <bean id="dataSourceFromPool"
+          class="main.utils.DatabaseManager"
+    />
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/views/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
-    <bean id="dataSourceFromPool"
-          class="main.utils.DatabaseManager"
-    />
 
     <mvc:resources mapping="/resources/**" location="/resources/theme1/"
                    cache-period="31556926"/>

@@ -1,28 +1,41 @@
 package main.models.dao;
 
+import main.models.entities.UserRolesEntity;
+import main.models.entities.UserentryEntity;
 import main.models.pojo.User;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Transactional
 public class UserDaoImpl implements UserDao {
     static final Logger logger = LogManager.getLogger(UserDaoImpl.class.getName());
 
     private DatabaseManager databaseManager;
+    private SessionFactory sessionFactory;
+
+    public UserDaoImpl() {
+    }
 
     @Autowired
     public void setDatabaseManager(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
+    }
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     private User createEntity(ResultSet result) throws SQLException {
@@ -82,45 +95,70 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByEmail(String email)
     {
-        String query = "SELECT * FROM userentry " +
-                "WHERE email=?";
-
-        User user = null;
-
-        logger.warn("User email " + email);
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, email);
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    user = createEntity(result);
-                    logger.warn(user);
-                }
-            }
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("findByEmail", query, ex);
-        }
+        Session currentSession = sessionFactory.openSession();
+        UserentryEntity ue = currentSession.get(
+                UserentryEntity.class, 26);
+        User user = new User(ue.getId(), ue.getFirstName(), ue.getSecondName(),
+                ue.getLastName(), ue.getEmail(), ue.getPhoneNumber(), true,
+                ue.getPassword());
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_ADMIN");
+        user.setRoles(roles);
 
         return user;
     }
 
+//    @Override
+//    public User findByEmail(String email)
+//    {
+//        String query = "SELECT * FROM userentry " +
+//                "WHERE email=?";
+//
+//        User user = null;
+//
+//        logger.warn("User email " + email);
+//        try (Connection conn = databaseManager.getConnectionFromPool();
+//             PreparedStatement statement = conn.prepareStatement(query)) {
+//            statement.setString(1, email);
+//            try (ResultSet result = statement.executeQuery()) {
+//                if (result.next()) {
+//                    user = createEntity(result);
+//                    logger.warn(user);
+//                }
+//            }
+//        } catch (SQLException ex) {
+//            throw new UncategorizedSQLException("findByEmail", query, ex);
+//        }
+//
+//        return user;
+//    }
+
+//    @Override
+//    public List<String> findRolesByEmail(String email) {
+//        String query = "SELECT role FROM user_roles " +
+//                "WHERE email=?";
+//        List<String> roles = new ArrayList<>(2);
+//        try (Connection conn = databaseManager.getConnectionFromPool();
+//             PreparedStatement statement = conn.prepareStatement(query)) {
+//            statement.setString(1, email);
+//            try (ResultSet result = statement.executeQuery()) {
+//                while (result.next()) {
+//                    roles.add(result.getString("role"));
+//                }
+//            }
+//        } catch (SQLException ex) {
+//            throw new UncategorizedSQLException("findRolesByEmail", query, ex);
+//        }
+//
+//        return roles;
+//    }
+
     @Override
     public List<String> findRolesByEmail(String email) {
-        String query = "SELECT role FROM user_roles " +
-                "WHERE email=?";
-        List<String> roles = new ArrayList<>(2);
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, email);
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    roles.add(result.getString("role"));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("findRolesByEmail", query, ex);
-        }
-
+        Session currentSession = sessionFactory.openSession();
+        UserRolesEntity userRolesEntity = currentSession.get(UserRolesEntity.class, 6);
+        List<String> roles = new ArrayList<>();
+        roles.add(userRolesEntity.getRole());
         return roles;
     }
 
