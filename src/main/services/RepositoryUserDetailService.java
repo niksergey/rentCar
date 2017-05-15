@@ -32,11 +32,6 @@ public class RepositoryUserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
 
-        List<String> roles = userRepository.findRolesByEmail(email);
-        logger.debug("Roles" + roles);
-        user.setRoles(roles);
-        user.setEnabled(true);
-
         return new PasswUserDetail(user);
     }
 

@@ -1,11 +1,15 @@
 package main.models.dao;
 
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import main.models.entities.UserRolesEntity;
 import main.models.entities.UserentryEntity;
 import main.models.pojo.User;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +28,14 @@ public class UserDaoImpl implements UserDao {
 
     private DatabaseManager databaseManager;
     private SessionFactory sessionFactory;
+    private MapperFacade mapper;
 
     public UserDaoImpl() {
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+        mapperFactory.classMap(UserentryEntity.class, User.class)
+                .byDefault()
+                .register();
+        mapper = mapperFactory.getMapperFacade();
     }
 
     @Autowired
@@ -92,41 +102,29 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-//    @Override
+    @Override
     public User findByEmail(String email)
     {
         Session currentSession = sessionFactory.openSession();
-        UserentryEntity ue = currentSession.get(
-                UserentryEntity.class, 26);
-        User user = new User(ue.getId(), ue.getFirstName(), ue.getSecondName(),
-                ue.getLastName(), ue.getEmail(), ue.getPhoneNumber(), true,
-                ue.getPassword());
-        currentSession.close();
-        return user;
-    }
-
-//    @Override
-    public User findByEmail2(String email)
-    {
-        String query = "SELECT * FROM userentry " +
-                "WHERE email=?";
+        Query query = currentSession.createQuery("from UserentryEntity where email = :email");
+        query.setParameter("email", email);
+        List list = query.list();
 
         User user = null;
+        if (list.size() > 0) {
+            UserentryEntity ue = (UserentryEntity) list.get(0);
+            user = mapper.map(ue, User.class);
 
-        logger.warn("User email " + email);
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, email);
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    user = createEntity(result);
-                    logger.warn(user);
-                }
+            List<UserRolesEntity> userRoles = ue.getUserRoles();
+            List<String> rolesStr = new ArrayList<>();
+            for (UserRolesEntity ure : userRoles) {
+                rolesStr.add(ure.getRole());
             }
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("findByEmail", query, ex);
+            user.setRoles(rolesStr);
+
         }
 
+        currentSession.close();
         return user;
     }
 
@@ -237,15 +235,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean deleteUser(int id) {
-        String query = "DELETE FROM userentry WHERE id=?;";
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("deleteUser", query, ex);
-        }
-
-        return true;
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("delete UserentryEntity where id = :id");
+        query.setParameter("id", id);
+        int result = query.executeUpdate();
+        session.close();
+        return result > 0;
     }
 }

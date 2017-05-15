@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class UserRolesEntity {
     private int userRoleId;
     private String role;
+    private UserentryEntity userentryEntity;
 
     @Id
     @Column(name = "user_role_id")
@@ -16,6 +17,15 @@ public class UserRolesEntity {
 
     public void setUserRoleId(int userRoleId) {
         this.userRoleId = userRoleId;
+    }
+
+    @ManyToOne
+    public UserentryEntity getUserentryEntity() {
+        return userentryEntity;
+    }
+
+    public void setUserentryEntity(UserentryEntity userentryEntity) {
+        this.userentryEntity = userentryEntity;
     }
 
     @Basic

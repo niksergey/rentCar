@@ -1,6 +1,7 @@
 package main.models.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "userentry", schema = "public", catalog = "rentcar")
@@ -14,6 +15,8 @@ public class UserentryEntity {
     private Boolean enabled;
     private String password;
 
+    private List<UserRolesEntity> userRoles;
+
     @Id
     @Column(name = "id")
     public int getId() {
@@ -22,6 +25,16 @@ public class UserentryEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @OneToMany
+    @Column(name = "role")
+    public List<UserRolesEntity> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRolesEntity> userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Basic
