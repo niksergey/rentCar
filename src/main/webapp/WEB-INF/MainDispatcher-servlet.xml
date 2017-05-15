@@ -16,6 +16,11 @@
 
     <context:component-scan base-package="main"/>
 
+    <mvc:annotation-driven/>
+
+    <import resource="spring-security.xml"/>
+    <import resource="db-config.xml"/>
+
     <bean id="dataSourceFromPool"
           class="main.utils.DatabaseManager"
     />
@@ -29,6 +34,6 @@
     <mvc:resources mapping="/resources/**" location="/resources/theme1/"
                    cache-period="31556926"/>
 
-    <mvc:annotation-driven/>
+
     <security:global-method-security secured-annotations="enabled" />
 </beans>

@@ -1,25 +1,37 @@
 package main.models.dao;
 
+import main.models.entities.CarmodelEntity;
 import main.models.pojo.CarModel;
 import main.utils.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Transactional
 public class CarModelDaoImpl implements CarModelDao {
     static final Logger logger = LogManager.getLogger(CarModelDaoImpl.class.getName());
 
     private DatabaseManager databaseManager;
 
+    private SessionFactory sessionFactory;
+
     @Autowired
     public void setDatabaseManager(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
+    }
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     private CarModel createEntity(ResultSet result) {
@@ -74,8 +86,8 @@ public class CarModelDaoImpl implements CarModelDao {
         return carModel;
     }
 
-    @Override
-    public boolean save(String manufacturer, String model, int power, String gear) {
+//    @Override
+    public boolean save2(String manufacturer, String model, int power, String gear) {
         String query = "INSERT INTO carmodel (manufacturer, model, power, gear) " +
                 " VALUES (?, ?, ?, ?);";
         try (Connection conn = databaseManager.getConnectionFromPool();
@@ -90,6 +102,22 @@ public class CarModelDaoImpl implements CarModelDao {
             logger.debug("SQLException while inserting carModel", e);
         }
         return false;
+    }
+
+    @Override
+    public boolean save(String manufacturer, String model, int power, String gear) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        CarmodelEntity carmodelEntity = new CarmodelEntity();
+        carmodelEntity.setManufacturer(manufacturer);
+        carmodelEntity.setModel(model);
+        carmodelEntity.setPower(power);
+        carmodelEntity.setGear(gear);
+        session.save(carmodelEntity);
+        session.getTransaction().commit();
+        session.close();
+        return true;
     }
 
     @Override

@@ -92,7 +92,7 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    @Override
+//    @Override
     public User findByEmail(String email)
     {
         Session currentSession = sessionFactory.openSession();
@@ -101,62 +101,60 @@ public class UserDaoImpl implements UserDao {
         User user = new User(ue.getId(), ue.getFirstName(), ue.getSecondName(),
                 ue.getLastName(), ue.getEmail(), ue.getPhoneNumber(), true,
                 ue.getPassword());
-        List<String> roles = new ArrayList<>();
-        roles.add("ROLE_ADMIN");
-        user.setRoles(roles);
+        currentSession.close();
+        return user;
+    }
+
+//    @Override
+    public User findByEmail2(String email)
+    {
+        String query = "SELECT * FROM userentry " +
+                "WHERE email=?";
+
+        User user = null;
+
+        logger.warn("User email " + email);
+        try (Connection conn = databaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    user = createEntity(result);
+                    logger.warn(user);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("findByEmail", query, ex);
+        }
 
         return user;
     }
 
 //    @Override
-//    public User findByEmail(String email)
-//    {
-//        String query = "SELECT * FROM userentry " +
-//                "WHERE email=?";
-//
-//        User user = null;
-//
-//        logger.warn("User email " + email);
-//        try (Connection conn = databaseManager.getConnectionFromPool();
-//             PreparedStatement statement = conn.prepareStatement(query)) {
-//            statement.setString(1, email);
-//            try (ResultSet result = statement.executeQuery()) {
-//                if (result.next()) {
-//                    user = createEntity(result);
-//                    logger.warn(user);
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            throw new UncategorizedSQLException("findByEmail", query, ex);
-//        }
-//
-//        return user;
-//    }
+    public List<String> findRolesByEmail2(String email) {
+        String query = "SELECT role FROM user_roles " +
+                "WHERE email=?";
+        List<String> roles = new ArrayList<>(2);
+        try (Connection conn = databaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    roles.add(result.getString("role"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new UncategorizedSQLException("findRolesByEmail", query, ex);
+        }
+
+        return roles;
+    }
 
 //    @Override
-//    public List<String> findRolesByEmail(String email) {
-//        String query = "SELECT role FROM user_roles " +
-//                "WHERE email=?";
-//        List<String> roles = new ArrayList<>(2);
-//        try (Connection conn = databaseManager.getConnectionFromPool();
-//             PreparedStatement statement = conn.prepareStatement(query)) {
-//            statement.setString(1, email);
-//            try (ResultSet result = statement.executeQuery()) {
-//                while (result.next()) {
-//                    roles.add(result.getString("role"));
-//                }
-//            }
-//        } catch (SQLException ex) {
-//            throw new UncategorizedSQLException("findRolesByEmail", query, ex);
-//        }
-//
-//        return roles;
-//    }
-
-    @Override
     public List<String> findRolesByEmail(String email) {
         Session currentSession = sessionFactory.openSession();
-        UserRolesEntity userRolesEntity = currentSession.get(UserRolesEntity.class, 6);
+        UserRolesEntity userRolesEntity = currentSession.get(UserRolesEntity.class,
+                6);
         List<String> roles = new ArrayList<>();
         roles.add(userRolesEntity.getRole());
         return roles;
