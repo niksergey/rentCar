@@ -33,6 +33,7 @@ public class UserDaoImpl implements UserDao {
     public UserDaoImpl() {
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
         mapperFactory.classMap(UserentryEntity.class, User.class)
+                .field("userRoles{role}", "roles{}")
                 .byDefault()
                 .register();
         mapper = mapperFactory.getMapperFacade();
@@ -105,47 +106,20 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByEmail(String email)
     {
-        Session currentSession = sessionFactory.openSession();
-        Query query = currentSession.createQuery("from UserentryEntity where email = :email");
-        query.setParameter("email", email);
-        List list = query.list();
-
         User user = null;
-        if (list.size() > 0) {
-            UserentryEntity ue = (UserentryEntity) list.get(0);
-            user = mapper.map(ue, User.class);
 
-            List<UserRolesEntity> userRoles = ue.getUserRoles();
-            List<String> rolesStr = new ArrayList<>();
-            for (UserRolesEntity ure : userRoles) {
-                rolesStr.add(ure.getRole());
-            }
-            user.setRoles(rolesStr);
+        Session currentSession = sessionFactory.openSession();
+        Query query = currentSession.createQuery(
+                "from UserentryEntity where email = :email");
+        query.setParameter("email", email);
 
+        for (Object obj : query.list()) {
+            user = mapper.map((UserentryEntity)obj, User.class);
         }
 
         currentSession.close();
+
         return user;
-    }
-
-//    @Override
-    public List<String> findRolesByEmail2(String email) {
-        String query = "SELECT role FROM user_roles " +
-                "WHERE email=?";
-        List<String> roles = new ArrayList<>(2);
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, email);
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    roles.add(result.getString("role"));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("findRolesByEmail", query, ex);
-        }
-
-        return roles;
     }
 
 //    @Override
