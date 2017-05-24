@@ -1,5 +1,6 @@
 package main.models;
 
+import main.models.dto.UserDto;
 import main.models.pojo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,9 +15,9 @@ import java.util.List;
 public class PasswUserDetail implements UserDetails {
     public final Logger logger = LogManager.getLogger(this.getClass());
 
-    private User user;
+    private UserDto user;
 
-    public PasswUserDetail(User user) {
+    public PasswUserDetail(UserDto user) {
         this.user = user;
         logger.debug(user);
     }

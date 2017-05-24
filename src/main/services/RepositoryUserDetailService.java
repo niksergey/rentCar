@@ -2,6 +2,7 @@ package main.services;
 
 import main.models.PasswUserDetail;
 import main.models.dao.UserDao;
+import main.models.dto.UserDto;
 import main.models.pojo.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,7 @@ public class RepositoryUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
     {
-        User user = userRepository.findByEmail(email);
+        UserDto user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException(email);

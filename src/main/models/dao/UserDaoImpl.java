@@ -3,6 +3,7 @@ package main.models.dao;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
+import main.models.dto.UserDto;
 import main.models.entities.UserRolesEntity;
 import main.models.entities.UserentryEntity;
 import main.models.pojo.User;
@@ -12,11 +13,13 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ public class UserDaoImpl implements UserDao {
 
     public UserDaoImpl() {
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
-        mapperFactory.classMap(UserentryEntity.class, User.class)
+        mapperFactory.classMap(UserentryEntity.class, UserDto.class)
                 .field("userRoles{role}", "roles{}")
                 .byDefault()
                 .register();
@@ -63,50 +66,25 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    public List<User> getAll() {
-        String query = "SELECT * FROM userentry  ORDER BY id ASC;";
-        List<User> users = new ArrayList<>(64);
+    @Override
+    public List<UserDto> getAll() {
+        List<UserDto> users = new ArrayList<>(64);
 
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             Statement statement = conn.createStatement()) {
-            try (ResultSet result = statement.executeQuery(query)) {
-                while (result.next()) {
-                    users.add(createEntity(result));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("getAll", query, ex);
+        Session currentSession = sessionFactory.openSession();
+        Query query = currentSession.createQuery(
+                "from UserentryEntity order by id ASC");
+
+        for (Object obj : query.list()) {
+            users.add(mapper.map((UserentryEntity)obj, UserDto.class));
         }
 
         return users;
     }
 
-    public User findByEmailAndPassword(String email, String password)
-    {
-        String query = "SELECT * FROM userentry " +
-                "WHERE email=? AND password=?";
-        User user = null;
-
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, email);
-            statement.setString(2, password);
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    user = createEntity(result);
-                }
-            }
-        }  catch (SQLException ex) {
-            throw new UncategorizedSQLException("findByEmailAndPassword", query, ex);
-        }
-
-        return user;
-    }
-
     @Override
-    public User findByEmail(String email)
+    public UserDto findByEmail(String email)
     {
-        User user = null;
+        UserDto user = null;
 
         Session currentSession = sessionFactory.openSession();
         Query query = currentSession.createQuery(
@@ -114,7 +92,7 @@ public class UserDaoImpl implements UserDao {
         query.setParameter("email", email);
 
         for (Object obj : query.list()) {
-            user = mapper.map((UserentryEntity)obj, User.class);
+            user = mapper.map((UserentryEntity)obj, UserDto.class);
         }
 
         currentSession.close();
@@ -122,90 +100,40 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-//    @Override
-    public List<String> findRolesByEmail(String email) {
+    @Override
+    public UserDto findByPhone(String phone) {
+        UserDto user = null;
+
         Session currentSession = sessionFactory.openSession();
-        UserRolesEntity userRolesEntity = currentSession.get(UserRolesEntity.class,
-                6);
-        List<String> roles = new ArrayList<>();
-        roles.add(userRolesEntity.getRole());
-        return roles;
-    }
+        Query query = currentSession.createQuery(
+                "from UserentryEntity where phoneNumber = :phoneNumber");
+        query.setParameter("phoneNumber", phone);
 
-    @Override
-    public User findByPhone(String phone) {
-        String query = "SELECT * FROM userentry " +
-                "WHERE phone_number=?";
-        User user = null;
-
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, phone);
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    user = createEntity(result);
-                }
-            }
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("findByPhone", query, ex);
+        for (Object obj : query.list()) {
+            user = mapper.map((UserentryEntity)obj, UserDto.class);
         }
+
+        currentSession.close();
 
         return user;
     }
 
     @Override
-    public boolean addUser(String email, String phone, String firstName,
-                           String secondName, String lastName, String password)
-    {
-        String query = "INSERT INTO userentry (email, phone_number, first_name," +
-                " second_name, last_name, password, enabled) " +
-                " VALUES (?, ?, ?, ?, ?, ?, ?);";
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, email);
-            statement.setString(2, phone);
-            statement.setString(3, firstName);
-            statement.setString(4, secondName);
-            statement.setString(5, lastName);
-            statement.setString(6, password);
-            statement.setBoolean(7, true);
-            statement.executeUpdate();
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("addUser", query, ex);
+    public UserDto addUser(UserDto user) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        UserentryEntity userEntity = mapper.map(user, UserentryEntity.class);
+        System.out.println("------------+++++++++============----------");
+        for(UserRolesEntity ure : userEntity.getUserRoles()) {
+            System.out.println(ure.getRole() +"****" + ure.getUserentryEntity());
         }
-        return true;
-    }
-
-    @Override
-    public User addUser(User user) {
-        String query = "INSERT INTO userentry (email, phone_number, first_name," +
-                " second_name, last_name, password, enabled) " +
-                " VALUES (?, ?, ?, ?, ?, ?, ?);";
-        String roleQuery = "INSERT INTO user_roles (email, role) VALUES (?, ?)";
-
-        try (Connection conn = databaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query);
-             PreparedStatement roleStatement = conn.prepareStatement(roleQuery)) {
-            statement.setString(1, user.getEmail());
-            statement.setString(2, user.getPhoneNumber());
-            statement.setString(3, user.getFirstName());
-            statement.setString(4, user.getSecondName());
-            statement.setString(5, user.getLastName());
-            statement.setString(6, user.getPassword());
-            statement.setBoolean(7, true);  // TODO
-            statement.executeUpdate();
-
-            for (String role : user.getRoles()) {
-                roleStatement.setString(1, user.getEmail());
-                roleStatement.setString(2, role);
-                roleStatement.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            throw new UncategorizedSQLException("addUser", query, ex);
-        }
-
+        Serializable id = session.save(userEntity);
+        transaction.commit();
+//        UserDto savedUser = mapper.map(session.get(UserentryEntity.class, id), UserDto.class);
+        session.close();
         return user;
     }
+
 
     @Override
     public boolean deleteUser(int id) {

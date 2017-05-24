@@ -34,43 +34,24 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    public User auth(String email, String password)
-    {
-        User user = userDao.findByEmailAndPassword(email, password) ;
-        if (user == null) {
-            logger.debug("User with these credentials not found");
-            return null;
-        }
-
-        if (!user.isEnabled()) {
-            logger.debug(user + " blocked");
-            return user;
-        }
-
-        logger.debug("user: " + user.getEmail());
-
-        return user;
-    }
 
     @Override
-    public User registerNewUserAccount(UserDto accountDto) throws EmailExistsException {
+    public UserDto registerNewUserAccount(UserDto accountDto) throws EmailExistsException {
 
         if (emailExist(accountDto.getEmail())) {
             throw new EmailExistsException("There is an account with that email address: "
                     + accountDto.getEmail());
         }
 
-        User user = new User(accountDto);
-        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-        user.setRoles(Arrays.asList("ROLE_USER"));
-        user.setEnabled(true);
-        logger.debug(user);
-        return userDao.addUser(user);
+        accountDto.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        accountDto.setRoles(Arrays.asList("ROLE_USER"));
+        accountDto.setEnabled(true);
+        logger.debug(accountDto);
+        return userDao.addUser(accountDto);
     }
 
     @Override
-    public List<User> getAllUsers()
+    public List<UserDto> getAllUsers()
     {
         return userDao.getAll();
     }
@@ -82,10 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean emailExist(String email) {
-        User user = userDao.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        UserDto user = userDao.findByEmail(email);
+        return user != null;
     }
 }

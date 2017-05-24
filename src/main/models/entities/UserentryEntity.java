@@ -1,11 +1,14 @@
 package main.models.entities;
 
+import org.hibernate.annotations.Generated;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "userentry", schema = "public", catalog = "rentcar")
-public class UserentryEntity {
+public class UserentryEntity implements Serializable {
     private int id;
     private String firstName;
     private String secondName;
@@ -19,6 +22,7 @@ public class UserentryEntity {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.TABLE)
     public int getId() {
         return id;
     }
@@ -27,7 +31,7 @@ public class UserentryEntity {
         this.id = id;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "userentryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @Column(name = "role")
     public List<UserRolesEntity> getUserRoles() {
         return userRoles;

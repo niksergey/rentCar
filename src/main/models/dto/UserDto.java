@@ -2,6 +2,7 @@ package main.models.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class UserDto {
     private Integer id;
@@ -29,6 +30,8 @@ public class UserDto {
     private String password;
 
     private boolean enabled;
+
+    private List<String> roles;
 
     public UserDto() {
     }
@@ -97,6 +100,14 @@ public class UserDto {
         this.password = password;
     }
 
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "UserDto{" +
@@ -108,6 +119,7 @@ public class UserDto {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
+                ", roles=" + roles +
                 '}';
     }
 }

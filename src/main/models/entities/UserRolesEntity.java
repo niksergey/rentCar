@@ -5,21 +5,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_roles", schema = "public", catalog = "rentcar")
 public class UserRolesEntity {
-    private int userRoleId;
     private String role;
     private UserentryEntity userentryEntity;
 
-    @Id
-    @Column(name = "user_role_id")
-    public int getUserRoleId() {
-        return userRoleId;
-    }
-
-    public void setUserRoleId(int userRoleId) {
-        this.userRoleId = userRoleId;
-    }
-
     @ManyToOne
+    @JoinColumn(name = "userentry_id")
     public UserentryEntity getUserentryEntity() {
         return userentryEntity;
     }
@@ -28,7 +18,7 @@ public class UserRolesEntity {
         this.userentryEntity = userentryEntity;
     }
 
-    @Basic
+    @Id
     @Column(name = "role")
     public String getRole() {
         return role;
@@ -45,7 +35,6 @@ public class UserRolesEntity {
 
         UserRolesEntity that = (UserRolesEntity) o;
 
-        if (userRoleId != that.userRoleId) return false;
         if (role != null ? !role.equals(that.role) : that.role != null) return false;
 
         return true;
@@ -53,7 +42,7 @@ public class UserRolesEntity {
 
     @Override
     public int hashCode() {
-        int result = userRoleId;
+        int result = 1;
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }

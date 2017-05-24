@@ -59,7 +59,7 @@ public class LoginController  {
             BindingResult result) throws SQLException
     {
         logger.debug(accountDto);
-        User registered;
+        UserDto registered;
 
         if(!result.hasErrors()) {
             registered = createUserAccount(accountDto);
@@ -76,8 +76,8 @@ public class LoginController  {
         }
     }
 
-    private User createUserAccount(UserDto accountDto) throws SQLException {
-        User registered;
+    private UserDto createUserAccount(UserDto accountDto) throws SQLException {
+        UserDto registered;
         try {
             registered = userService.registerNewUserAccount(accountDto);
         } catch (EmailExistsException e) {
